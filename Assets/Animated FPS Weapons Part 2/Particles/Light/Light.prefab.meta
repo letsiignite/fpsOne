@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f86708ee2b37a91498f2146d7192fdd7
+timeCreated: 1525521961
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Particles/Light/Light.prefab
+  uploadId: 594802

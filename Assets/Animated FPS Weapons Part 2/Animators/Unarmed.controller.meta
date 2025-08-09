@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 1ba4c775e8a71b94c8096a142ad87d1c
+timeCreated: 1527068593
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Animators/Unarmed.controller
+  uploadId: 594802

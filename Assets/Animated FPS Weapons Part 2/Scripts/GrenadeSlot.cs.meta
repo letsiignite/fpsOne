@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 1db1d9d2efc43514397e40158f894903
+timeCreated: 1525938797
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Scripts/GrenadeSlot.cs
+  uploadId: 594802

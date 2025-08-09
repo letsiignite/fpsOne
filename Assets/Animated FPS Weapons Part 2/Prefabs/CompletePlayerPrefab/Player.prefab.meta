@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: b19ba2c2822ddf94cafbecc92f8f2a7e
+timeCreated: 1526110491
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Prefabs/CompletePlayerPrefab/Player.prefab
+  uploadId: 594802

@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: aab73005c2c96dd4ea43502ae217a9be
+timeCreated: 1525610111
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Scripts/Projectile.cs
+  uploadId: 594802

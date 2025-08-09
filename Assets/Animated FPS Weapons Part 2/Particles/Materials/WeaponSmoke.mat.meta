@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: cc45799ef8e63f940939991e5c992669
+timeCreated: 1525772641
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Particles/Materials/WeaponSmoke.mat
+  uploadId: 594802

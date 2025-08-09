@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: e3e1e1fa8836148499796189cb3ca42d
+timeCreated: 1527235731
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Scripts/ControlsInfo.cs
+  uploadId: 594802

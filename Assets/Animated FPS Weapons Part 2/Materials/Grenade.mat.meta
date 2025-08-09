@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 18bb5349eec6b0f41b2b045557f600b6
+timeCreated: 1525366381
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Materials/Grenade.mat
+  uploadId: 594802

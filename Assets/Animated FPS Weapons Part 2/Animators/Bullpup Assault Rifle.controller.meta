@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4f9bdc29bd7062648ab1b1cd00315bc9
+timeCreated: 1493975752
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: -1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Animators/Bullpup Assault Rifle.controller
+  uploadId: 594802

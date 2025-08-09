@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: f685a98ff9799724a8898597076614d8
+timeCreated: 1525416284
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Scripts/ThrowGrenade.cs
+  uploadId: 594802

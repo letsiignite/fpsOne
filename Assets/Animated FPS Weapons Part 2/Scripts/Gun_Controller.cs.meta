@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 62d121855c5191747829cbb05b69fa99
+timeCreated: 1512811388
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Scripts/Gun_Controller.cs
+  uploadId: 594802
