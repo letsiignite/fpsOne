@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e2e408a19dde6f44399c8547d5390918
+timeCreated: 1493975752
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: -1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Animators/Light Machine Gun.controller
+  uploadId: 594802

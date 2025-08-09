@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4b03c60007cbf9d49b016979af7c13d6
+timeCreated: 1493975752
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: -1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141735
+  packageName: Animated FPS Weapons Pack (Part 2)
+  packageVersion: 1.0.3
+  assetPath: Assets/Animated FPS Weapons Part 2/Animators/Bullpup Automatic Shotgun.controller
+  uploadId: 594802
