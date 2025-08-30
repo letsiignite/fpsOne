@@ -48,8 +48,11 @@ private GameObject Weapon;
 [SerializeField] private Camera animatedCamera;
 [SerializeField] private PlayerController Player;
 [SerializeField] private CameraShakeController mainCamera;
-[SerializeField] private GameObject Impact;
-[SerializeField] private GameObject[] bulletHoles;
+[SerializeField] private GameObject impact;
+[SerializeField] private GameObject []bulletHoles;
+[SerializeField] private GameObject []bulletHoleMetal;
+[SerializeField] private GameObject []bulletHoleWood;
+[SerializeField] private GameObject []bulletHoleConcrete;
 [SerializeField] private float impactForce = 25f;
 [SerializeField] private float aimSpeed;
 [SerializeField] private Vector3 WeaponPosition;
@@ -1136,37 +1139,87 @@ private void PlayJumpSound()
 {
 	Player.JumpAudio();
 }
-private void PlayCrouchSound()
-{
-	Player.CrouchAudio();
-}
-private void HitATarget ()
-	{
-		
-		RaycastHit hit;
-		if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, range))
-		{
-			DestructibleObject target = hit.transform.GetComponent<DestructibleObject>();
-			GameObject colObject = hit.collider.gameObject;
-			if (target != null)
-			{
-				target.TakeDamage(damage);
-			}
-			
-			if (hit.rigidbody != null)
-			{
-				hit.rigidbody.AddForce(-hit.normal * impactForce);
-			}
-			
-			GameObject impactObject = Instantiate(Impact, hit.point, Quaternion.LookRotation(hit.normal));
-			GameObject holeObject = Instantiate(bulletHoles[Random.Range(0,1)], hit.point, Quaternion.FromToRotation(Vector3.up,hit.normal));
-			holeObject.transform.SetParent(colObject.transform);
-			Destroy(impactObject, 2f);
-			Destroy(holeObject, 4f);
-		}
-		
-	}
-public void Deactivation(){
+//private void PlayCrouchSound()
+//{
+//	Player.CrouchAudio();
+//	}
+//	private void HitATarget()
+//	{
+
+//		RaycastHit hit;
+//		if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, range))
+//		{
+//			DestructibleObject target = hit.transform.GetComponent<DestructibleObject>();
+//			GameObject colObject = hit.collider.gameObject;
+//			if (target != null)
+//			{
+//				target.TakeDamage(damage);
+//			}
+
+//			if (hit.rigidbody != null)
+//			{
+//				hit.rigidbody.AddForce(-hit.normal * impactForce);
+//			}
+
+//			GameObject impactObject = Instantiate(Impact, hit.point, Quaternion.LookRotation(hit.normal));
+//			GameObject holeObject = Instantiate(bulletHoles[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+//			holeObject.transform.SetParent(colObject.transform);
+//			Destroy(impactObject, 2f);
+//			Destroy(holeObject, 4f);
+//		}
+
+//	}
+
+    private void HitATarget()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, range))
+        {
+            DestructibleObject target = hit.transform.GetComponent<DestructibleObject>();
+            GameObject colObject = hit.collider.gameObject;
+
+            // Apply damage if destructible
+            if (target != null)
+            {
+                target.TakeDamage(damage);
+            }
+
+            // Apply force if it has a rigidbody
+            if (hit.rigidbody != null)
+            {
+                hit.rigidbody.AddForce(-hit.normal * impactForce);
+            }
+
+            // Always spawn the generic impact effect
+            GameObject impactObject = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(impactObject, 2f);
+
+            // Choose bullet hole prefab based on tag
+            if (colObject.CompareTag("Metal"))
+            {
+				GameObject holeObject = Instantiate( bulletHoleMetal[Random.Range(0, 1)], hit.point,Quaternion.FromToRotation(Vector3.up, hit.normal));
+            }
+            else if (colObject.CompareTag("Wood"))
+            {
+                GameObject holeObject = Instantiate(bulletHoleWood[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+            }
+            else if (colObject.CompareTag("Concrete"))
+            {
+                GameObject holeObject = Instantiate(bulletHoleConcrete[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+            }
+            else
+            {
+				GameObject holeObject = Instantiate( bulletHoles[Random.Range(0, 1)], hit.point,Quaternion.FromToRotation(Vector3.up, hit.normal));
+				Debug.Log("YOU HIT " + colObject.tag);
+                
+                holeObject.transform.SetParent(colObject.transform);
+                Destroy(holeObject, 4f);
+            }
+        }
+    }
+
+
+    public void Deactivation(){
 AmmoIcon1. SetActive(true);
 AmmoIcon2. SetActive(false);
 Collimator.SetActive(false);
