@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Game;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -1139,65 +1140,38 @@ private void PlayJumpSound()
 {
 	Player.JumpAudio();
 }
-//private void PlayCrouchSound()
-//{
-//	Player.CrouchAudio();
-//	}
-//	private void HitATarget()
-//	{
+private void PlayCrouchSound()
+{
+	Player.CrouchAudio();
+}
+private void HitATarget ()
+	{
+		
+		RaycastHit hit;
+		if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, range))
+		{
+			DestructibleObject target = hit.transform.GetComponent<DestructibleObject>();
+			GameObject colObject = hit.collider.gameObject;
+			if (target != null)
+			{
+				target.TakeDamage(damage);
+			}
 
-//		RaycastHit hit;
-//		if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, range))
-//		{
-//			DestructibleObject target = hit.transform.GetComponent<DestructibleObject>();
-//			GameObject colObject = hit.collider.gameObject;
-//			if (target != null)
-//			{
-//				target.TakeDamage(damage);
-//			}
+			if(hit.transform.GetComponent<DamageReceiver>())
+			{
+                hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage);
 
-//			if (hit.rigidbody != null)
-//			{
-//				hit.rigidbody.AddForce(-hit.normal * impactForce);
-//			}
-
-//			GameObject impactObject = Instantiate(Impact, hit.point, Quaternion.LookRotation(hit.normal));
-//			GameObject holeObject = Instantiate(bulletHoles[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-//			holeObject.transform.SetParent(colObject.transform);
-//			Destroy(impactObject, 2f);
-//			Destroy(holeObject, 4f);
-//		}
-
-//	}
-
-    private void HitATarget()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, range))
-        {
-            DestructibleObject target = hit.transform.GetComponent<DestructibleObject>();
-            GameObject colObject = hit.collider.gameObject;
-
-            // Apply damage if destructible
-            if (target != null)
-            {
-                target.TakeDamage(damage);
             }
-
-            // Apply force if it has a rigidbody
-            if (hit.rigidbody != null)
-            {
-                hit.rigidbody.AddForce(-hit.normal * impactForce);
-            }
-
-            // Always spawn the generic impact effect
-            GameObject impactObject = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impactObject, 2f);
-
-            // Choose bullet hole prefab based on tag
+			
+			if (hit.rigidbody != null)
+			{
+				hit.rigidbody.AddForce(-hit.normal * impactForce);
+			}
+			
+			GameObject impactObject = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
             if (colObject.CompareTag("Metal"))
             {
-				GameObject holeObject = Instantiate( bulletHoleMetal[Random.Range(0, 1)], hit.point,Quaternion.FromToRotation(Vector3.up, hit.normal));
+                GameObject holeObject = Instantiate(bulletHoleMetal[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
             }
             else if (colObject.CompareTag("Wood"))
             {
@@ -1209,15 +1183,17 @@ private void PlayJumpSound()
             }
             else
             {
-				GameObject holeObject = Instantiate( bulletHoles[Random.Range(0, 1)], hit.point,Quaternion.FromToRotation(Vector3.up, hit.normal));
-				Debug.Log("YOU HIT " + colObject.tag);
-                
+                GameObject holeObject = Instantiate(bulletHoles[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                Debug.Log("YOU HIT " + colObject.tag);
+
                 holeObject.transform.SetParent(colObject.transform);
                 Destroy(holeObject, 4f);
             }
-        }
-    }
-
+			Destroy(impactObject, 2f);
+			
+		}
+		
+	}
 
     public void Deactivation(){
 AmmoIcon1. SetActive(true);
