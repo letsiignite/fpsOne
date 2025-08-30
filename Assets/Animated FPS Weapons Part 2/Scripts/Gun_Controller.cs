@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Game;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -1152,6 +1153,12 @@ private void HitATarget ()
 			{
 				target.TakeDamage(damage);
 			}
+
+			if(hit.transform.GetComponent<DamageReceiver>())
+			{
+                hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage);
+
+            }
 			
 			if (hit.rigidbody != null)
 			{
