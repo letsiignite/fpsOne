@@ -1,6 +1,7 @@
+using Game;
+using Unity.AppUI.Core;
 using UnityEngine;
 using UnityEngine.AI;
-using Game;
 namespace Enemy
 {
     public class EnemyAI : MonoBehaviour, IDamageHandler
@@ -14,6 +15,8 @@ namespace Enemy
         public float fireRate = 1f;
         public int maxHealth = 100;
 
+        [SerializeField]
+        private EnemyGun enemyGun;
         private float currentHealth;
         private NavMeshAgent agent;
         private float nextFireTime = 0f;
@@ -51,10 +54,14 @@ namespace Enemy
 
         void FacePlayer()
         {
-            Vector3 direction = (player.position - transform.position).normalized;
-            direction.y = 0f;                  // keep only horizontal rotation
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            Vector3 direction = player.position - transform.position;
+            direction.y = 0f; // Ignore vertical axis
+
+            if (direction.magnitude > 0.1f)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            }
         }
 
         void Update()
@@ -104,7 +111,7 @@ namespace Enemy
             animator.SetBool("idle", false);
             animator.SetBool("shoot", false);
         }
-
+       
         void DetectPlayer()
         {
             Vector3 dirToPlayer = player.position - transform.position;
@@ -175,15 +182,23 @@ namespace Enemy
             }
             return best;
         }
+        void OnDrawGizmos()
+        {
 
+            Gizmos.color = Color.whiteSmoke;
+            Vector3 dir = (player.position - transform.position).normalized;
+            Gizmos.DrawRay(transform.position + Vector3.up, dir * detectionRange);
+        }
         bool HasLineOfSight()
         {
             RaycastHit hit;
             Vector3 dir = (player.position - transform.position).normalized;
             if (Physics.Raycast(transform.position + Vector3.up, dir, out hit, detectionRange))
             {
-                if (hit.transform == player)
+                Debug.Log(" In sight = " + hit.transform.tag);
+                if (hit.transform.tag == "Player")
                 {
+                    Debug.Log(" return true ");
                     return true;
                 }
             }
@@ -194,6 +209,7 @@ namespace Enemy
         void ShootAtPlayer()
         {
             //  TODO: Here we must add projectile instantiation & raycast damage logic
+            enemyGun.Shoot();
         }
 
         public void TakeDamage(float damage)
