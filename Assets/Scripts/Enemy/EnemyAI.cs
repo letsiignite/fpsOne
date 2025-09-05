@@ -26,6 +26,7 @@ namespace Enemy
 
         private enum State { MovingToPoint, Idle, Combat, TakingCover }
         private State currentState;
+        private const float CLOSE_COMBAT_THRESHOLD = 5f;
 
         void Start()
         {
@@ -155,6 +156,17 @@ namespace Enemy
         void TakingCoverBehavior()
         {
             Transform bestCover = FindClosestCover();
+            float distanceToCover = Vector3.Distance(transform.position, bestCover.position);
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+            if(distanceToPlayer < CLOSE_COMBAT_THRESHOLD)
+            {
+                if(distanceToPlayer < CLOSE_COMBAT_THRESHOLD)
+                {
+                    inCover = true;
+                    currentState = State.Combat;
+                }
+            }
             if (bestCover != null)
             {
                 agent.isStopped = false;
@@ -215,6 +227,10 @@ namespace Enemy
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
+            if ((currentHealth < maxHealth / 2) && !inCover)
+            {
+                currentState = State.TakingCover;
+            }
             if (currentHealth <= 0)
             {
                 Die();
@@ -226,7 +242,7 @@ namespace Enemy
             Debug.Log("Enemy died!");
             ResetAnimation();
             animator.SetBool("dead", true);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 
         void OnDrawGizmosSelected()
