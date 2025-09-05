@@ -101,8 +101,9 @@ public class Gun_Controller : MonoBehaviour
 	[SerializeField] private AudioSource SlideSound;
 	[SerializeField] private AudioSource RemovingSafetyPin;
 	[SerializeField] private AudioSource Throw;
+    [SerializeField] LayerMask ignoredLayers;
 
-	private void Start()
+    private void Start()
 	{
 		transform.Rotate(0, -180, 0);
 		Collimator.SetActive(false);
@@ -1240,7 +1241,11 @@ public class Gun_Controller : MonoBehaviour
 	{
 
 		RaycastHit hit;
-		if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, range))
+		if (Physics.Raycast(mainCamera.transform.position  , 
+							mainCamera.transform.forward, 
+							out hit, 
+							range,
+                            ~ignoredLayers))
 		{
 			DestructibleObject target = hit.transform.GetComponent<DestructibleObject>();
 			GameObject colObject = hit.collider.gameObject;
