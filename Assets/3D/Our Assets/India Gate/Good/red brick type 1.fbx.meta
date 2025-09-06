@@ -1,44 +1,9 @@
 fileFormatVersion: 2
-guid: 29edb32ff279f9f498c0e3540d30e73d
+guid: d1def966fac8e844183023340858624d
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material #533
-    second: {fileID: 2100000, guid: 73a4d0a7ad452a243a4a0d570fd43a98, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: metallic
-    second: {fileID: 2800000, guid: d7e02b0b6ffb0b04d9155053ac82e883, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: roughness
-    second: {fileID: 2800000, guid: 2de1bd2873f81f94da563b48dae2e222, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: worn_plaster_wall_bump_2k
-    second: {fileID: 2800000, guid: 588fbb2dacbbe174594276bdbc9511a1, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: worn_plaster_wall_diff_2k
-    second: {fileID: 2800000, guid: 271c81e280a982645b82abf5439b8683, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: worn_plaster_wall_disp_2k
-    second: {fileID: 2800000, guid: 61573483d8728a3468c5fd95d7927349, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: worn_plaster_wall_nor_gl_2k
-    second: {fileID: 2800000, guid: daee50e49be22224db8352017000a51c, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
