@@ -1,16 +1,21 @@
 using UnityEngine;
 
-public class DropedGun : MonoBehaviour
+namespace Game
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class DropedGun : MonoBehaviour
     {
-        
-    }
+        public int GunIndex;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }

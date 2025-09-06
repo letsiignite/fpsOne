@@ -11,18 +11,21 @@ namespace Enemy
         private float range;
         [SerializeField]
         private float damage = 30;
-        public void Shoot()
+
+        private Vector3 dir;
+        public void Shoot(Vector3 dir)
         {
             Debug.Log(" Shooting ");
-          
+            this.dir = dir;
             RaycastHit hit;
-            if (Physics.Raycast(shootPoint.transform.position + Vector3.up, shootPoint.transform.forward, out hit, range))
+            if (Physics.Raycast(shootPoint.transform.position, dir, out hit, range))
             {
                 Debug.Log(" Hit = "+hit.collider.name);
-                if (hit.transform.GetComponent<DamageReceiver>())
+               
+                if (hit.collider.gameObject.GetComponent<DamageReceiver>() != null)
                 {
-                    hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage);
-
+                    hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage);
+                    Debug.Log(" Calling - ReceiveRayHitDamage "+damage);
                 }
 
             }
@@ -30,8 +33,8 @@ namespace Enemy
         void OnDrawGizmos()
         {
 
-            Gizmos.color = Color.white;
-            Gizmos.DrawRay(shootPoint.position + Vector3.up, shootPoint.forward * range);
+            Gizmos.color = Color.black;
+            Gizmos.DrawRay(shootPoint.position, dir * range);
         }
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()

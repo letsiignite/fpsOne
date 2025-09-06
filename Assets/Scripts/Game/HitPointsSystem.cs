@@ -20,6 +20,7 @@ namespace Game
         }
         public void ProcessDamage(float damageMultiplyer, float damage)
         {
+            Debug.Log(" Processing dam - "+damage);
             float totalDamage = damageMultiplyer * damage;
             if (armor > 0) 
             {
