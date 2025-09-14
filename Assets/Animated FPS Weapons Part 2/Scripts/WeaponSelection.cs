@@ -33,6 +33,8 @@ public class WeaponSelection : MonoBehaviour
         GunsInHandIndex = new List<int>();
 		GunsInHandIndex.Add(1);
         GunsInHandIndex.Add(2);
+		currentGunIndex = 0;
+        selectedWeapon = GunsInHandIndex[currentGunIndex];
         SelectWeapon();
 	}
 
@@ -130,6 +132,7 @@ public class WeaponSelection : MonoBehaviour
 				currentGunIndex = 0;
             }
             selectedWeapon = GunsInHandIndex[currentGunIndex];
+            showUnarmed = false;
             SelectWeapon();
 			return;
         }
