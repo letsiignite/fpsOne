@@ -57,6 +57,7 @@ namespace Enemy
 
         void FacePlayer()
         {
+            return;
             Vector3 direction = player.position - transform.position;
             direction.y = 0f; // Ignore vertical axis
 
@@ -142,8 +143,11 @@ namespace Enemy
                 return;
             }
 
+            // Make sure the enemy does not tilt.
+            Vector3 targetPositionAdjusted = new Vector3(player.position.x, transform.position.y, player.position.z);
+
             agent.isStopped = true;
-            transform.LookAt(player);
+            transform.LookAt(targetPositionAdjusted);
 
             if (Time.time >= nextFireTime)
             {
