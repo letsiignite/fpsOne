@@ -25,7 +25,7 @@ namespace Enemy
         private bool detectedPlayer = false;
         private bool inCover = false;
 
-        private enum State { MovingToPoint, Idle, Combat, TakingCover }
+        private enum State { MovingToPoint, Idle, Combat, TakingCover, Dead }
         private State currentState;
         private const float CLOSE_COMBAT_THRESHOLD = 5f;
         private Vector3 dir;
@@ -105,6 +105,9 @@ namespace Enemy
                     animator.SetBool("run", true);
                     //agent.speed = (animator.deltaPosition / Time.deltaTime).magnitude;
                     TakingCoverBehavior();
+                    break;
+                default:
+
                     break;
             }
         }
@@ -250,6 +253,7 @@ namespace Enemy
             Debug.Log("Enemy died!");
             ResetAnimation();
             animator.SetBool("dead", true);
+            currentState = State.Dead;
             //Destroy(gameObject);
         }
 
