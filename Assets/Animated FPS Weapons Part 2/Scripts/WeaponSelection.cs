@@ -1,44 +1,81 @@
-﻿using NUnit.Framework;
+﻿
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
+[System.Serializable]
+public struct GunDetails {
+    public GameObject gun;
+    public string gunName;
+    public Sprite gunImage;
+};
 
 public class WeaponSelection : MonoBehaviour
 {
 
 	[SerializeField] private int selectedWeapon = -1;
 	[SerializeField] private int numberOfSlots;
+	[SerializeField] private GunDetails[] gunDetails;
+	[SerializeField] private GameObject GunPickupOptionPopup;
+    [SerializeField] private Image GunIcon;
+    [SerializeField] private TMP_Text GunNameForPickupPopup;
 	private bool showUnarmed = true;
 	private bool keyIsPressed = false;
 
 	private List<int> GunsInHandIndex;
 	private int currentGunIndex;
-	private List<GameObject> gunsToThrowList;
+	private int pickupGunIndex = 0;
+	private GameObject droppedGun;
 
 	private void Start()
 	{
         GunsInHandIndex = new List<int>();
-
+		GunsInHandIndex.Add(1);
+        GunsInHandIndex.Add(2);
+		currentGunIndex = 0;
+        selectedWeapon = GunsInHandIndex[currentGunIndex];
         SelectWeapon();
 	}
 
-	public void DropAndPickupGun(GameObject gun)
+	public void ShowPickupOption(int index, GameObject droppedGun)
+	{
+        GunIcon.sprite = gunDetails[index].gunImage;
+        GunNameForPickupPopup.text = gunDetails[index].gunName;
+        GunPickupOptionPopup.SetActive(true);
+		pickupGunIndex = index;
+		this.droppedGun = droppedGun;
+    }
+
+	public void HidePickupOption()
+	{
+        GunPickupOptionPopup.SetActive(false);
+		droppedGun = null;
+    }
+
+	public void DropAndPickupGun(int gunIndex)
 	{
 		if(GunsInHandIndex.Count == 2)
 		{
-            ThrowWeapon(gunsToThrowList[GunsInHandIndex[currentGunIndex]]);
+            ThrowWeapon(gunDetails[GunsInHandIndex[currentGunIndex]].gun);
             GunsInHandIndex.RemoveAt(currentGunIndex);
 
         }
-        GunsInHandIndex.Add(1); // need to add the gun index
+        GunsInHandIndex.Add(gunIndex); // need to add the gun index
+        selectedWeapon = gunIndex;
+        currentGunIndex = GunsInHandIndex.Count - 1;
+        showUnarmed = false;
+        SelectWeapon();
     }
 
 	private void ThrowWeapon(GameObject gun)
 	{
+		var obj = Instantiate(gun, transform.position,Quaternion.identity, this.transform );
         Rigidbody rigidbody = gun.GetComponent<Rigidbody>();
 
         if (rigidbody == null)
 		{
-			gun.AddComponent<Rigidbody>();
+            rigidbody = gun.AddComponent<Rigidbody>();
 		}
 		gun.transform.parent = null;
 		rigidbody.isKinematic = false;
@@ -59,7 +96,13 @@ public class WeaponSelection : MonoBehaviour
 			keyIsPressed = false;
 		}
 
-		int previousSelectedWeapon = selectedWeapon;
+        if (Input.GetKeyDown(KeyCode.F) && GunPickupOptionPopup.activeInHierarchy)
+        {
+			DropAndPickupGun(pickupGunIndex);
+            droppedGun.SetActive(false);
+        }
+
+        int previousSelectedWeapon = selectedWeapon;
 
 		if (Input.GetAxis("Mouse ScrollWheel") < 0f && keyIsPressed == false)
 		{
@@ -77,6 +120,24 @@ public class WeaponSelection : MonoBehaviour
 			else
 				selectedWeapon--;
 		}
+
+		if (Input.GetKeyDown(KeyCode.Alpha1) && transform.childCount >= 1 && keyIsPressed == false || Input.GetKeyDown(KeyCode.Keypad1) && transform.childCount >= 1 && keyIsPressed == false)
+		{
+			if(currentGunIndex == 0)
+			{
+				currentGunIndex = 1;
+            }
+            else
+            {
+				currentGunIndex = 0;
+            }
+            selectedWeapon = GunsInHandIndex[currentGunIndex];
+            showUnarmed = false;
+            SelectWeapon();
+			return;
+        }
+
+
 		if (Input.GetKeyDown(KeyCode.Alpha0) || showUnarmed == true || Input.GetKeyDown(KeyCode.Keypad0))
 		{
 			selectedWeapon = 0;

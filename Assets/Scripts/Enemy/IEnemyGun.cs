@@ -4,6 +4,6 @@ namespace Enemy
 {
     public interface IEnemyGun
     {
-        public void Shoot();
+        public void Shoot(Vector3 dir);
     }
 }

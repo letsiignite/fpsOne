@@ -14,6 +14,7 @@ namespace Enemy
         public float fieldOfView = 90f;
         public float fireRate = 1f;
         public int maxHealth = 100;
+        public GameObject enemyEyesPos;
 
         [SerializeField]
         private EnemyGun enemyGun;
@@ -24,9 +25,10 @@ namespace Enemy
         private bool detectedPlayer = false;
         private bool inCover = false;
 
-        private enum State { MovingToPoint, Idle, Combat, TakingCover }
+        private enum State { MovingToPoint, Idle, Combat, TakingCover, Dead }
         private State currentState;
         private const float CLOSE_COMBAT_THRESHOLD = 5f;
+        private Vector3 dir;
 
         void Start()
         {
@@ -55,6 +57,7 @@ namespace Enemy
 
         void FacePlayer()
         {
+            return;
             Vector3 direction = player.position - transform.position;
             direction.y = 0f; // Ignore vertical axis
 
@@ -103,6 +106,9 @@ namespace Enemy
                     //agent.speed = (animator.deltaPosition / Time.deltaTime).magnitude;
                     TakingCoverBehavior();
                     break;
+                default:
+
+                    break;
             }
         }
 
@@ -117,9 +123,11 @@ namespace Enemy
         {
             Vector3 dirToPlayer = player.position - transform.position;
             float angle = Vector3.Angle(transform.forward, dirToPlayer);
-            
+            //Debug.Log("dirToPlayer.magnitude = " + dirToPlayer.magnitude + " | angle = " + angle/2);
+
             if (dirToPlayer.magnitude <= detectionRange && angle <= fieldOfView / 2f)
             {
+                //Debug.Log(" Check Has Line OfSight");
                 if (HasLineOfSight())
                 {
                     detectedPlayer = true;
@@ -138,8 +146,11 @@ namespace Enemy
                 return;
             }
 
+            // Make sure the enemy does not tilt.
+            Vector3 targetPositionAdjusted = new Vector3(player.position.x, transform.position.y, player.position.z);
+
             agent.isStopped = true;
-            transform.LookAt(player);
+            transform.LookAt(targetPositionAdjusted);
 
             if (Time.time >= nextFireTime)
             {
@@ -198,19 +209,19 @@ namespace Enemy
         {
 
             Gizmos.color = Color.whiteSmoke;
-            Vector3 dir = (player.position - transform.position).normalized;
-            Gizmos.DrawRay(transform.position + Vector3.up, dir * detectionRange);
+            dir = (player.position - enemyEyesPos.transform.position).normalized;
+            Gizmos.DrawRay(enemyEyesPos.transform.position, dir * detectionRange);
         }
         bool HasLineOfSight()
         {
             RaycastHit hit;
-            Vector3 dir = (player.position - transform.position).normalized;
-            if (Physics.Raycast(transform.position + Vector3.up, dir, out hit, detectionRange))
+            dir = (player.position - enemyEyesPos.transform.position).normalized;
+            if (Physics.Raycast(enemyEyesPos.transform.position, dir, out hit, detectionRange))
             {
-                Debug.Log(" In sight = " + hit.transform.tag);
+                //Debug.Log(" In sight = " + hit.transform.tag);
                 if (hit.transform.tag == "Player")
                 {
-                    Debug.Log(" return true ");
+                    //Debug.Log(" return true ");
                     return true;
                 }
             }
@@ -221,7 +232,7 @@ namespace Enemy
         void ShootAtPlayer()
         {
             //  TODO: Here we must add projectile instantiation & raycast damage logic
-            enemyGun.Shoot();
+            enemyGun.Shoot(dir);
         }
 
         public void TakeDamage(float damage)
@@ -242,6 +253,7 @@ namespace Enemy
             Debug.Log("Enemy died!");
             ResetAnimation();
             animator.SetBool("dead", true);
+            currentState = State.Dead;
             //Destroy(gameObject);
         }
 
