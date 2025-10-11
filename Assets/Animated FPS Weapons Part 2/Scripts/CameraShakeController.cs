@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 
 public class CameraShakeController : MonoBehaviour
 {
@@ -32,7 +32,8 @@ public class CameraShakeController : MonoBehaviour
 	     foreach(GameObject target in explosion) {
          float distance = Vector3.Distance(target.transform.position, transform.position);
          if(distance < 25) {
-             canShake = true;  
+             canShake = true;
+			 shakePower = (distance-26)*0.04f;
          }
      }
 
@@ -40,7 +41,7 @@ public class CameraShakeController : MonoBehaviour
 	{
 		if(shakeDuration > 0)
 		{
-			mainCamera.localPosition = startPosition + Random.insideUnitSphere * shakePower;
+			mainCamera.localPosition = startPosition + Random.insideUnitSphere * (-shakePower);
 			shakeDuration -= Time.deltaTime * slowdownAmount;
 		}
 		else
@@ -51,4 +52,60 @@ public class CameraShakeController : MonoBehaviour
 		}
 	}
 	}	
+}
+*/
+
+
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+public class CameraShakeController : MonoBehaviour
+{
+    [SerializeField] private float shakePower = 0.5f;
+    [SerializeField] private float duration = 10f;
+    public bool canShake = false;
+
+    void Update()
+    {
+        CameraShake();
+    }
+    IEnumerator Shake(float duration, float magnitude)
+	{
+        
+        Vector3 originalPos = transform.localPosition;
+		float elapsed = 0.0f;
+		while (elapsed < duration)
+		{
+			float x = Random.Range(-1f, 1f) * magnitude;
+			float y = Random.Range(-1f, 1f) * magnitude;
+			transform.localPosition = new Vector3(x, y, originalPos.z);
+			elapsed += Time.deltaTime;
+			yield return null;
+		}
+		transform.localPosition = originalPos;
+	}
+
+    void CameraShake()
+    {
+        GameObject[] explosion = GameObject.FindGameObjectsWithTag("Explosion");
+        float elapsed = 0.0f;
+        foreach (GameObject target in explosion)
+        {
+            //float elapsed = 0.0f;
+            float distance = Vector3.Distance(target.transform.position, transform.position);
+            if (distance < 25 && elapsed < duration)
+            {
+                //float elapsed = 0.0f;
+                canShake = true;
+                shakePower = (26 - distance) * 0.04f;
+                StartCoroutine(Shake(duration, shakePower));
+                elapsed += Time.deltaTime;
+                Debug.Log(elapsed);
+                //while(elapsed < duration)
+                {
+                }
+                //Destroy(target);
+            }
+        }
+    }
 }

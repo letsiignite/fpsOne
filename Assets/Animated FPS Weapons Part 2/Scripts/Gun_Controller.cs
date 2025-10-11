@@ -37,10 +37,11 @@ public class Gun_Controller : MonoBehaviour
 	private bool isEmpty;
 	private int clip;
 	private float CounterSpeed = 2;
-	private float currentLerpTime1;
-	private float currentLerpTime2;
-	private GameObject Weapon;
-	[SerializeField] private int AmmoQuantity;
+	private Recoil recoilScript;
+    private GameObject Weapon;
+	private ObjectPool bulletHolePool;
+    public  ObjectPool bulletHoleMetalPool;
+    [SerializeField] private int AmmoQuantity;
 	[SerializeField] private int AmmoReserve;
 	[SerializeField] private float damage = 10f;
 	[SerializeField] private float range = 100f;
@@ -51,8 +52,8 @@ public class Gun_Controller : MonoBehaviour
 	[SerializeField] private PlayerController Player;
 	[SerializeField] private CameraShakeController mainCamera;
 	[SerializeField] private GameObject impact;
-	[SerializeField] private GameObject[] bulletHoles;
-	[SerializeField] private GameObject[] bulletHoleMetal;
+	//[SerializeField] private GameObject[] bulletHoles;
+	//[SerializeField] private GameObject[] bulletHoleMetal;
 	[SerializeField] private GameObject[] bulletHoleWood;
 	[SerializeField] private GameObject[] bulletHoleConcrete;
 	[SerializeField] private float impactForce = 25f;
@@ -102,6 +103,7 @@ public class Gun_Controller : MonoBehaviour
 	[SerializeField] private AudioSource RemovingSafetyPin;
 	[SerializeField] private AudioSource Throw;
     [SerializeField] LayerMask ignoredLayers;
+   // Limit so it doesn’t go too far
 
     private void Start()
 	{
@@ -118,6 +120,7 @@ public class Gun_Controller : MonoBehaviour
 		mystyle.normal.textColor = Color.white;
 		clip = AmmoQuantity;
 		Weapon = this.gameObject;
+		recoilScript = transform.Find("UpdatedPlayer/CameraHolder/Camera").GetComponent<Recoil>();
 	}
 
 	private void Update()
@@ -294,7 +297,7 @@ public class Gun_Controller : MonoBehaviour
 				Fire = true;
 				FastMove = false;
 				Select = false;
-			}
+            }
 			else
 			{
 				if (Input.GetButtonDown("Fire1") && clip > 0 && !isEmpty)
@@ -907,8 +910,9 @@ public class Gun_Controller : MonoBehaviour
 		{
 			animator.SetFloat("Speed", 1.0f);
 		}
-	}
-	private void OnGUI()
+
+    }
+    private void OnGUI()
 	{
 		if (!isUnarmed)
 		{
@@ -1150,7 +1154,7 @@ public class Gun_Controller : MonoBehaviour
 	private IEnumerator HitTargetWhenZoomed()
 	{
 		mainCamera.canShake = true;
-		yield return new WaitForSeconds(0.05f);
+		yield return new WaitForSeconds(0.5f);
 		mainCamera.canShake = false;
 		HitATarget();
 	}
@@ -1241,7 +1245,8 @@ public class Gun_Controller : MonoBehaviour
 	{
 
 		RaycastHit hit;
-		if (Physics.Raycast(mainCamera.transform.position  , 
+		recoilScript.RecoilFire();
+        if (Physics.Raycast(mainCamera.transform.position  , 
 							mainCamera.transform.forward, 
 							out hit, 
 							range,
@@ -1268,31 +1273,46 @@ public class Gun_Controller : MonoBehaviour
 			GameObject impactObject = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
 			if (colObject.CompareTag("Metal"))
 			{
-				GameObject holeObject = Instantiate(bulletHoleMetal[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-			}
+                GameObject holeObject = bulletHolePool.GetObject(hit.point, hit.normal);
+                StartCoroutine(DeactivateHole(holeObject));
+
+            }
 			else if (colObject.CompareTag("Wood"))
 			{
 				GameObject holeObject = Instantiate(bulletHoleWood[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-			}
+                Destroy(holeObject, 4f);
+            }
 			else if (colObject.CompareTag("Concrete"))
 			{
 				GameObject holeObject = Instantiate(bulletHoleConcrete[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-			}
+                Destroy(holeObject, 4f);
+            }
 			else
 			{
-				GameObject holeObject = Instantiate(bulletHoles[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-				Debug.Log("YOU HIT " + colObject.tag);
+				GameObject holeObject = Instantiate(bulletHolePool.GetObject(hit.point, hit.normal), hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+				//GameObject holeObject = bulletHolePool.GetObject();
+				
+                Debug.Log("YOU HIT " + colObject.tag);
 
 				holeObject.transform.SetParent(colObject.transform);
-				Destroy(holeObject, 4f);
-			}
+                StartCoroutine(DeactivateHole(holeObject));
+            }
 			Destroy(impactObject, 2f);
 
 		}
 
 	}
 
-	public void Deactivation()
+	IEnumerator DeactivateHole(GameObject hole)
+	{
+		yield return new WaitForSeconds(2f);
+		bulletHolePool.ReturnObject(hole);
+    }
+
+
+
+
+    public void Deactivation()
 	{
 		AmmoIcon1.SetActive(true);
 		AmmoIcon2.SetActive(false);
