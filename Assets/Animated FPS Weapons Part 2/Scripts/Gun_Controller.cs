@@ -40,7 +40,11 @@ public class Gun_Controller : MonoBehaviour
 	private Recoil recoilScript;
     private GameObject Weapon;
 	private ObjectPool bulletHolePool;
-    public  ObjectPool bulletHoleMetalPool;
+    [SerializeField] private ObjectPool bulletHoleMetalPool;
+    [SerializeField] private ObjectPool bulletHoleConcretePool;
+    [SerializeField] private ObjectPool bulletHoleWoodPool;
+    [SerializeField] private ObjectPool bulletHoleFleshPool;
+    [SerializeField] private ObjectPool impactPool;
     [SerializeField] private int AmmoQuantity;
 	[SerializeField] private int AmmoReserve;
 	[SerializeField] private float damage = 10f;
@@ -51,11 +55,7 @@ public class Gun_Controller : MonoBehaviour
 	[SerializeField] private Camera animatedCamera;
 	[SerializeField] private PlayerController Player;
 	[SerializeField] private CameraShakeController mainCamera;
-	[SerializeField] private GameObject impact;
-	//[SerializeField] private GameObject[] bulletHoles;
-	//[SerializeField] private GameObject[] bulletHoleMetal;
-	[SerializeField] private GameObject[] bulletHoleWood;
-	[SerializeField] private GameObject[] bulletHoleConcrete;
+	//[SerializeField] private GameObject impact;
 	[SerializeField] private float impactForce = 25f;
 	[SerializeField] private float aimSpeed;
 	[SerializeField] private Vector3 WeaponPosition;
@@ -120,7 +120,7 @@ public class Gun_Controller : MonoBehaviour
 		mystyle.normal.textColor = Color.white;
 		clip = AmmoQuantity;
 		Weapon = this.gameObject;
-		recoilScript = transform.Find("UpdatedPlayer/CameraHolder/Camera").GetComponent<Recoil>();
+		//recoilScript = transform.Find("UpdatedPlayer/CameraHolder/Camera").GetComponent<Recoil>();
 	}
 
 	private void Update()
@@ -1245,7 +1245,7 @@ public class Gun_Controller : MonoBehaviour
 	{
 
 		RaycastHit hit;
-		recoilScript.RecoilFire();
+		//recoilScript.RecoilFire();
         if (Physics.Raycast(mainCamera.transform.position  , 
 							mainCamera.transform.forward, 
 							out hit, 
@@ -1270,24 +1270,29 @@ public class Gun_Controller : MonoBehaviour
 				hit.rigidbody.AddForce(-hit.normal * impactForce);
 			}
 
-			GameObject impactObject = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
-			if (colObject.CompareTag("Metal"))
+            GameObject impactObject = impactPool.GetObject(hit.point, hit.normal);
+            if (colObject.CompareTag("Metal"))
 			{
-                GameObject holeObject = bulletHolePool.GetObject(hit.point, hit.normal);
+                GameObject holeObject = bulletHoleMetalPool.GetObject(hit.point, hit.normal);
                 StartCoroutine(DeactivateHole(holeObject));
 
             }
 			else if (colObject.CompareTag("Wood"))
 			{
-				GameObject holeObject = Instantiate(bulletHoleWood[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-                Destroy(holeObject, 4f);
+                GameObject holeObject = bulletHoleWoodPool.GetObject(hit.point, hit.normal);
+                StartCoroutine(DeactivateHole(holeObject));
             }
 			else if (colObject.CompareTag("Concrete"))
 			{
-				GameObject holeObject = Instantiate(bulletHoleConcrete[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-                Destroy(holeObject, 4f);
+                GameObject holeObject = bulletHoleConcretePool.GetObject(hit.point, hit.normal);
+                StartCoroutine(DeactivateHole(holeObject));
             }
-			else
+            else if (colObject.CompareTag("Flesh"))
+            {
+                GameObject holeObject = bulletHoleFleshPool.GetObject(hit.point, hit.normal);
+                StartCoroutine(DeactivateHole(holeObject));
+            }
+            else
 			{
 				GameObject holeObject = Instantiate(bulletHolePool.GetObject(hit.point, hit.normal), hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
 				//GameObject holeObject = bulletHolePool.GetObject();
@@ -1297,7 +1302,7 @@ public class Gun_Controller : MonoBehaviour
 				holeObject.transform.SetParent(colObject.transform);
                 StartCoroutine(DeactivateHole(holeObject));
             }
-			Destroy(impactObject, 2f);
+			StartCoroutine(DeactivateHole(impactObject));
 
 		}
 
@@ -1305,8 +1310,8 @@ public class Gun_Controller : MonoBehaviour
 
 	IEnumerator DeactivateHole(GameObject hole)
 	{
-		yield return new WaitForSeconds(2f);
-		bulletHolePool.ReturnObject(hole);
+        yield return new WaitForSeconds(4f);
+		hole.SetActive(false);
     }
 
 

@@ -10,10 +10,6 @@ public class Recoil : MonoBehaviour
     [SerializeField] private float recoilX;
     [SerializeField] private float recoilY;
     [SerializeField] private float recoilZ;
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -27,3 +23,4 @@ public class Recoil : MonoBehaviour
         targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
     }
 }
+ 

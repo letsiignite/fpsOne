@@ -6,26 +6,34 @@ using System.Collections.Generic;
 public class ObjectPool : MonoBehaviour
 {
     public GameObject bulletHoles;
-    private Gun_Controller gunController;
-    public Queue<GameObject> pool = new Queue<GameObject>();
+    public List<GameObject> pool = new List<GameObject>();
 
+    //void Start()
+    //{
+    //    for (int i = 0; i < 20; i++)
+    //    {
+    //        GameObject newObj = Instantiate(bulletHoles);
+    //        newObj.SetActive(false);
+    //        pool.Add(newObj);
+    //    }
+    //}
     public GameObject GetObject(Vector3 targetPoint, Vector3 normal)
     {
-        if (pool.Count > 0)
+        foreach (GameObject obj in pool)
         {
-            GameObject obj = pool.Dequeue();
-            obj.SetActive(true);
-            return obj;
+            if (!obj.activeInHierarchy)
+            {
+                obj.transform.position = targetPoint + normal * 0.01f;
+                obj.transform.rotation = Quaternion.FromToRotation(Vector3.up, normal);
+                obj.SetActive(true);
+                return obj;
+            }   
         }
-        else
         {
-            return Instantiate(bulletHoles, targetPoint, Quaternion.FromToRotation(Vector3.up, normal));
+            GameObject newObj = Instantiate(bulletHoles, targetPoint, Quaternion.FromToRotation(Vector3.up, normal));
+            pool.Add(newObj);
+            return newObj;
+        }
 
-        }
-    }
-    public void ReturnObject(GameObject obj)
-    {
-        obj.SetActive(false);
-        pool.Enqueue(obj);
     }
 }
