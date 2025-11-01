@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a6662eaa71093cd4888b5d071aaa2df9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 264551
+  packageName: RTS Armored Transport Vehicle
+  packageVersion: 1.0
+  assetPath: Assets/Raptor3D/ATV_N1/Materials/LOD0/2_Wheels_Tracks/Wheels_Tracks_V0_Mat.mat
+  uploadId: 658921
