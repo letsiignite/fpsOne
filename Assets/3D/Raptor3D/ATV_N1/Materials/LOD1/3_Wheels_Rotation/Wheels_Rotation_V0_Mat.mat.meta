@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 36bf48d4c17eed442b94fdaf1a7a5f9b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 264551
+  packageName: RTS Armored Transport Vehicle
+  packageVersion: 1.0
+  assetPath: Assets/Raptor3D/ATV_N1/Materials/LOD1/3_Wheels_Rotation/Wheels_Rotation_V0_Mat.mat
+  uploadId: 658921

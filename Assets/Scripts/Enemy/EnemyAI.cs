@@ -2,6 +2,7 @@ using Game;
 using Unity.AppUI.Core;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 namespace Enemy
 {
     public class EnemyAI : MonoBehaviour, IDamageHandler
@@ -15,6 +16,9 @@ namespace Enemy
         public float fireRate = 1f;
         public int maxHealth = 100;
         public GameObject enemyEyesPos;
+        public LayerMask layerMask;
+        public AudioClip gunFireAudioClip;
+        public AudioSource audioSource;
 
         [SerializeField]
         private EnemyGun enemyGun;
@@ -205,9 +209,9 @@ namespace Enemy
             }
             return best;
         }
+        
         void OnDrawGizmos()
         {
-
             Gizmos.color = Color.whiteSmoke;
             dir = (player.position - enemyEyesPos.transform.position).normalized;
             Gizmos.DrawRay(enemyEyesPos.transform.position, dir * detectionRange);
@@ -216,9 +220,9 @@ namespace Enemy
         {
             RaycastHit hit;
             dir = (player.position - enemyEyesPos.transform.position).normalized;
-            if (Physics.Raycast(enemyEyesPos.transform.position, dir, out hit, detectionRange))
+            if (Physics.Raycast(enemyEyesPos.transform.position, dir, out hit, detectionRange, enemyGun.layerMask))
             {
-                //Debug.Log(" In sight = " + hit.transform.tag);
+                //Debug.Log(gameObject.name+ " >> In sight = " + hit.transform.name);
                 if (hit.transform.tag == "Player")
                 {
                     //Debug.Log(" return true ");
@@ -232,6 +236,9 @@ namespace Enemy
         void ShootAtPlayer()
         {
             //  TODO: Here we must add projectile instantiation & raycast damage logic
+            audioSource.Stop();
+            audioSource.clip = gunFireAudioClip;
+            audioSource.Play();
             enemyGun.Shoot(dir);
         }
 

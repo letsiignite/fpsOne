@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9dc6f7a12be041545bd1b8053fee375b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 264551
+  packageName: RTS Armored Transport Vehicle
+  packageVersion: 1.0
+  assetPath: Assets/Raptor3D/ATV_N1/Materials/LOD0/0_Main/Main_V3_Mat.mat
+  uploadId: 658921

@@ -5,6 +5,7 @@ namespace Enemy
 {
     public class EnemyGun : MonoBehaviour, IEnemyGun
     {
+        public LayerMask layerMask;
         [SerializeField]
         private Transform shootPoint;
         [SerializeField]
@@ -18,9 +19,9 @@ namespace Enemy
             Debug.Log(" Shooting ");
             this.dir = dir;
             RaycastHit hit;
-            if (Physics.Raycast(shootPoint.transform.position, dir, out hit, range))
+            if (Physics.Raycast(shootPoint.transform.position, dir, out hit, range, layerMask))
             {
-                Debug.Log(" Hit = "+hit.collider.name);
+                Debug.Log(" Hit = "+hit.collider.gameObject.name);
                
                 if (hit.collider.gameObject.GetComponent<DamageReceiver>() != null)
                 {
