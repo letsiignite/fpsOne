@@ -1281,7 +1281,7 @@ public class Gun_Controller : MonoBehaviour
 			else
 			{
 				GameObject holeObject = Instantiate(bulletHoles[Random.Range(0, 1)], hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-				Debug.Log("YOU HIT " + colObject.tag);
+				Debug.Log("YOU HIT " + colObject.name);
 
 				holeObject.transform.SetParent(colObject.transform);
 				Destroy(holeObject, 4f);

@@ -1,0 +1,255 @@
+fileFormatVersion: 2
+guid: e93c7f4df4a49bd4d9f1b6b461530cc1
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-chassis_14
+    second: {fileID: 2100000, guid: 31570a6ffca2f984ca2512a2c4b9dff0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-hatches_2
+    second: {fileID: 2100000, guid: 17eaac1e78433824da605c2ac551a371, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-hatches_7
+    second: {fileID: 2100000, guid: d86e4ef859a6aad43b4792d025f8b040, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-hulla_0
+    second: {fileID: 2100000, guid: ee23be3aff16ac24c8c2b237f52de78f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-hulla_11
+    second: {fileID: 2100000, guid: 66df106de2b8ee948b309d7ae0aa1a03, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-hulla_8
+    second: {fileID: 2100000, guid: d607b0e211dd70246a26d5c4fd443358, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-hullb_3
+    second: {fileID: 2100000, guid: bd52135f018da034daf9207a167cbd66, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-hullb_4
+    second: {fileID: 2100000, guid: 76ec895aa75122b489dd08c05a1cf0aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-interior_1
+    second: {fileID: 2100000, guid: 96819dd3eebfad5428fdb23b8293ba3b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-wheel_13
+    second: {fileID: 2100000, guid: 877cb618b383ac445a8ed50fcb382768, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1115-windows_9
+    second: {fileID: 2100000, guid: 153dc73ebf73947409a24ccc54ad2242, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m1151a1_new_12
+    second: {fileID: 2100000, guid: 01892cf17dea2b94a885f32ca58f16e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: us-vehicle-gear_10
+    second: {fileID: 2100000, guid: 00a52786ae53dfe469bbf21f900a6a07, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-chassis
+    second: {fileID: 2800000, guid: 4c2214f484dc67946a20d40f9a5a2299, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-hatches
+    second: {fileID: 2800000, guid: d927ea2f88615394b8e326b994ae4e55, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-hatches_normal map
+    second: {fileID: 2800000, guid: 03b89456a3f84814a88184c0a6e52db0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-hulla
+    second: {fileID: 2800000, guid: ddb61c1cbba589345aa0468c0c4e5253, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-hulla_normal map
+    second: {fileID: 2800000, guid: dbb2638202e44cf41a56b95642bec0aa, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-hullb
+    second: {fileID: 2800000, guid: bd105a5c2dd2d884d93f38fc80bbe709, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-hullb_normal map
+    second: {fileID: 2800000, guid: c9d5b6acb559247449988033b9d51933, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-interior
+    second: {fileID: 2800000, guid: eb03622e7dc82384d9ac423f29c18c47, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-interior_normal map
+    second: {fileID: 2800000, guid: ac7785614aad96146bc0e3ea1f0ab078, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-wheel
+    second: {fileID: 2800000, guid: a161b3348e8b5c9438e7fda3c47b5e1f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-wheel_normal map
+    second: {fileID: 2800000, guid: 9e9b79689ecbcce4bae99688619cdc06, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1115-windows
+    second: {fileID: 2800000, guid: 1aefadafe6b686a4a8d48146dfb75cf1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1151a1_new
+    second: {fileID: 2800000, guid: acac55a39c24c0a46ae2bb77aa150846, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: m1151a1_new_normal map
+    second: {fileID: 2800000, guid: 9ce49742b62cc45468c637870b1d9534, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: us-vehicle-gear
+    second: {fileID: 2800000, guid: 0be2d958b39669948bf338f0679e6e0a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: us-vehicle-gear_normal_map
+    second: {fileID: 2800000, guid: 910aa45bc1ecfcd4da35baeb00e95dd8, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 130
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1.3
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
