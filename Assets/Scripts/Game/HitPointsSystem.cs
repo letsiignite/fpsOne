@@ -70,12 +70,12 @@ namespace Game
                 delayTimer = SecondHitDelay;
                 hitImage = firstHit;
             }
-            if(currentHealth <= 0)
+            /*if(currentHealth <= 0)
             {
                 GameManager.Instance.SetGameState(GameState.PlayerKilled);
                 deathScreen.DisplayDeathScreen();
                 return;
-            }
+            }*/
             StartCoroutine(HideHitIndicatorImage(delayTimer, hitImage));
             //Debug.Log(" Processing dam - " + damage+ " || currentHealth = " + currentHealth);
         }

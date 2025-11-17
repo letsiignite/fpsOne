@@ -15,6 +15,7 @@ namespace mission
         private AudioSource bgAudioSource;
         private AudioSource voiceOverAudioSource;
         private TMP_Text DialogText;
+        private PlayerController playerController;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -30,9 +31,12 @@ namespace mission
         public void StartMission()
         { 
             GameManager.Instance.player.transform.position = PlayerSpawnPosForMission[missionIndex].transform.position;
+            playerController = GameManager.Instance.player.GetComponent<PlayerController>();
+            playerController.DisableMovement();
             bgAudioSource.Stop();
             bgAudioSource.clip = introData[missionIndex].bgMusic;
             bgAudioSource.Play();
+
             StartCoroutine(HandleNerration());
         }
 
@@ -47,6 +51,7 @@ namespace mission
                 yield return new WaitForSeconds(voiceOverAudioSource.clip.length);
             }
             GameManager.Instance.SetGameState(GameState.Running);
+            playerController.EnableMovement();
             yield return null;
         }
 
