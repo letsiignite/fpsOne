@@ -4,9 +4,8 @@ public enum GameState { Running, Pause, PlayerKilled }
 
 public class GameManager : MonoBehaviour
 {
-    
-
     private GameState CurrentGameState;
+    [SerializeField]
     public GameObject player;
     public static GameManager Instance { get; private set; }
 

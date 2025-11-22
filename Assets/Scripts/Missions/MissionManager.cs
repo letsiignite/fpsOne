@@ -11,15 +11,22 @@ namespace mission
         private int missionIndex = 0;
         private int nerrationIndex = 0;
         private MissionIntroData[] introData;
+        [SerializeField]
         private Transform[] PlayerSpawnPosForMission;
+        [SerializeField]
         private AudioSource bgAudioSource;
+        [SerializeField]
         private AudioSource voiceOverAudioSource;
+        [SerializeField]
         private TMP_Text DialogText;
+        [SerializeField]
         private PlayerController playerController;
+        [SerializeField]
+        private GameObject[] missionIntroObject;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-
+            StartMission();
         }
 
         // Update is called once per frame
@@ -36,7 +43,7 @@ namespace mission
             bgAudioSource.Stop();
             bgAudioSource.clip = introData[missionIndex].bgMusic;
             bgAudioSource.Play();
-
+            missionIntroObject[missionIndex].SetActive(true);
             StartCoroutine(HandleNerration());
         }
 
@@ -52,6 +59,7 @@ namespace mission
             }
             GameManager.Instance.SetGameState(GameState.Running);
             playerController.EnableMovement();
+            missionIntroObject[missionIndex].SetActive(false);
             yield return null;
         }
 
