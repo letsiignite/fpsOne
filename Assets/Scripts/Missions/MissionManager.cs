@@ -10,6 +10,7 @@ namespace mission
     {
         private int missionIndex = 0;
         private int nerrationIndex = 0;
+        [SerializeField]
         private MissionIntroData[] introData;
         [SerializeField]
         private Transform[] PlayerSpawnPosForMission;
@@ -51,6 +52,7 @@ namespace mission
         {
             while (nerrationIndex < introData[missionIndex].nerrationClips.Length)
             {
+                //Debug.Log(" Start Nerration - " + nerrationIndex);
                 voiceOverAudioSource.Stop();
                 voiceOverAudioSource.clip = introData[missionIndex].nerrationClips[nerrationIndex];
                 voiceOverAudioSource.Play();
@@ -58,6 +60,8 @@ namespace mission
                 yield return new WaitForSeconds(voiceOverAudioSource.clip.length);
             }
             GameManager.Instance.SetGameState(GameState.Running);
+            DialogText.text = "...";
+            bgAudioSource.Stop();
             playerController.EnableMovement();
             missionIntroObject[missionIndex].SetActive(false);
             yield return null;
