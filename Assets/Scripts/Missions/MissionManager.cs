@@ -50,7 +50,7 @@ namespace mission
 
         IEnumerator HandleNerration()
         {
-            while (nerrationIndex < introData[missionIndex].nerrationClips.Length)
+           /* while (nerrationIndex < introData[missionIndex].nerrationClips.Length)
             {
                 //Debug.Log(" Start Nerration - " + nerrationIndex);
                 voiceOverAudioSource.Stop();
@@ -63,7 +63,7 @@ namespace mission
             DialogText.text = "...";
             bgAudioSource.Stop();
             playerController.EnableMovement();
-            missionIntroObject[missionIndex].SetActive(false);
+            missionIntroObject[missionIndex].SetActive(false);*/
             yield return null;
         }
 
