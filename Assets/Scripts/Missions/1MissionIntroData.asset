@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137d736288a659c42acfb0d2fab1bf73, type: 3}
-  m_Name: MissionIntroData_1
+  m_Name: 1MissionIntroData
   m_EditorClassIdentifier: Assembly-CSharp::mission.MissionIntroData
   nerrationClips:
   - {fileID: 8300000, guid: 492fdf065a184e04084e9459bb48694d, type: 3}
