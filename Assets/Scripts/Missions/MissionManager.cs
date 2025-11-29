@@ -10,8 +10,7 @@ namespace mission
     {
         private int missionIndex = 0;
         private int nerrationIndex = 0;
-        [SerializeField]
-        private MissionIntroData[] introData;
+        public MissionIntroData[] introData;
         [SerializeField]
         private Transform[] PlayerSpawnPosForMission;
         [SerializeField]
@@ -44,13 +43,18 @@ namespace mission
             bgAudioSource.Stop();
             bgAudioSource.clip = introData[missionIndex].bgMusic;
             bgAudioSource.Play();
-            missionIntroObject[missionIndex].SetActive(true);
-            StartCoroutine(HandleNerration());
+            //missionIntroObject[missionIndex].SetActive(true);
+            GameManager.Instance.SetGameState(GameState.Running);
+            DialogText.text = "...";
+            //bgAudioSource.Stop();
+            playerController.EnableMovement();
+            missionIntroObject[missionIndex].SetActive(false);
+            //StartCoroutine(HandleNerration());
         }
 
         IEnumerator HandleNerration()
         {
-           /* while (nerrationIndex < introData[missionIndex].nerrationClips.Length)
+            while (nerrationIndex < introData[missionIndex].nerrationClips.Length)
             {
                 //Debug.Log(" Start Nerration - " + nerrationIndex);
                 voiceOverAudioSource.Stop();
@@ -63,7 +67,7 @@ namespace mission
             DialogText.text = "...";
             bgAudioSource.Stop();
             playerController.EnableMovement();
-            missionIntroObject[missionIndex].SetActive(false);*/
+            missionIntroObject[missionIndex].SetActive(false);
             yield return null;
         }
 
