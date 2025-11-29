@@ -11,12 +11,15 @@ namespace mission
         private AudioClip audioClip;
         [SerializeField]
         private string checkpointInfo;
+        private bool checkpointInfoProvided = false;
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.tag == "Player")
+            if(other.tag == "Player" && !checkpointInfoProvided)
             {
                 checkpointSystem.ProvideCheckpointInfo(audioClip, checkpointInfo);
+                checkpointInfoProvided = true;
+                this.gameObject.SetActive(false);
             }
         }
 
