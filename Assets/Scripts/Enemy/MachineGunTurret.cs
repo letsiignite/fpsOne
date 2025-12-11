@@ -78,7 +78,7 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler
     {
         Vector3 direction = (player.position - gunHead.position).normalized;
         Quaternion targetRot = Quaternion.LookRotation(direction);
-
+        Debug.Log("Rotating to player");
         gunHead.rotation = Quaternion.Slerp(gunHead.rotation, targetRot, rotationSpeed * Time.deltaTime);
     }
 
@@ -109,7 +109,7 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler
     private void ShootFireRay()
     {
         if (isDestroyed) return;
-
+        Debug.Log("Shooting");
         Vector3 direction = firePoint.forward;
 
         if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, rayDistance))
