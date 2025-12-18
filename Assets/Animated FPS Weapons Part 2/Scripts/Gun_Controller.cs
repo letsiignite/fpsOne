@@ -36,6 +36,8 @@ public class Gun_Controller : MonoBehaviour
     private bool SwitchToAlt2;
     private bool isZoomed;
     private bool isEmpty;
+    private float shakePower;
+    [SerializeField] public bool canShake;
     private int clip;
     private float CounterSpeed = 2;
     [SerializeField] private Recoil recoilScript;
@@ -53,6 +55,7 @@ public class Gun_Controller : MonoBehaviour
     [SerializeField] private int zoom;
     [SerializeField] private int normalFOV;
     [SerializeField] private float zoomSmooth;
+    [SerializeField] private float shakeStrength;
     [SerializeField] private Camera animatedCamera;
     [SerializeField] private PlayerController Player;
     [SerializeField] public CameraShakeController mainCamera;
@@ -1155,9 +1158,7 @@ public class Gun_Controller : MonoBehaviour
     }
     private IEnumerator HitTargetWhenZoomed()
     {
-        mainCamera.canShake = true;
         yield return new WaitForSeconds(0.5f);
-        mainCamera.canShake = false;
         HitATarget();
     }
     private void AutoFireAmmoCounter()
@@ -1296,7 +1297,7 @@ public class Gun_Controller : MonoBehaviour
             }
             else
             {
-                GameObject holeObject = Instantiate(bulletHolePool.GetObject(hit.point, hit.normal), hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                GameObject holeObject = Instantiate(bulletHoleConcretePool.GetObject(hit.point, hit.normal), hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
                 //GameObject holeObject = bulletHolePool.GetObject();
 
                 Debug.Log("YOU HIT " + colObject.tag);
@@ -1305,7 +1306,11 @@ public class Gun_Controller : MonoBehaviour
                 StartCoroutine(DeactivateHole(holeObject));
             }
             StartCoroutine(DeactivateHole(impactObject));
-
+            if (canShake && hit.distance < 25)
+            {
+                shakePower = 1.5f - (0.04f * hit.distance);
+                mainCamera.TriggerShake(shakePower);
+            }
         }
 
     }

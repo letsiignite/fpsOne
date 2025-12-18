@@ -505,14 +505,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353409725}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -1357,15 +1357,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1279790753822849049, guid: 56ea5e0ec8a91ab418040a02251ed233, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.13733
       objectReference: {fileID: 0}
     - target: {fileID: 1279790753822849049, guid: 56ea5e0ec8a91ab418040a02251ed233, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.13733
       objectReference: {fileID: 0}
     - target: {fileID: 1279790753822849049, guid: 56ea5e0ec8a91ab418040a02251ed233, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.13733
       objectReference: {fileID: 0}
     - target: {fileID: 1279790753822849049, guid: 56ea5e0ec8a91ab418040a02251ed233, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1531,6 +1531,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &967000701
 MeshFilter:
@@ -1643,6 +1644,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1018197761
 MeshFilter:
@@ -1756,6 +1758,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1104778949
 MeshFilter:
@@ -1869,6 +1872,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1133684091
 MeshFilter:
@@ -2095,6 +2099,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1183225998
 MeshFilter:
@@ -2436,6 +2441,96 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1620769983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1620769984}
+  - component: {fileID: 1620769986}
+  - component: {fileID: 1620769985}
+  m_Layer: 0
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1620769984
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620769983}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.06662, y: 0.06662, z: 0.06662}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3622784323826433535}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1620769985
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620769983}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 39babc0a61c17df41bca722640cfc289, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1620769986
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620769983}
+  m_Mesh: {fileID: 4300000, guid: 7a3eb2516523a4c42a3c119fa798bb58, type: 3}
 --- !u!1001 &1755084097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2522,6 +2617,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3954487354609249982, guid: 9a34ff7ccb5519a4fb86614bf63c8d56, type: 3}
     - target: {fileID: 1674997808687776441, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: recoilScript
+      value: 
+      objectReference: {fileID: 1880672651}
+    - target: {fileID: 1674997808687776441, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: impactConcrete
       value: 
       objectReference: {fileID: 6902408231888516120, guid: 16f501e2d02835d40b04f4562121eff8, type: 3}
@@ -2585,6 +2684,54 @@ PrefabInstance:
       propertyPath: 'bulletHoleConcrete.Array.data[0]'
       value: 
       objectReference: {fileID: 9037886408184841439, guid: 44eeac8825cc9d54eb62cbec82598558, type: 3}
+    - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: canShake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: impactPool
+      value: 
+      objectReference: {fileID: 248815965}
+    - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: recoilScript
+      value: 
+      objectReference: {fileID: 1880672651}
+    - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: shakeStrength
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: bulletHoleWoodPool
+      value: 
+      objectReference: {fileID: 1148422966}
+    - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: bulletHoleFleshPool
+      value: 
+      objectReference: {fileID: 131116995}
+    - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: bulletHoleMetalPool
+      value: 
+      objectReference: {fileID: 1886006621}
+    - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: bulletHoleConcretePool
+      value: 
+      objectReference: {fileID: 749014393}
+    - target: {fileID: 2183361708413136635, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: duration
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183361708413136635, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: magnitude
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183361708413136635, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: shakePower
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183361708413136635, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: shakeDuration
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 3791739501736092353, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: m_Name
       value: UpdatedPlayer
@@ -2705,11 +2852,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17bc3f1b5998e347b2bb0d21d999b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Recoil
-  recoilSmoothness: 2
+  recoilSmoothness: 1
   recoilSpeed: 2
   recoilX: -2
   recoilY: 2
-  recoilZ: 1
+  recoilZ: 0
 --- !u!136 &1880672653
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2977,6 +3124,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2078085640
 MeshFilter:
@@ -3111,8 +3259,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6041015796778887827, guid: b06cde0c59b2a9540b08f8d3cc7e6993, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7775218930936283192, guid: b06cde0c59b2a9540b08f8d3cc7e6993, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1620769984}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b06cde0c59b2a9540b08f8d3cc7e6993, type: 3}
 --- !u!1 &3622784323826433534 stripped
