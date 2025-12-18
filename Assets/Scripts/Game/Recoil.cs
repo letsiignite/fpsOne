@@ -7,7 +7,7 @@ public class Recoil : MonoBehaviour
     private Vector3 targetRotation;
 
 
-    [SerializeField] private float recoilSmoothness = 10f;
+    [SerializeField] private float recoilSmoothness = 1f;
     [SerializeField] private float recoilSpeed = 5f;
     [SerializeField] private float recoilX;
     [SerializeField] private float recoilY;
