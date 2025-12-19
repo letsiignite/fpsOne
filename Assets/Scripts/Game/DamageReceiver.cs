@@ -33,7 +33,7 @@ namespace Game
 
         public void ReceiveGrenadeDamage(float damage)
         {
-            Debug.Log("  Grenade Damage on = "+gameObject.name);
+            //Debug.Log("  Grenade Damage on = "+gameObject.name);
             damageHandler.ProcessDamage(damageMultiplyer, damage); // damageMultiplyer is handeled in grenade script.
         }
     } 

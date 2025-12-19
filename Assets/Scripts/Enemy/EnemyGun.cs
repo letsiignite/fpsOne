@@ -21,7 +21,7 @@ namespace Enemy
             RaycastHit hit;
             if (Physics.Raycast(shootPoint.transform.position, dir, out hit, range, layerMask))
             {
-                Debug.Log(" Hit = "+hit.collider.gameObject.name);
+                //Debug.Log(" Hit = "+hit.collider.gameObject.name);
                
                 if (hit.collider.gameObject.GetComponent<DamageReceiver>() != null)
                 {

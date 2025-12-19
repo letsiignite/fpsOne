@@ -97,7 +97,7 @@ public class Grenade : MonoBehaviour
 			// Not blocked -> apply damage with linear falloff (can replace with different curve)
 			float normalizedDistance = Mathf.Clamp01(dist / radius); // 0..1
 			float damage = Mathf.Lerp(maxDamage, 0f, normalizedDistance);
-            Debug.Log(" ** Damage - "+col.gameObject.name+ " |  damage = "+ damage);
+            //Debug.Log(" ** Damage - "+col.gameObject.name+ " |  damage = "+ damage);
 
             var damageable = col.GetComponentInParent<DamageReceiver>();
 			if (damageable != null)
