@@ -2685,7 +2685,7 @@ MonoBehaviour:
   Throw: {fileID: 8365786344858151508}
   ignoredLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 132
 --- !u!1 &411700539941674022
 GameObject:
   m_ObjectHideFlags: 0
@@ -3639,7 +3639,7 @@ MonoBehaviour:
   Throw: {fileID: 1701465531328222469}
   ignoredLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 132
 --- !u!1 &490523054528619119
 GameObject:
   m_ObjectHideFlags: 0
@@ -9079,7 +9079,7 @@ MonoBehaviour:
   Throw: {fileID: 4178696103202308839}
   ignoredLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 132
 --- !u!1 &610136924649019131
 GameObject:
   m_ObjectHideFlags: 0
@@ -52761,7 +52761,7 @@ MonoBehaviour:
   Throw: {fileID: 3132839428768545789}
   ignoredLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 132
 --- !u!1 &4198409502424276251
 GameObject:
   m_ObjectHideFlags: 0
@@ -55065,7 +55065,7 @@ MonoBehaviour:
   Throw: {fileID: 8697007120021552937}
   ignoredLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 132
 --- !u!1 &4613617095709856844
 GameObject:
   m_ObjectHideFlags: 0
@@ -67757,7 +67757,7 @@ MonoBehaviour:
   Throw: {fileID: 6267511355522439597}
   ignoredLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 132
 --- !u!1 &6940530722459349291
 GameObject:
   m_ObjectHideFlags: 0
