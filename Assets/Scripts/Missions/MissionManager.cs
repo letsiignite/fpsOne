@@ -47,9 +47,10 @@ namespace mission
             GameManager.Instance.SetGameState(GameState.MissionIntro);
             DialogText.text = "...";
             //bgAudioSource.Stop();
-            //playerController.EnableMovement();
-            //missionIntroObject[missionIndex].SetActive(false);
-            StartCoroutine(HandleNerration());
+            GameManager.Instance.SetGameState(GameState.Running);
+            playerController.EnableMovement();
+            missionIntroObject[missionIndex].SetActive(false);
+            //StartCoroutine(HandleNerration());
         }
 
         IEnumerator HandleNerration()
