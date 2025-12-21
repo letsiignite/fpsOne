@@ -6538,7 +6538,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1470359311627408452, guid: a0140a77d424588448c8f11519fbb098, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 9007862968719649918, guid: a0140a77d424588448c8f11519fbb098, type: 3}
@@ -17656,8 +17657,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.018322, y: 4.1666303, z: 0.99515635}
-  m_Center: {x: -2.4268758, y: -0.008487735, z: 1.1122751}
+  m_Size: {x: 1.9571025, y: 2.986876, z: 0.99515635}
+  m_Center: {x: -2.3962667, y: 0.031484205, z: 1.1122752}
 --- !u!65 &647267471
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17677,8 +17678,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.561232, y: 4.1666303, z: 1.7543558}
-  m_Center: {x: 0.91985714, y: -0.008515274, z: 1.560313}
+  m_Size: {x: 4.561232, y: 3.094718, z: 1.7543558}
+  m_Center: {x: 0.9198572, y: 0.03231256, z: 1.560313}
 --- !u!4 &647267472 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e93c7f4df4a49bd4d9f1b6b461530cc1, type: 3}
@@ -25689,10 +25690,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1269202746}
     - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
-      propertyPath: ignoredLayers.m_Bits
-      value: 132
-      objectReference: {fileID: 0}
-    - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
@@ -25717,10 +25714,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1269202746}
     - target: {fileID: 4051178243125017640, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
-      propertyPath: ignoredLayers.m_Bits
-      value: 132
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051178243125017640, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
@@ -25740,10 +25733,6 @@ PrefabInstance:
       propertyPath: bulletHoleMetalPool
       value: 
       objectReference: {fileID: 1269202746}
-    - target: {fileID: 4841012749208773587, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
-      propertyPath: ignoredLayers.m_Bits
-      value: 132
-      objectReference: {fileID: 0}
     - target: {fileID: 4841012749208773587, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
@@ -25765,10 +25754,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1269202746}
     - target: {fileID: 6649905132775525600, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
-      propertyPath: ignoredLayers.m_Bits
-      value: 132
-      objectReference: {fileID: 0}
-    - target: {fileID: 6649905132775525600, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
@@ -25789,10 +25774,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1269202746}
     - target: {fileID: 6909196586053570612, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
-      propertyPath: ignoredLayers.m_Bits
-      value: 132
-      objectReference: {fileID: 0}
-    - target: {fileID: 6909196586053570612, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
@@ -25812,10 +25793,6 @@ PrefabInstance:
       propertyPath: bulletHoleMetalPool
       value: 
       objectReference: {fileID: 1269202746}
-    - target: {fileID: 7603101716741952076, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
-      propertyPath: ignoredLayers.m_Bits
-      value: 132
-      objectReference: {fileID: 0}
     - target: {fileID: 7603101716741952076, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
@@ -52432,8 +52409,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.018322, y: 4.1666303, z: 0.99515635}
-  m_Center: {x: -2.4268758, y: -0.008487735, z: 1.1122751}
+  m_Size: {x: 1.9571025, y: 2.986876, z: 0.99515635}
+  m_Center: {x: -2.3962667, y: 0.031484205, z: 1.1122752}
 --- !u!65 &1926641829
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52453,8 +52430,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.561232, y: 4.1666303, z: 1.7543558}
-  m_Center: {x: 0.91985714, y: -0.008515274, z: 1.560313}
+  m_Size: {x: 4.561232, y: 3.094718, z: 1.7543558}
+  m_Center: {x: 0.9198572, y: 0.03231256, z: 1.560313}
 --- !u!4 &1926641830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e93c7f4df4a49bd4d9f1b6b461530cc1, type: 3}
