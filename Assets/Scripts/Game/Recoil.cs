@@ -15,7 +15,16 @@ public class Recoil : MonoBehaviour
 
     private void Start()
     {
-        gunController = GetComponentInParent<Gun_Controller>();
+        Gun_Controller[] childElements = GetComponentsInChildren<Gun_Controller>();
+        foreach (var ele in childElements)
+        {
+            // Check if the child GameObject is active in the hierarchy
+            if (ele.gameObject.activeInHierarchy)
+            {
+                gunController = ele.GetComponent<Gun_Controller>();
+            }
+        }
+
         targetRotation = Vector3.one;
         currentRotation = gunController.mainCamera.transform.rotation.eulerAngles;
     }
