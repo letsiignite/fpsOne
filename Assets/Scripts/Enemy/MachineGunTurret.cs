@@ -22,6 +22,12 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler
     public float damage = 10f;
     public float rayDamage = 10f;
     public float rayDistance = 100f;
+    [SerializeField]
+    private AudioClip shootAudioClip;
+    [SerializeField]
+    private AudioSource shootAudioSource;
+    [SerializeField]
+    private GameObject OnDestroyVfx;
 
     [Header("Bullet Settings")]
     public GameObject bulletPrefab;
@@ -155,6 +161,7 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler
         isDestroyed = true;
 
         // Optional: disable gun visuals, smoke, explosion, etc.
+        OnDestroyVfx.SetActive(true);
         Debug.Log("Turret destroyed!");
 
         // Stop rotating and shooting by disabling this script or just skipping logic

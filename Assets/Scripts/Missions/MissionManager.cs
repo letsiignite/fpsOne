@@ -43,13 +43,13 @@ namespace mission
             bgAudioSource.Stop();
             bgAudioSource.clip = introData[missionIndex].bgMusic;
             bgAudioSource.Play();
-            //missionIntroObject[missionIndex].SetActive(true);
-            GameManager.Instance.SetGameState(GameState.Running);
+            missionIntroObject[missionIndex].SetActive(true);
+            GameManager.Instance.SetGameState(GameState.MissionIntro);
             DialogText.text = "...";
             //bgAudioSource.Stop();
-            playerController.EnableMovement();
-            missionIntroObject[missionIndex].SetActive(false);
-            //StartCoroutine(HandleNerration());
+            //playerController.EnableMovement();
+            //missionIntroObject[missionIndex].SetActive(false);
+            StartCoroutine(HandleNerration());
         }
 
         IEnumerator HandleNerration()

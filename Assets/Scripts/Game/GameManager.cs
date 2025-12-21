@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-public enum GameState { Running, Pause, PlayerKilled }
+public enum GameState { MissionIntro, Running, Pause, PlayerKilled }
 
 public class GameManager : MonoBehaviour
 {
