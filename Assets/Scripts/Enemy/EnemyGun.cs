@@ -16,7 +16,7 @@ namespace Enemy
         private Vector3 dir;
         public void Shoot(Vector3 dir)
         {
-            Debug.Log(" Shooting ");
+            //Debug.Log(" Shooting ");
             this.dir = dir;
             RaycastHit hit;
             if (Physics.Raycast(shootPoint.transform.position, dir, out hit, range, layerMask))

@@ -27,7 +27,7 @@ namespace Game
 
         public void ReceiveRayHitDamage(float damage)
         {
-            Debug.Log(  "  ReceiveRayHitDamage");
+            //Debug.Log(  "  ReceiveRayHitDamage");
             damageHandler.ProcessDamage(damageMultiplyer,damage);
         }
 

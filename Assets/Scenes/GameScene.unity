@@ -25689,6 +25689,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1269202746}
     - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: ignoredLayers.m_Bits
+      value: 132
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926782550454786013, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
@@ -25713,6 +25717,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1269202746}
     - target: {fileID: 4051178243125017640, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: ignoredLayers.m_Bits
+      value: 132
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051178243125017640, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
@@ -25733,6 +25741,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1269202746}
     - target: {fileID: 4841012749208773587, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: ignoredLayers.m_Bits
+      value: 132
+      objectReference: {fileID: 0}
+    - target: {fileID: 4841012749208773587, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
@@ -25753,6 +25765,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1269202746}
     - target: {fileID: 6649905132775525600, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: ignoredLayers.m_Bits
+      value: 132
+      objectReference: {fileID: 0}
+    - target: {fileID: 6649905132775525600, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
@@ -25773,6 +25789,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1269202746}
     - target: {fileID: 6909196586053570612, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: ignoredLayers.m_Bits
+      value: 132
+      objectReference: {fileID: 0}
+    - target: {fileID: 6909196586053570612, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
@@ -25792,6 +25812,10 @@ PrefabInstance:
       propertyPath: bulletHoleMetalPool
       value: 
       objectReference: {fileID: 1269202746}
+    - target: {fileID: 7603101716741952076, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: ignoredLayers.m_Bits
+      value: 132
+      objectReference: {fileID: 0}
     - target: {fileID: 7603101716741952076, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: bulletHoleConcretePool
       value: 
