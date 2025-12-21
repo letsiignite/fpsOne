@@ -74,6 +74,11 @@ namespace Enemy
 
         void Update()
         {
+            if (GameManager.Instance.GetGameState() != GameState.Running)
+            {
+                animator.SetBool("idle", true);
+                return;
+            }
             if(detectedPlayer && currentState == State.Idle)
             {
                 FacePlayer();
@@ -159,7 +164,7 @@ namespace Enemy
             if (Time.time >= nextFireTime)
             {
                 ShootAtPlayer();
-                nextFireTime = Time.time + 1f / fireRate;
+                nextFireTime = (Time.time + 1f / fireRate) + Random.Range(-0.1f, 0.1f);
             }
 
             if ((currentHealth < maxHealth / 2) && !inCover)
@@ -237,6 +242,7 @@ namespace Enemy
         {
             //  TODO: Here we must add projectile instantiation & raycast damage logic
             audioSource.Stop();
+            audioSource.pitch = Random.Range(0.8f, 1.2f);
             audioSource.clip = gunFireAudioClip;
             audioSource.Play();
             enemyGun.Shoot(dir);
