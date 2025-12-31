@@ -12,6 +12,10 @@ namespace Enemy
         private float range;
         [SerializeField]
         private float damage = 30;
+        [SerializeField]
+        private GameObject bulletHitEffect;
+        [SerializeField]
+        private GameObject BulletTrailPrefab;
 
         private Vector3 dir;
         public void Shoot(Vector3 dir)
@@ -28,7 +32,8 @@ namespace Enemy
                     hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage);
                     Debug.Log(" Calling - ReceiveRayHitDamage "+damage);
                 }
-
+                GameObject obj = Instantiate(BulletTrailPrefab, shootPoint.transform.position, Quaternion.LookRotation(dir, Vector3.up));
+                obj.GetComponent<BulletTrail>().Init(hit.point, bulletHitEffect);
             }
         }
         void OnDrawGizmos()
