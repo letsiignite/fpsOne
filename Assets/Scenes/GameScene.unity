@@ -25450,8 +25450,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9435d11bf02dd5438143c715651bb06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathScreen
-  deathScreen: {fileID: 0}
-  deathScreenImage: {fileID: 0}
+  deathScreen: {fileID: 943062456}
+  deathScreenImage: {fileID: 943062458}
 --- !u!1001 &945078427
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26174,6 +26174,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1379912568}
     - target: {fileID: 8658945233563018046, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658945233563018046, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 943062456}
@@ -26225,7 +26229,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8658945233563018046, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 9071321642589669544, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
