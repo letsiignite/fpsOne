@@ -55,9 +55,11 @@ public class WeaponSelection : MonoBehaviour
 
 	public void DropAndPickupGun(int gunIndex)
 	{
-		if(GunsInHandIndex.Count == 2)
+		HidePickupOption();
+
+        if (GunsInHandIndex.Count == 2)
 		{
-            ThrowWeapon(gunDetails[GunsInHandIndex[currentGunIndex]].gun);
+            //ThrowWeapon(gunDetails[GunsInHandIndex[currentGunIndex]].gun);
             GunsInHandIndex.RemoveAt(currentGunIndex);
 
         }
@@ -199,7 +201,10 @@ public class WeaponSelection : MonoBehaviour
 		foreach (Transform weapon in transform)
 		{
 			if (i == selectedWeapon)
+			{
+				Debug.Log(" Selected index = " + i);
 				weapon.gameObject.SetActive(true);
+			}
 			else
 				weapon.GetComponent<Gun_Controller>().Deactivation();
 			i++;

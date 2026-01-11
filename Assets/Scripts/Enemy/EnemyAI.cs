@@ -1,4 +1,6 @@
 using Game;
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Audio;
@@ -18,6 +20,8 @@ namespace Enemy
         public LayerMask layerMask;
         public AudioClip gunFireAudioClip;
         public AudioSource audioSource;
+        [Tooltip("What type of gun this solder has")]
+        public DropGunType soldierType;
 
         [SerializeField]
         private EnemyGun enemyGun;
@@ -27,19 +31,36 @@ namespace Enemy
         private Animator animator;
         private bool detectedPlayer = false;
         private bool inCover = false;
+        [SerializeField]
+        private List<GameObject> objectsToDisableOnDeath;
 
         private enum State { MovingToPoint, Idle, Combat, TakingCover, Dead }
         private State currentState;
         private const float CLOSE_COMBAT_THRESHOLD = 5f;
         private Vector3 dir;
+        private Vector3 startPos;
 
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
+            startPos = transform.position;
             currentHealth = maxHealth;
             currentState = State.MovingToPoint;
             agent.SetDestination(endPoint.position);
+        }
+
+        public void Reset()
+        {
+            transform.position = startPos;
+            currentHealth = maxHealth;
+            currentState = State.MovingToPoint;
+            agent.SetDestination(endPoint.position);
+            foreach (GameObject g in objectsToDisableOnDeath)
+            {
+                g.SetActive(true);
+            }
+            GameManager.Instance.SetGameState(GameState.Running);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -262,10 +283,22 @@ namespace Enemy
 
         void Die()
         {
-            Debug.Log("Enemy died!");
+            
             ResetAnimation();
             animator.SetBool("dead", true);
             currentState = State.Dead;
+            GameObject gunToDrop = GameManager.Instance.GetGunPrefabToDrop(soldierType);
+           
+            foreach(GameObject g in objectsToDisableOnDeath)
+            {
+                g.SetActive(false);
+            }
+
+            gunToDrop.transform.position = enemyEyesPos.transform.position + new Vector3(0,2,0);
+            Debug.Log(" gunToDrop.transform.position = " + gunToDrop.transform.position);
+            Debug.Log("enemyEyesPos.transform.position = " + enemyEyesPos.transform.position);
+            Debug.Log("Enemy died!");
+            GameManager.Instance.SetGameState(GameState.PlayerKilled);
             //Destroy(gameObject);
         }
 

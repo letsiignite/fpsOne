@@ -21,7 +21,11 @@ namespace mission
         [SerializeField]
         private PlayerController playerController;
         [SerializeField]
+        private CheckpointSystem checkpointSystem;
+        [SerializeField]
         private GameObject[] missionIntroObject;
+
+        public float RESPAWN_DELAY = 3;  
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -74,6 +78,20 @@ namespace mission
         public void EndMission()
         { 
         
+        }
+
+        public void Respawn()
+        {
+            playerController.DisableMovement();
+            StartCoroutine(ProcessRespawn(RESPAWN_DELAY));
+        }
+
+        IEnumerator ProcessRespawn(float delay)
+        { 
+            yield return new WaitForSeconds(delay);
+            GameManager.Instance.player.transform.position = checkpointSystem.GetLastCheckpointPos();
+            checkpointSystem.Respawn();
+            playerController.EnableMovement();
         }
     }
 }
