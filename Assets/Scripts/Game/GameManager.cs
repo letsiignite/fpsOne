@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 public enum GameState { MissionIntro, Running, Pause, PlayerKilled }
+public enum DropGunType { Assault };
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public GameObject player;
     public static GameManager Instance { get; private set; }
+    [SerializeField]
+    private GameObject AssaultGun;
 
     private void Awake()
     {
@@ -30,6 +33,20 @@ public class GameManager : MonoBehaviour
     public GameState GetGameState() 
     {
         return CurrentGameState;
+    }
+
+    public GameObject GetGunPrefabToDrop(DropGunType gun)
+    {
+        switch (gun) 
+        { 
+            case DropGunType.Assault:
+                Debug.Log("Providing gun");
+                return Instantiate(AssaultGun);
+                break;
+            
+            default:return null;
+                break;
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

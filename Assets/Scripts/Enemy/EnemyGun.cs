@@ -30,7 +30,7 @@ namespace Enemy
                 if (hit.collider.gameObject.GetComponent<DamageReceiver>() != null)
                 {
                     hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage);
-                    Debug.Log(" Calling - ReceiveRayHitDamage "+damage);
+                    //Debug.Log(" Calling - ReceiveRayHitDamage "+damage);
                 }
                 GameObject obj = Instantiate(BulletTrailPrefab, shootPoint.transform.position, Quaternion.LookRotation(dir, Vector3.up));
                 obj.GetComponent<BulletTrail>().Init(hit.point, bulletHitEffect);

@@ -9,13 +9,33 @@ namespace mission
         private TMP_Text checkpointDialogText;
         [SerializeField]
         private AudioSource voiceOverAudioSource;
-       
-        public void ProvideCheckpointInfo(AudioClip clip, string info)
+
+        private Checkpoint lastCheckpoint;
+
+        public void ProvideCheckpointInfo(Checkpoint checkpoint)
         {
-            checkpointDialogText.text = info;
+            checkpointDialogText.text = checkpoint.GetCheckpointInfo();
             voiceOverAudioSource.Stop();
-            voiceOverAudioSource.clip = clip;
+            voiceOverAudioSource.clip = checkpoint.GetAudioClip();
             voiceOverAudioSource.Play();
+
+            lastCheckpoint = checkpoint;    
+            Invoke("ResetCheckpointData", lastCheckpoint.GetAudioClip().length + 1);
+        }
+
+        private void ResetCheckpointData()
+        {
+            checkpointDialogText.text = "";
+        }
+
+        public Vector3 GetLastCheckpointPos()
+        {
+            return lastCheckpoint.transform.position;
+        }
+
+        public void Respawn()
+        { 
+            lastCheckpoint.Respawn();
         }
     }
 }
