@@ -40,6 +40,16 @@ namespace Enemy
         private Vector3 dir;
         private Vector3 startPos;
 
+        [Header("Shoot Randomization")]
+        [SerializeField]
+        private AudioClip[] shootAudio = new AudioClip[4];
+        [SerializeField]
+        private int[] shootCount = new int[4];
+        private List<int> numbers = new List<int> { 0, 1, 2, 3};
+
+        private UniqueRandom<int> randomInts;
+
+
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
@@ -48,6 +58,7 @@ namespace Enemy
             currentHealth = maxHealth;
             currentState = State.MovingToPoint;
             agent.SetDestination(endPoint.position);
+            randomInts = new UniqueRandom<int>(numbers);
         }
 
         public void Reset()
@@ -261,11 +272,13 @@ namespace Enemy
         void ShootAtPlayer()
         {
             //  TODO: Here we must add projectile instantiation & raycast damage logic
+            int index = randomInts.GetNext();
+            Debug.Log(" Shoot Index = " + index);
             audioSource.Stop();
             audioSource.pitch = Random.Range(0.8f, 1.2f);
-            audioSource.clip = gunFireAudioClip;
+            audioSource.clip =shootAudio[index];
             audioSource.Play();
-            enemyGun.Shoot(dir);
+            enemyGun.Shoot(dir, shootCount[index]);
         }
 
         public void TakeDamage(float damage)

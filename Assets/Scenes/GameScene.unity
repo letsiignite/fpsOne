@@ -1811,7 +1811,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4884626283735724317, guid: 5944fb998d4c6894993e6f3974db9afe, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4884626283735724317, guid: 5944fb998d4c6894993e6f3974db9afe, type: 3}
       propertyPath: m_TagString
@@ -2205,7 +2205,15 @@ MonoBehaviour:
   audioSource: {fileID: 52554885}
   soldierType: 0
   enemyGun: {fileID: 2008569089}
-  objectsToDisableOnDeath: []
+  objectsToDisableOnDeath:
+  - {fileID: 2138132626}
+  - {fileID: 968134065}
+  shootAudio:
+  - {fileID: 8300000, guid: ef7fef7689058f542a0d0e5532573f60, type: 3}
+  - {fileID: 8300000, guid: 04793d24ccaf3a845a6717935a2a73b3, type: 3}
+  - {fileID: 8300000, guid: 62d98b917bbd68e4db56b13e4bec3186, type: 3}
+  - {fileID: 8300000, guid: 1cd55592142d36b409a40ddcaf8f7f8d, type: 3}
+  shootCount: 03000000020000000100000001000000
 --- !u!1 &53243499
 GameObject:
   m_ObjectHideFlags: 0
@@ -19051,6 +19059,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1507636620937791777, guid: 7097ba7ba649e1f41bba232312bdcbd8, type: 3}
   m_PrefabInstance: {fileID: 689235352}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &690544626
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.98488
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 425.05927
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_Name
+      value: 'apartment MODEL '
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: af1527c576c48fe47bd0e7d5d26899d2, type: 3}
 --- !u!1001 &692614901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31293,7 +31362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4884626283735724317, guid: 5944fb998d4c6894993e6f3974db9afe, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4884626283735724317, guid: 5944fb998d4c6894993e6f3974db9afe, type: 3}
       propertyPath: m_TagString
@@ -31542,7 +31611,15 @@ MonoBehaviour:
   audioSource: {fileID: 1120076664}
   soldierType: 0
   enemyGun: {fileID: 1120076655}
-  objectsToDisableOnDeath: []
+  objectsToDisableOnDeath:
+  - {fileID: 1638108117}
+  - {fileID: 1000408984}
+  shootAudio:
+  - {fileID: 8300000, guid: ef7fef7689058f542a0d0e5532573f60, type: 3}
+  - {fileID: 8300000, guid: 04793d24ccaf3a845a6717935a2a73b3, type: 3}
+  - {fileID: 8300000, guid: 62d98b917bbd68e4db56b13e4bec3186, type: 3}
+  - {fileID: 8300000, guid: 1cd55592142d36b409a40ddcaf8f7f8d, type: 3}
+  shootCount: 03000000020000000100000001000000
 --- !u!1 &1120076654 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5599153280294039561, guid: 5944fb998d4c6894993e6f3974db9afe, type: 3}
@@ -39898,7 +39975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4884626283735724317, guid: 5944fb998d4c6894993e6f3974db9afe, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4884626283735724317, guid: 5944fb998d4c6894993e6f3974db9afe, type: 3}
       propertyPath: m_TagString
@@ -40292,7 +40369,15 @@ MonoBehaviour:
   audioSource: {fileID: 1454264513}
   soldierType: 0
   enemyGun: {fileID: 993320084}
-  objectsToDisableOnDeath: []
+  objectsToDisableOnDeath:
+  - {fileID: 1341752827}
+  - {fileID: 989439990}
+  shootAudio:
+  - {fileID: 8300000, guid: ef7fef7689058f542a0d0e5532573f60, type: 3}
+  - {fileID: 8300000, guid: 04793d24ccaf3a845a6717935a2a73b3, type: 3}
+  - {fileID: 8300000, guid: 62d98b917bbd68e4db56b13e4bec3186, type: 3}
+  - {fileID: 8300000, guid: 1cd55592142d36b409a40ddcaf8f7f8d, type: 3}
+  shootCount: 03000000020000000100000001000000
 --- !u!1001 &1457859422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50869,7 +50954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3341494469715003236, guid: 074071508bd36f64ab089b557313853b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3341494469715003236, guid: 074071508bd36f64ab089b557313853b, type: 3}
       propertyPath: m_TagString
@@ -51090,7 +51175,15 @@ MonoBehaviour:
   audioSource: {fileID: 1823601254}
   soldierType: 0
   enemyGun: {fileID: 1823601246}
-  objectsToDisableOnDeath: []
+  objectsToDisableOnDeath:
+  - {fileID: 512133429}
+  - {fileID: 2101778405}
+  shootAudio:
+  - {fileID: 8300000, guid: ef7fef7689058f542a0d0e5532573f60, type: 3}
+  - {fileID: 8300000, guid: 04793d24ccaf3a845a6717935a2a73b3, type: 3}
+  - {fileID: 8300000, guid: 62d98b917bbd68e4db56b13e4bec3186, type: 3}
+  - {fileID: 8300000, guid: 1cd55592142d36b409a40ddcaf8f7f8d, type: 3}
+  shootCount: 03000000020000000100000001000000
 --- !u!82 &1823601254
 AudioSource:
   m_ObjectHideFlags: 0
@@ -55885,6 +55978,12 @@ MonoBehaviour:
   objectsToDisableOnDeath:
   - {fileID: 957190350}
   - {fileID: 1371130763}
+  shootAudio:
+  - {fileID: 8300000, guid: ef7fef7689058f542a0d0e5532573f60, type: 3}
+  - {fileID: 8300000, guid: 04793d24ccaf3a845a6717935a2a73b3, type: 3}
+  - {fileID: 8300000, guid: 62d98b917bbd68e4db56b13e4bec3186, type: 3}
+  - {fileID: 8300000, guid: 1cd55592142d36b409a40ddcaf8f7f8d, type: 3}
+  shootCount: 03000000020000000100000001000000
 --- !u!1001 &2012543417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97965,3 +98064,4 @@ SceneRoots:
   - {fileID: 936760845}
   - {fileID: 1399304578}
   - {fileID: 834699878}
+  - {fileID: 690544626}
