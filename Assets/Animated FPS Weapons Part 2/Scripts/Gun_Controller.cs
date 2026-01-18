@@ -1264,7 +1264,7 @@ public class Gun_Controller : MonoBehaviour
 
             if (hit.transform.GetComponent<DamageReceiver>())
             {
-                hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage);
+                hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position);
 
             }
 
