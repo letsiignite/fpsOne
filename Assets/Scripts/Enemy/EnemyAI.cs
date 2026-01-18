@@ -105,6 +105,9 @@ namespace Enemy
 
         void Update()
         {
+            if(currentState == State.Dead)
+            { return; }
+
             if (GameManager.Instance.GetGameState() != GameState.Running)
             {
                 animator.SetBool("idle", true);
