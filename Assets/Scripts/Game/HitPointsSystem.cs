@@ -34,7 +34,6 @@ namespace Game
         private const float ThirdHitDelay = 2;
         private const float fadeDuration = 0.5f;
 
-
         private void Start()
         {
             currentHealth = totalHealth;
