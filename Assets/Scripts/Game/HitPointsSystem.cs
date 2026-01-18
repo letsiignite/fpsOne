@@ -1,3 +1,4 @@
+using mission;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -28,6 +29,8 @@ namespace Game
         private DeathScreen deathScreen;
         [SerializeField]
         private GameManager gameManager;
+        [SerializeField]
+        private MissionManager missionManager;
 
         private const float firstHitDelay = 1;
         private const float SecondHitDelay = 1.5f;
@@ -69,12 +72,15 @@ namespace Game
                 delayTimer = SecondHitDelay;
                 hitImage = firstHit;
             }
-            /*if(currentHealth <= 0)
+            if(currentHealth <= 0)
             {
                 GameManager.Instance.SetGameState(GameState.PlayerKilled);
                 deathScreen.DisplayDeathScreen();
+                missionManager.Respawn();
+                float delay = missionManager.RESPAWN_DELAY;
+                Invoke("HideDeathScreen", delay);
                 return;
-            }*/
+            }
             StartCoroutine(HideHitIndicatorImage(delayTimer, hitImage));
             //Debug.Log(" Processing dam - " + damage+ " || currentHealth = " + currentHealth);
         }
@@ -117,6 +123,13 @@ namespace Game
             HitIndicatorImage.color = color;
 
             HitIndicatorImage.gameObject.SetActive(false);
+        }
+
+        private void HideDeathScreen()
+        {
+            currentHealth = totalHealth;
+            healthText.text = currentHealth.ToString();
+            deathScreen.HIdeDeathScreen();
         }
     }
 }

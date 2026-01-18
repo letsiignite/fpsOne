@@ -1,9 +1,9 @@
 using Game;
-using System.Timers;
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Audio;
-using UnityEngine.InputSystem.Android;
 namespace Enemy
 {
     public class EnemyAI : MonoBehaviour, IDamageHandler
@@ -20,7 +20,8 @@ namespace Enemy
         public LayerMask layerMask;
         public AudioClip gunFireAudioClip;
         public AudioSource audioSource;
-
+        [Tooltip("What type of gun this solder has")]
+        public DropGunType soldierType;
 
         [SerializeField]
         private EnemyGun enemyGun;
@@ -30,19 +31,47 @@ namespace Enemy
         private Animator animator;
         private bool detectedPlayer = false;
         private bool inCover = false;
+        [SerializeField]
+        private List<GameObject> objectsToDisableOnDeath;
 
         private enum State { MovingToPoint, Idle, Combat, TakingCover, Dead }
         private State currentState;
         private const float CLOSE_COMBAT_THRESHOLD = 5f;
         private Vector3 dir;
+        private Vector3 startPos;
+
+        [Header("Shoot Randomization")]
+        [SerializeField]
+        private AudioClip[] shootAudio = new AudioClip[4];
+        [SerializeField]
+        private int[] shootCount = new int[4];
+        private List<int> numbers = new List<int> { 0, 1, 2, 3};
+
+        private UniqueRandom<int> randomInts;
+
 
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
+            startPos = transform.position;
             currentHealth = maxHealth;
             currentState = State.MovingToPoint;
             agent.SetDestination(endPoint.position);
+            randomInts = new UniqueRandom<int>(numbers);
+        }
+
+        public void Reset()
+        {
+            transform.position = startPos;
+            currentHealth = maxHealth;
+            currentState = State.MovingToPoint;
+            agent.SetDestination(endPoint.position);
+            foreach (GameObject g in objectsToDisableOnDeath)
+            {
+                g.SetActive(true);
+            }
+            GameManager.Instance.SetGameState(GameState.Running);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -243,12 +272,13 @@ namespace Enemy
         void ShootAtPlayer()
         {
             //  TODO: Here we must add projectile instantiation & raycast damage logic
-            
+            int index = randomInts.GetNext();
+            Debug.Log(" Shoot Index = " + index);
             audioSource.Stop();
             audioSource.pitch = Random.Range(0.8f, 1.2f);
-            audioSource.clip = gunFireAudioClip;
+            audioSource.clip =shootAudio[index];
             audioSource.Play();
-            enemyGun.Shoot(dir);
+            enemyGun.Shoot(dir, shootCount[index]);
         }
 
         public void TakeDamage(float damage)
@@ -266,10 +296,22 @@ namespace Enemy
 
         void Die()
         {
-            Debug.Log("Enemy died!");
+            
             ResetAnimation();
             animator.SetBool("dead", true);
             currentState = State.Dead;
+            GameObject gunToDrop = GameManager.Instance.GetGunPrefabToDrop(soldierType);
+           
+            foreach(GameObject g in objectsToDisableOnDeath)
+            {
+                g.SetActive(false);
+            }
+
+            gunToDrop.transform.position = enemyEyesPos.transform.position + new Vector3(0,2,0);
+            Debug.Log(" gunToDrop.transform.position = " + gunToDrop.transform.position);
+            Debug.Log("enemyEyesPos.transform.position = " + enemyEyesPos.transform.position);
+            Debug.Log("Enemy died!");
+            GameManager.Instance.SetGameState(GameState.PlayerKilled);
             //Destroy(gameObject);
         }
 

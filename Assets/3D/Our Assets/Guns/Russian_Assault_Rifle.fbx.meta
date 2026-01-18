@@ -3,7 +3,22 @@ guid: edcd50ff8a1fd0c42a2ec50f46f26ca7
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Red_Dot_Sight
+    second: {fileID: 2100000, guid: ea8ba8b5315760746bb06d7a0e82338e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Russian_Assault_Rifle
+    second: {fileID: 2100000, guid: ab470cce384b6dd45a1f7bbd99e4b60c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Russian_Assault_Rifle_Collimator_Glass
+    second: {fileID: 2100000, guid: 498dcaf73a847b74dba61064526b08a9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +106,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.000080000005
+    globalScale: 0.008
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
