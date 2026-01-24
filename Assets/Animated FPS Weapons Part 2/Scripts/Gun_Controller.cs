@@ -1261,7 +1261,7 @@ public class Gun_Controller : MonoBehaviour
             {
                 target.TakeDamage(damage);
             }
-
+            Debug.Log(" YOU HIT TAG " + colObject.tag);
             if (hit.transform.GetComponent<DamageReceiver>())
             {
                 hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage);
