@@ -5,6 +5,7 @@ public class Recoil : MonoBehaviour
     private Gun_Controller gunController;
     private Vector3 currentRotation;
     private Vector3 targetRotation;
+    private Crosshair crosshair;
 
 
     [SerializeField] private float recoilSmoothness = 1f;

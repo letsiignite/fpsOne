@@ -1,3 +1,4 @@
+using Enemy;
 using UnityEngine;
 
 /// <summary>
@@ -14,11 +15,13 @@ namespace Game
         public bool isPlayer = false;
         public Vector3 damagePosition;
         public damageIndicator myDamageIndicator;
+        private EnemyGun enemyGun;
 
         private void Start()
         {
             damageHandler = damageHandlerObject.GetComponent<IDamageHandler>();
-            damagePosition = Vector3.zero;
+            enemyGun = FindFirstObjectByType<EnemyGun>();
+            damagePosition = enemyGun.transform.position;
         }
         private void OnTriggerEnter(Collider other)
         {
@@ -41,7 +44,7 @@ namespace Game
 
         void damageIndicatorEnable()
         {
-            myDamageIndicator.DamageLocation = Vector3.zero;
+            myDamageIndicator.DamageLocation = damagePosition;
             GameObject go = Instantiate(myDamageIndicator.gameObject, myDamageIndicator.transform.position, myDamageIndicator.transform.rotation, myDamageIndicator.transform.parent);
             Debug.Log(" Damage Indicator Enabled ");
             go.SetActive(true);
