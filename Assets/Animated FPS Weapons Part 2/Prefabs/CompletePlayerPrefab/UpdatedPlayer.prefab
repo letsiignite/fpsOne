@@ -2248,7 +2248,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.684, z: 0}
-  m_LocalScale: {x: 1.1, y: 0.4, z: 1.1}
+  m_LocalScale: {x: 1.5, y: 0.4, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4654388557102795242}
@@ -2347,9 +2347,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
   damageMultiplyer: 2
-  isPlayer: 1
-  damagePosition: {x: 0, y: 0, z: 0}
-  myDamageIndicator: {fileID: 0}
 --- !u!1 &401874990547162265
 GameObject:
   m_ObjectHideFlags: 0
@@ -9368,9 +9365,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
   damageMultiplyer: 2
-  isPlayer: 0
-  damagePosition: {x: 0, y: 0, z: 0}
-  myDamageIndicator: {fileID: 0}
 --- !u!1 &635290788210514842
 GameObject:
   m_ObjectHideFlags: 0
@@ -24924,7 +24918,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 0.2, z: 1.1}
+  m_LocalScale: {x: 1.5, y: 0.2, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4654388557102795242}
@@ -25023,9 +25017,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
   damageMultiplyer: 5
-  isPlayer: 1
-  damagePosition: {x: 0, y: 0, z: 0}
-  myDamageIndicator: {fileID: 0}
 --- !u!1 &1790230768621942881
 GameObject:
   m_ObjectHideFlags: 0
@@ -50503,7 +50494,6 @@ GameObject:
   - component: {fileID: 8529905010397909831}
   - component: {fileID: 1118106360081527704}
   - component: {fileID: 661079505766258567}
-  - component: {fileID: 8658945233563018046}
   m_Layer: 7
   m_Name: UpdatedPlayer
   m_TagString: Player
@@ -50526,7 +50516,7 @@ Transform:
   m_Children:
   - {fileID: 4654388557102795242}
   - {fileID: 2496586968436145173}
-  - {fileID: 6606173503403961320}
+  - {fileID: 3703362721705834714}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!143 &1636194218495428612
@@ -50705,6 +50695,7 @@ MonoBehaviour:
   audioSource: {fileID: 1977347176100646759}
   deathScreen: {fileID: 0}
   gameManager: {fileID: 0}
+  missionManager: {fileID: 0}
 --- !u!136 &1118106360081527704
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -50755,19 +50746,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8658945233563018046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3791739501736092353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9435d11bf02dd5438143c715651bb06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeathScreen
-  DeathScreenImage: {fileID: 0}
 --- !u!1 &3808128237529256546
 GameObject:
   m_ObjectHideFlags: 0
@@ -51064,7 +51042,6 @@ GameObject:
   - component: {fileID: 237312387711722823}
   - component: {fileID: 1502708738819100475}
   - component: {fileID: 4139451152001557456}
-  - component: {fileID: 7528212918309916841}
   m_Layer: 7
   m_Name: Muzzle_Flash_Light
   m_TagString: Untagged
@@ -51164,35 +51141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51a25321d6480e40ad859126c62fae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7528212918309916841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3840291245928587314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_CustomShadowLayers: 0
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
-  m_RenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_ShadowRenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_Version: 4
-  m_LightLayerMask: 1
-  m_ShadowLayerMask: 1
-  m_RenderingLayers: 1
-  m_ShadowRenderingLayers: 1
 --- !u!1 &3844243185153012321
 GameObject:
   m_ObjectHideFlags: 0
@@ -55705,9 +55653,9 @@ MonoBehaviour:
   - gun: {fileID: 1865098965834702480, guid: 38f937814dc96c84ea2040e032bf297c, type: 3}
     gunName: Assault Rifle
     gunImage: {fileID: 21300000, guid: c91f5dd758dc5a7429518404d600e351, type: 3}
-  - gun: {fileID: 1780004114429520866, guid: dacf660f3ca456d45a87c445b6a15f97, type: 3}
+  - gun: {fileID: 1865098965834702480, guid: 38f937814dc96c84ea2040e032bf297c, type: 3}
     gunName: Assault Rifle
-    gunImage: {fileID: 7681201850867341242, guid: 215687feeab0b7445b4a1cd86c82c2e1, type: 3}
+    gunImage: {fileID: 21300000, guid: c91f5dd758dc5a7429518404d600e351, type: 3}
   GunPickupOptionPopup: {fileID: 0}
   GunIcon: {fileID: 0}
   GunNameForPickupPopup: {fileID: 0}
@@ -63515,9 +63463,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
   damageMultiplyer: 1
-  isPlayer: 0
-  damagePosition: {x: 0, y: 0, z: 0}
-  myDamageIndicator: {fileID: 0}
 --- !u!1 &6126317541442540304
 GameObject:
   m_ObjectHideFlags: 0
@@ -74267,9 +74212,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
   damageMultiplyer: 5
-  isPlayer: 0
-  damagePosition: {x: 0, y: 0, z: 0}
-  myDamageIndicator: {fileID: 0}
 --- !u!1 &7439002832801936967
 GameObject:
   m_ObjectHideFlags: 0
@@ -76668,7 +76610,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1.518, z: 0}
-  m_LocalScale: {x: 1.1, y: 0.4, z: 1.1}
+  m_LocalScale: {x: 1.5, y: 0.4, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4654388557102795242}
@@ -76767,9 +76709,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
   damageMultiplyer: 1
-  isPlayer: 1
-  damagePosition: {x: 0, y: 0, z: 0}
-  myDamageIndicator: {fileID: 0}
 --- !u!1 &7912370186500144743
 GameObject:
   m_ObjectHideFlags: 0
@@ -86620,7 +86559,7 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0059265494, y: 0.014379337, z: 0.11145544}
     m_Extent: {x: 0.11228985, y: 0.111891136, z: 0.12838416}
   m_DirtyAABB: 0
---- !u!1001 &8772388565483030355
+--- !u!1001 &1257880776584598625
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -86677,8 +86616,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3ff1bcc2f30b354ca92f0db1b825e00, type: 3}
---- !u!4 &6606173503403961320 stripped
+--- !u!4 &3703362721705834714 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2454496023371656379, guid: f3ff1bcc2f30b354ca92f0db1b825e00, type: 3}
-  m_PrefabInstance: {fileID: 8772388565483030355}
+  m_PrefabInstance: {fileID: 1257880776584598625}
   m_PrefabAsset: {fileID: 0}
