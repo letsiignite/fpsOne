@@ -37,6 +37,7 @@ namespace Game
         private const float ThirdHitDelay = 2;
         private const float fadeDuration = 0.5f;
 
+
         private void Start()
         {
             currentHealth = totalHealth;
@@ -74,12 +75,11 @@ namespace Game
             }
             if(currentHealth <= 0)
             {
-                deathScreen.isDead = true;
-                GameManager.Instance.SetGameState(GameState.PlayerKilled);
+                /*GameManager.Instance.SetGameState(GameState.PlayerKilled);
                 deathScreen.DisplayDeathScreen();
                 missionManager.Respawn();
                 float delay = missionManager.RESPAWN_DELAY;
-                Invoke("HideDeathScreen", delay);
+                Invoke("HideDeathScreen", delay);*/
                 return;
             }
             StartCoroutine(HideHitIndicatorImage(delayTimer, hitImage));
@@ -132,7 +132,5 @@ namespace Game
             healthText.text = currentHealth.ToString();
             deathScreen.HIdeDeathScreen();
         }
-
-        
     }
 }

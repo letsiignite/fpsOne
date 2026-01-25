@@ -105,6 +105,9 @@ namespace Enemy
 
         void Update()
         {
+            if(currentState == State.Dead)
+            { return; }
+
             if (GameManager.Instance.GetGameState() != GameState.Running)
             {
                 animator.SetBool("idle", true);
@@ -273,7 +276,7 @@ namespace Enemy
         {
             //  TODO: Here we must add projectile instantiation & raycast damage logic
             int index = randomInts.GetNext();
-            Debug.Log(" Shoot Index = " + index);
+            //Debug.Log(" Shoot Index = " + index);
             audioSource.Stop();
             audioSource.pitch = Random.Range(0.8f, 1.2f);
             audioSource.clip =shootAudio[index];

@@ -22,7 +22,7 @@ namespace Game
                 Shuffle();
                 index = 0;
             }
-            Debug.Log(" UniqueRandom Index = "+index);
+            
             return items[index++];
         }
 
