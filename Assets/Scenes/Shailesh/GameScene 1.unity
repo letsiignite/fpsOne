@@ -25749,6 +25749,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1247686646831002309, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247686646831002309, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: myDamageIndicator
       value: 
       objectReference: {fileID: 133265697}
@@ -25837,6 +25841,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 424103670}
     - target: {fileID: 6083341926698628830, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6083341926698628830, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: myDamageIndicator
       value: 
       objectReference: {fileID: 133265697}
@@ -25880,6 +25888,10 @@ PrefabInstance:
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
+    - target: {fileID: 7514842954243428228, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7514842954243428228, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: myDamageIndicator
       value: 
