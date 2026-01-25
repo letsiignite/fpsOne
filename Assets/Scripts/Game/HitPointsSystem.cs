@@ -74,6 +74,7 @@ namespace Game
             }
             if(currentHealth <= 0)
             {
+                deathScreen.isDead = true;
                 GameManager.Instance.SetGameState(GameState.PlayerKilled);
                 deathScreen.DisplayDeathScreen();
                 missionManager.Respawn();
@@ -131,5 +132,7 @@ namespace Game
             healthText.text = currentHealth.ToString();
             deathScreen.HIdeDeathScreen();
         }
+
+        
     }
 }
