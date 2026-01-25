@@ -154,7 +154,7 @@ public class SniperEnemy : MonoBehaviour
             Debug.Log(" Shot at = " + hit.collider.gameObject.name);
             if (hit.collider.gameObject.GetComponent<DamageReceiver>() != null)
             {
-                hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage);
+                hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position);
                 Debug.Log(" Calling - ReceiveRayHitDamage "+damage);
             }
         }
