@@ -37,6 +37,7 @@ namespace Enemy
                     hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, shootPoint.transform.position);
                     //Debug.Log(" Calling - ReceiveRayHitDamage "+damage);
                 }
+
                 StartCoroutine(SpawnBulletTrail(hit));
             }
         }

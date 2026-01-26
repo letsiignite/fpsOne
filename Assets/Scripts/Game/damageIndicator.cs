@@ -6,9 +6,10 @@ public class damageIndicator : MonoBehaviour
     public Vector3 DamageLocation;
     public Transform PlayerObject;
     public Transform DamageImagePivot;
+    public Image arrowImage;
 
     public CanvasGroup DamageImageCanvas;
-    public float FadeStartTime, FadeDuration;
+    public float  FadeDuration;
     float maxFadeTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,21 +17,40 @@ public class damageIndicator : MonoBehaviour
         maxFadeTime = FadeDuration;
     }
 
+    public void EnableArrow()
+    {
+        DamageImageCanvas.alpha = 1.0f;
+        FadeDuration = maxFadeTime;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (FadeStartTime > 0)
-            FadeStartTime -= Time.deltaTime;
-        else
-        {
-            FadeDuration -= Time.deltaTime;
-            DamageImageCanvas.alpha = FadeDuration / maxFadeTime;
-            if (FadeDuration <= 0)
-                Destroy(this.gameObject);
-        }
-        DamageLocation.y = PlayerObject.position.y;
-        Vector3 Direction = (DamageLocation - PlayerObject.position).normalized;
-        float angle = (Vector3.SignedAngle(Direction, PlayerObject.forward, Vector3.up));
+        if (!transform.GetChild(0).gameObject.activeInHierarchy)
+            return;
+
+        FadeDuration -= Time.deltaTime;
+        DamageImageCanvas.alpha = FadeDuration / maxFadeTime;
+        
+        if (FadeDuration <= 0)
+            transform.GetChild(0).gameObject.SetActive(false);
+
+        DamageLocation.y = 0;
+        Vector3 flatForwardForPlayer = PlayerObject.forward;
+        flatForwardForPlayer.y = 0;
+        flatForwardForPlayer.Normalize();
+
+        Vector3 flatForward =
+        Quaternion.Euler(0, PlayerObject.eulerAngles.y, 0) * Vector3.forward;
+
+        Vector3 dir = (DamageLocation - PlayerObject.position).normalized;
+       
+        dir.y = 0;
+        float angle = (Vector3.SignedAngle(flatForward, dir,  Vector3.up));
+        if(Vector3.Distance(DamageLocation, PlayerObject.position) > 3)
+        angle -= 180;
+        
         DamageImagePivot.localEulerAngles = new Vector3(0, 0, angle);
+
     }
 }
