@@ -45,7 +45,8 @@ namespace Game
         void damageIndicatorEnable()
         {
             myDamageIndicator.DamageLocation = damagePosition;
-            GameObject go = Instantiate(myDamageIndicator.gameObject, myDamageIndicator.transform.position, myDamageIndicator.transform.rotation, myDamageIndicator.transform.parent);
+            myDamageIndicator.EnableArrow();
+            GameObject go = myDamageIndicator.transform.GetChild(0).gameObject;
             Debug.Log(" Damage Indicator Enabled ");
             go.SetActive(true);
         }
