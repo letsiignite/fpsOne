@@ -110,6 +110,8 @@ namespace Enemy
 
             if (GameManager.Instance.GetGameState() != GameState.Running)
             {
+                Debug.Log("* * Game not running * *");
+                ResetAnimation();
                 animator.SetBool("idle", true);
                 return;
             }
@@ -182,7 +184,7 @@ namespace Enemy
         void CombatBehavior()
         {
             if (player == null) return;
-
+            Debug.Log(gameObject.name + " can see - "+ HasLineOfSight());
             if (!HasLineOfSight())
             {
                 currentState = State.Idle;
@@ -281,6 +283,7 @@ namespace Enemy
             audioSource.pitch = Random.Range(0.8f, 1.2f);
             audioSource.clip =shootAudio[index];
             audioSource.Play();
+            Debug.Log(gameObject.name + " Shooting ");
             enemyGun.Shoot(dir, shootCount[index]);
         }
 
@@ -314,7 +317,7 @@ namespace Enemy
             Debug.Log(" gunToDrop.transform.position = " + gunToDrop.transform.position);
             Debug.Log("enemyEyesPos.transform.position = " + enemyEyesPos.transform.position);
             Debug.Log("Enemy died!");
-            GameManager.Instance.SetGameState(GameState.PlayerKilled);
+            //GameManager.Instance.SetGameState(GameState.PlayerKilled);
             //Destroy(gameObject);
         }
 
