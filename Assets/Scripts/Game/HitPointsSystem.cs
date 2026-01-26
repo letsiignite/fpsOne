@@ -31,17 +31,25 @@ namespace Game
         private GameManager gameManager;
         [SerializeField]
         private MissionManager missionManager;
+        [SerializeField]
+        private DamageDirection damageDirection;
+        [SerializeField]
+        private DamageArcIndicator damageArcDirection;
 
         private const float firstHitDelay = 1;
         private const float SecondHitDelay = 1.5f;
         private const float ThirdHitDelay = 2;
         private const float fadeDuration = 0.5f;
 
+        
+
 
         private void Start()
         {
             currentHealth = totalHealth;
             healthText.text = currentHealth.ToString();
+            damageDirection = GetComponent<DamageDirection>();
+            damageArcDirection = GetComponent<DamageArcIndicator>();
         }
         public void ProcessDamage(float damageMultiplyer, float damage)
         {

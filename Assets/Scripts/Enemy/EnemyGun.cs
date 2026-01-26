@@ -18,6 +18,8 @@ namespace Enemy
         private GameObject bulletHitEffect;
         [SerializeField]
         private GameObject BulletTrailPrefab;
+        public GameObject Enemyflash1;
+        public GameObject Enemyflash2;
 
         private Vector3 dir;
         private float trailSpawnDelay = 0.3f;
@@ -27,6 +29,9 @@ namespace Enemy
             //Debug.Log(" Shooting ");
             this.dir = dir;
             RaycastHit hit;
+            Enemyflash1.SetActive(true);
+            Enemyflash2.SetActive(true);
+            StartCoroutine(DisableFlash());
             this.shootCount = shootCount;
             if (Physics.Raycast(shootPoint.transform.position, dir, out hit, range, layerMask))
             {
@@ -53,6 +58,14 @@ namespace Enemy
 
         }
 
+        private IEnumerator DisableFlash()
+        {
+            Debug.Log(" Disable Flash Called ");
+            yield return new WaitForSeconds(0.1f);
+            Enemyflash1.SetActive(false);
+            Enemyflash2.SetActive(false);
+        }
+
         void OnDrawGizmos()
         {
 
@@ -62,7 +75,8 @@ namespace Enemy
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-
+            Enemyflash1.SetActive(false);
+            Enemyflash2.SetActive(false);
         }
 
         // Update is called once per frame
