@@ -83,11 +83,11 @@ namespace Game
             }
             if(currentHealth <= 0)
             {
-                /*GameManager.Instance.SetGameState(GameState.PlayerKilled);
+                GameManager.Instance.SetGameState(GameState.PlayerKilled);
                 deathScreen.DisplayDeathScreen();
                 missionManager.Respawn();
                 float delay = missionManager.RESPAWN_DELAY;
-                Invoke("HideDeathScreen", delay);*/
+                Invoke("HideDeathScreen", delay);
                 return;
             }
             StartCoroutine(HideHitIndicatorImage(delayTimer, hitImage));
