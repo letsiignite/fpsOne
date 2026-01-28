@@ -47,6 +47,7 @@ public class damageIndicator : MonoBehaviour
        
         dir.y = 0;
         float angle = (Vector3.SignedAngle(flatForward, dir,  Vector3.up));
+
         if(Vector3.Distance(DamageLocation, PlayerObject.position) > 3)
         angle -= 180;
         

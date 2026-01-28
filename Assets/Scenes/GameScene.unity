@@ -7677,7 +7677,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 588235915000975308, guid: ec39a32f6ea4f344d82410b9fb384e91, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34.3
+      value: -23.2
       objectReference: {fileID: 0}
     - target: {fileID: 588235915000975308, guid: ec39a32f6ea4f344d82410b9fb384e91, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7685,7 +7685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 588235915000975308, guid: ec39a32f6ea4f344d82410b9fb384e91, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 484.93
+      value: 509.4
       objectReference: {fileID: 0}
     - target: {fileID: 588235915000975308, guid: ec39a32f6ea4f344d82410b9fb384e91, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8561,6 +8561,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307872265}
   m_Mesh: {fileID: 4300034, guid: 72c93e4f187cc614291429b3f1d40f35, type: 3}
+--- !u!114 &315155088 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7217380036912400880, guid: 5944fb998d4c6894993e6f3974db9afe, type: 3}
+  m_PrefabInstance: {fileID: 788803488}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1058d8d404ec8114a9d1b553c261efd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
 --- !u!1001 &316433556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14698,7 +14709,7 @@ MonoBehaviour:
   - {fileID: 895419476}
   - {fileID: 998338506}
   - {fileID: 1342218140}
-  - {fileID: 0}
+  - {fileID: 315155088}
   - {fileID: 52554888}
 --- !u!65 &533604281
 BoxCollider:
