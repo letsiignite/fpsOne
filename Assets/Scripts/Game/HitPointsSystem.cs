@@ -25,8 +25,7 @@ namespace Game
         private Image HitIndicatorImage;
         [SerializeField]
         private AudioSource audioSource;
-        [SerializeField]
-        private DeathScreen deathScreen;
+       
         [SerializeField]
         private GameManager gameManager;
         [SerializeField]
@@ -35,8 +34,11 @@ namespace Game
         private DamageDirection damageDirection;
         [SerializeField]
         private DamageArcIndicator damageArcDirection;
+        [SerializeField]
+        private MenuManager menuManager;
+        
 
-        private const float firstHitDelay = 1;
+       private const float firstHitDelay = 1;
         private const float SecondHitDelay = 1.5f;
         private const float ThirdHitDelay = 2;
         private const float fadeDuration = 0.5f;
@@ -84,10 +86,13 @@ namespace Game
             if(currentHealth <= 0)
             {
                 GameManager.Instance.SetGameState(GameState.PlayerKilled);
-                deathScreen.DisplayDeathScreen();
-                missionManager.Respawn();
-                float delay = missionManager.RESPAWN_DELAY;
-                Invoke("HideDeathScreen", delay);
+                menuManager.DisplayDeathScreen();
+
+                missionManager.DisablePlayerMovement();
+                
+                //missionManager.Respawn();
+                //float delay = missionManager.RESPAWN_DELAY;
+                //Invoke("HideDeathScreen", delay);
                 return;
             }
             StartCoroutine(HideHitIndicatorImage(delayTimer, hitImage));
@@ -134,11 +139,10 @@ namespace Game
             HitIndicatorImage.gameObject.SetActive(false);
         }
 
-        private void HideDeathScreen()
+        public void HandleLoadLastCheckpoint()
         {
             currentHealth = totalHealth;
             healthText.text = currentHealth.ToString();
-            deathScreen.HIdeDeathScreen();
         }
     }
 }

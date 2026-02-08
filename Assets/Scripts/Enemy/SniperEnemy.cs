@@ -1,16 +1,18 @@
 using Game;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SniperEnemy : MonoBehaviour
+public class SniperEnemy : MonoBehaviour, IDamageHandler
 {
     private enum State
     {
         Idle,
         Alert,
         Shooting,
-        MovingToCover
+        MovingToCover,
+        Dead
     }
 
     [Header("References")]
@@ -49,11 +51,20 @@ public class SniperEnemy : MonoBehaviour
 
     private UniqueRandom<Transform> randomCover;
     private Transform currentCover;
+    private Vector3 startPos;
+    public int maxHealth = 100;
+    private float currentHealth;
+    [SerializeField]
+    private List<GameObject> objectsToDisableOnDeath;
+    public GameObject enemyEyesPos;
+    [Tooltip("What type of gun this solder has")]
+    public DropGunType soldierType;
 
     void Start()
     {
         randomCover = new UniqueRandom<Transform>(coverPoints);
         animator = GetComponent<Animator>();
+        startPos = transform.position;
     }
 
     private void ResetAnimation()
@@ -61,6 +72,19 @@ public class SniperEnemy : MonoBehaviour
         animator.SetBool("run", false);
         animator.SetBool("idle", false);
         animator.SetBool("shoot", false);
+    }
+
+    public void Reset()
+    {
+        transform.position = startPos;
+        currentHealth = maxHealth;
+        currentState = State.Idle;
+       
+        foreach (GameObject g in objectsToDisableOnDeath)
+        {
+            g.SetActive(true);
+        }
+        GameManager.Instance.SetGameState(GameState.Running);
     }
 
     void Update()
@@ -236,4 +260,41 @@ public class SniperEnemy : MonoBehaviour
         }
     }
 
+    public void ProcessDamage(float damageMultiplyer, float damage)
+    {
+        Debug.Log($" In Enemy Ai damageMultiplyer = {damageMultiplyer} | damage = {damage}");
+        float totalDamage = damageMultiplyer * damage;
+        TakeDamage(totalDamage);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+
+        ResetAnimation();
+        animator.SetBool("dead", true);
+        currentState = State.Dead;
+        GameObject gunToDrop = GameManager.Instance.GetGunPrefabToDrop(soldierType);
+
+        foreach (GameObject g in objectsToDisableOnDeath)
+        {
+            g.SetActive(false);
+        }
+
+        gunToDrop.transform.position = enemyEyesPos.transform.position + new Vector3(0, 2, 0);
+        Debug.Log(" gunToDrop.transform.position = " + gunToDrop.transform.position);
+        Debug.Log("enemyEyesPos.transform.position = " + enemyEyesPos.transform.position);
+        Debug.Log("Enemy died!");
+        //GameManager.Instance.SetGameState(GameState.PlayerKilled);
+        //Destroy(gameObject);
+    }
 }

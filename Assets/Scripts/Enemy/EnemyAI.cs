@@ -184,7 +184,7 @@ namespace Enemy
         void CombatBehavior()
         {
             if (player == null) return;
-            Debug.Log(gameObject.name + " can see - "+ HasLineOfSight());
+            //Debug.Log(gameObject.name + " can see - "+ HasLineOfSight());
             if (!HasLineOfSight())
             {
                 currentState = State.Idle;
@@ -290,7 +290,7 @@ namespace Enemy
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
-            if ((currentHealth < maxHealth / 2) && !inCover)
+            if ((currentHealth < maxHealth / 2) && !inCover && currentState != State.Dead)
             {
                 currentState = State.TakingCover;
             }
@@ -312,7 +312,7 @@ namespace Enemy
             {
                 g.SetActive(false);
             }
-
+            agent.isStopped = true;    
             gunToDrop.transform.position = enemyEyesPos.transform.position + new Vector3(0,2,0);
             Debug.Log(" gunToDrop.transform.position = " + gunToDrop.transform.position);
             Debug.Log("enemyEyesPos.transform.position = " + enemyEyesPos.transform.position);

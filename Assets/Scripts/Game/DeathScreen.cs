@@ -36,16 +36,19 @@ public class DeathScreen : MonoBehaviour
         yield return new WaitForSeconds(2);
         deathScreen.SetActive(true);
     }
+
     public void DisplayDeathScreen()
     {
         deathScreen.SetActive(true);
         StartCoroutine(HideHitIndicatorImage());
     }
+
     public void Restart()
     {
         SceneManager.LoadScene(0);
     }
-    public void HIdeDeathScreen()
+
+    public void HideDeathScreen()
     {
         deathScreen.SetActive(false);
     }
