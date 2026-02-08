@@ -16,6 +16,8 @@ namespace mission
         private string checkpointInfo;
         [SerializeField]
         private List<EnemyAI> enemySoldiers;
+        [SerializeField]
+        private List<SniperEnemy> enemySnipers;
 
         private bool checkpointInfoProvided = false;
 
@@ -56,6 +58,14 @@ namespace mission
                 a.gameObject.SetActive(true);
                 a.Reset();
             }
+
+            foreach (var a in enemySnipers)
+            {
+                a.gameObject.SetActive(true);
+                a.Reset();
+            }
+
+            this.gameObject.SetActive(true);
         }
 
         private void Start()

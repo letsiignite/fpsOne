@@ -130,6 +130,16 @@ public class Gun_Controller : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.GetGameState() != GameState.Running)
+        {
+            HideIcons();
+            return;
+        }
+        else
+        { 
+            DisplayIcons();
+        }
+
 
         if (HasAlternateFireMode && !IsShotgun)
         {
@@ -1321,7 +1331,23 @@ public class Gun_Controller : MonoBehaviour
         hole.SetActive(false);
     }
 
+    public void HideIcons()
+    {
+        Crosshair.SetActive(false);
+        AmmoIcon1.SetActive(false);
+        AmmoIcon2.SetActive(false);
+        Collimator.SetActive(false);
+        GrenadeSlot.SetActive(false);
+    }
 
+    public void DisplayIcons()
+    {
+        Crosshair.SetActive(false);
+        AmmoIcon1.SetActive(false);
+        AmmoIcon2.SetActive(false);
+        Collimator.SetActive(false);
+        GrenadeSlot.SetActive(false);
+    }
 
 
     public void Deactivation()

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 public enum GameState { MissionIntro, Running, Pause, PlayerKilled }
-public enum DropGunType { Assault };
+public enum DropGunType { Assault, Sniper };
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     [SerializeField]
     private GameObject AssaultGun;
+    [SerializeField]
+    private GameObject SniperGun;
 
     private void Awake()
     {
@@ -43,7 +45,10 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Providing gun");
                 return Instantiate(AssaultGun);
                 break;
-            
+            case DropGunType.Sniper:
+                Debug.Log("Providing Sniper gun");
+                return Instantiate(SniperGun);
+
             default:return null;
                 break;
         }

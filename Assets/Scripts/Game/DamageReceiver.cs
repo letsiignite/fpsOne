@@ -21,7 +21,6 @@ namespace Game
         {
             damageHandler = damageHandlerObject.GetComponent<IDamageHandler>();
             enemyGun = FindFirstObjectByType<EnemyGun>();
-            damagePosition = enemyGun.transform.position;
         }
         private void OnTriggerEnter(Collider other)
         {

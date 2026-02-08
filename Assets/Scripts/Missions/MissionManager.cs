@@ -25,7 +25,7 @@ namespace mission
         [SerializeField]
         private GameObject[] missionIntroObject;
 
-        public float RESPAWN_DELAY = 3;  
+        public float RESPAWN_DELAY = 0;  
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -43,9 +43,9 @@ namespace mission
             GameManager.Instance.player.transform.position = PlayerSpawnPosForMission[missionIndex].transform.position;
             playerController = GameManager.Instance.player.GetComponent<PlayerController>();
             playerController.DisableMovement();
-            bgAudioSource.Stop();
+            /*bgAudioSource.Stop();
             bgAudioSource.clip = introData[missionIndex].bgMusic;
-            bgAudioSource.Play();
+            bgAudioSource.Play();*/
             missionIntroObject[missionIndex].SetActive(true);
             GameManager.Instance.SetGameState(GameState.MissionIntro);
             DialogText.text = "...";
@@ -80,9 +80,13 @@ namespace mission
         
         }
 
-        public void Respawn()
+        public void DisablePlayerMovement()
         {
             playerController.DisableMovement();
+        }
+
+        public void Respawn()
+        {
             StartCoroutine(ProcessRespawn(RESPAWN_DELAY));
         }
 

@@ -1,3 +1,5 @@
+using Game;
+using mission;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +10,14 @@ public class MenuManager : MonoBehaviour
     private AudioClip buttonClickAudio;
     [SerializeField]
     private AudioSource audioSource;
+    [SerializeField]
+    private MissionManager missionManager;
+    [SerializeField]
+    private DeathScreen deathScreen;
+    [SerializeField]
+    private GameObject onDeathMenu;
+    [SerializeField]
+    private HitPointsSystem hitPointsSystem;
 
     private string GAME_SCENE_NAME = "GameScene";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,7 +35,7 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         PlayClickSound();
-        Invoke("LoadGameScene", 1);
+        Invoke("LoadGameScene", 0.3f);
     }
     private void LoadGameScene()
     {
@@ -35,7 +45,7 @@ public class MenuManager : MonoBehaviour
     public void ExitGame()
     {
         PlayClickSound();
-        Invoke("LoadGameScene", 1);
+        Invoke("CloseGame", 0.3f);
     }
 
     private void CloseGame()
@@ -48,5 +58,25 @@ public class MenuManager : MonoBehaviour
         audioSource.Stop();
         audioSource.clip = buttonClickAudio;
         audioSource.Play();
+    }
+
+    public void DisplayDeathScreen()
+    {
+        onDeathMenu.SetActive(true);
+        deathScreen.DisplayDeathScreen();
+    }
+
+    public void LoadLastCheckpoint()
+    {
+        PlayClickSound();
+        Invoke("LoadCheckpoint", 0.3f);
+    }
+
+    private void LoadCheckpoint()
+    {
+        onDeathMenu.SetActive(false);
+        hitPointsSystem.HandleLoadLastCheckpoint();
+        deathScreen.HideDeathScreen();
+        missionManager.Respawn();
     }
 }
