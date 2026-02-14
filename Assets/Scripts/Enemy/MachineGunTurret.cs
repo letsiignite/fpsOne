@@ -83,7 +83,7 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler
     {
         Vector3 direction = (player.position - gunHead.position).normalized;
         Quaternion targetRot = Quaternion.LookRotation(direction);
-        Debug.Log("Rotating to player");
+        //Debug.Log("Rotating to player");
         gunHead.rotation = Quaternion.Slerp(gunHead.rotation, targetRot, rotationSpeed * Time.deltaTime);
     }
 
@@ -113,19 +113,24 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler
 
     private void ShootFireRay()
     {
-        if (isDestroyed) return;
+        if (isDestroyed || GameManager.Instance.GetGameState() != GameState.Running)
+            return;
+
+
         Debug.Log("Shooting");
         Vector3 direction = firePoint.forward;
 
         if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, rayDistance))
         {
+            Debug.Log(" Hitting "+ hit.collider.tag);
             // If the ray hits the player, apply damage
             if (hit.collider.CompareTag(playerTag))
             {
 
-                if (hit.transform.GetComponent<DamageReceiver>())
+                if (hit.collider.gameObject.GetComponent<DamageReceiver>())
                 {
-                    hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position);
+                    Debug.Log(" Set damage " +damage);
+                    hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position);
 
                 }
             }
@@ -136,7 +141,7 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler
         else
         {
             // Draw ray to full distance when missing
-            Debug.DrawLine(firePoint.position, firePoint.position + direction * rayDistance, Color.red, 0.1f);
+            Debug.DrawLine(firePoint.position, firePoint.position + direction * rayDistance, Color.black, 0.1f);
         }
     }
 
@@ -171,6 +176,7 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler
     {
         Gizmos.color = Color.aquamarine;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+        Gizmos.color = Color.black;
         Gizmos.DrawRay(transform.position, transform.forward * detectionRange);
     }
 }
