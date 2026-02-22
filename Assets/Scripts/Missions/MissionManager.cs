@@ -24,8 +24,10 @@ namespace mission
         private CheckpointSystem checkpointSystem;
         [SerializeField]
         private GameObject[] missionIntroObject;
+        [SerializeField]
+        private MenuManager menuManager;
 
-        public float RESPAWN_DELAY = 0;  
+       public float RESPAWN_DELAY = 0;  
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -94,8 +96,11 @@ namespace mission
         { 
             yield return new WaitForSeconds(delay);
             GameManager.Instance.player.transform.position = checkpointSystem.GetLastCheckpointPos();
+            Debug.Log(" Plr Pos = " + GameManager.Instance.player.transform.position+" | Chk Pos = "+ checkpointSystem.GetLastCheckpointPos());
             checkpointSystem.Respawn();
             playerController.EnableMovement();
+            menuManager.HideMissionMenus();
+            GameManager.Instance.SetGameState(GameState.Running);
         }
     }
 }

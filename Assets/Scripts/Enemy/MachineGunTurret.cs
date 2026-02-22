@@ -117,12 +117,12 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler
             return;
 
 
-        Debug.Log("Shooting");
+        //Debug.Log("Shooting");
         Vector3 direction = firePoint.forward;
 
         if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, rayDistance))
         {
-            Debug.Log(" Hitting "+ hit.collider.tag);
+            //Debug.Log(" Hitting "+ hit.collider.tag);
             // If the ray hits the player, apply damage
             if (hit.collider.CompareTag(playerTag))
             {

@@ -74,9 +74,15 @@ public class MenuManager : MonoBehaviour
 
     private void LoadCheckpoint()
     {
-        onDeathMenu.SetActive(false);
+        
         hitPointsSystem.HandleLoadLastCheckpoint();
-        deathScreen.HideDeathScreen();
+        
         missionManager.Respawn();
+    }
+
+    public void HideMissionMenus()
+    {
+        onDeathMenu.SetActive(false);
+        deathScreen.HideDeathScreen();
     }
 }
