@@ -64,14 +64,29 @@ namespace Enemy
         public void Reset()
         {
             transform.position = startPos;
+            agent.ResetPath();
+            agent.Warp(startPos);
+            agent.isStopped = false;
+            if ( !agent.isOnNavMesh )
+            {
+                Debug.Log(" Not on NAV Mesh ");
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(transform.position, out hit, 2f, NavMesh.AllAreas))
+                {
+                    agent.Warp(hit.position);
+                }
+            }
+
             currentHealth = maxHealth;
             currentState = State.MovingToPoint;
+            detectedPlayer = false;
+            ResetAnimation();
             agent.SetDestination(endPoint.position);
             foreach (GameObject g in objectsToDisableOnDeath)
             {
                 g.SetActive(true);
             }
-            GameManager.Instance.SetGameState(GameState.Running);
+            
         }
 
         private void OnTriggerEnter(Collider other)
@@ -110,7 +125,7 @@ namespace Enemy
 
             if (GameManager.Instance.GetGameState() != GameState.Running)
             {
-                Debug.Log("* * Game not running * *");
+                //Debug.Log("* * Game not running * *");
                 ResetAnimation();
                 animator.SetBool("idle", true);
                 return;

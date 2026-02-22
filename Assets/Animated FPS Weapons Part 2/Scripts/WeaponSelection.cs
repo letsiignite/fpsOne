@@ -1,8 +1,11 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public struct GunDetails {
@@ -27,8 +30,10 @@ public class WeaponSelection : MonoBehaviour
 	private int currentGunIndex;
 	private int pickupGunIndex = 0;
 	private GameObject droppedGun;
-
-	private void Start()
+	private Gun_Controller currentGun;
+	private int MAX_AMMO_TO_ADD = 15;
+    private int MIN_AMMO_TO_ADD = 5;
+    private void Start()
 	{
         GunsInHandIndex = new List<int>();
 		GunsInHandIndex.Add(1);
@@ -40,11 +45,19 @@ public class WeaponSelection : MonoBehaviour
 
 	public void ShowPickupOption(int index, GameObject droppedGun)
 	{
+        if (GunsInHandIndex.Contains(index))
+        {
+			droppedGun.SetActive(false);
+			AddAmmo(index);
+			return;
+        }
+
         GunIcon.sprite = gunDetails[index].gunImage;
         GunNameForPickupPopup.text = gunDetails[index].gunName;
         GunPickupOptionPopup.SetActive(true);
 		pickupGunIndex = index;
 		this.droppedGun = droppedGun;
+		
     }
 
 	public void HidePickupOption()
@@ -204,9 +217,28 @@ public class WeaponSelection : MonoBehaviour
 			{
 				Debug.Log(" Selected index = " + i);
 				weapon.gameObject.SetActive(true);
-			}
+				currentGun = weapon.GetComponent<Gun_Controller>();
+
+            }
 			else
 				weapon.GetComponent<Gun_Controller>().Deactivation();
+			i++;
+		}
+	}
+
+	private void AddAmmo(int index)
+	{
+		int i = 0;
+		foreach (Transform weapon in transform)
+		{
+			if (i == index)
+			{
+				int _count = Random.Range(MIN_AMMO_TO_ADD, MAX_AMMO_TO_ADD);
+
+                Debug.Log(" +++++ Picked up AMMO = "+_count);
+                weapon.GetComponent<Gun_Controller>().AddAmmoFromDroppedGun(_count);
+
+            }
 			i++;
 		}
 	}

@@ -84,7 +84,7 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler
         {
             g.SetActive(true);
         }
-        GameManager.Instance.SetGameState(GameState.Running);
+       
     }
 
     void Update()
@@ -130,8 +130,8 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler
     void HandleAlert()
     {
         LookAtPlayer();
-        Debug.Log(" CanSeePlayer() = " + CanSeePlayer()+ 
-            " | Time.time > lastFireTime + fireCooldown = "+(Time.time > lastFireTime + fireCooldown));
+        //Debug.Log(" CanSeePlayer() = " + CanSeePlayer()+ 
+         //   " | Time.time > lastFireTime + fireCooldown = "+(Time.time > lastFireTime + fireCooldown));
         if (CanSeePlayer() && Time.time > lastFireTime + fireCooldown)
         {
             currentState = State.Shooting;

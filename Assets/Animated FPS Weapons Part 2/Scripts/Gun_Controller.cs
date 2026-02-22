@@ -128,6 +128,13 @@ public class Gun_Controller : MonoBehaviour
         //recoilScript = transform.Find("UpdatedPlayer/CameraHolder/Camera").GetComponent<Recoil>();
     }
 
+    public void AddAmmoFromDroppedGun(int count)
+    {
+       
+        AmmoReserve += count;
+        Debug.Log(" +++++ Adding Ammo = " + count+" | Total = "+ AmmoReserve);
+    }
+
     private void Update()
     {
         if (GameManager.Instance.GetGameState() != GameState.Running)
