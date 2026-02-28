@@ -11,6 +11,7 @@ public class damageIndicator : MonoBehaviour
     public CanvasGroup DamageImageCanvas;
     public float  FadeDuration;
     float maxFadeTime;
+    public GameObject HitIndicatorObject;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,6 +40,7 @@ public class damageIndicator : MonoBehaviour
         Vector3 flatForwardForPlayer = PlayerObject.forward;
         flatForwardForPlayer.y = 0;
         flatForwardForPlayer.Normalize();
+        HitIndicatorObject.transform.LookAt(DamageLocation);
 
         Vector3 flatForward =
         Quaternion.Euler(0, PlayerObject.eulerAngles.y, 0) * Vector3.forward;
@@ -48,10 +50,11 @@ public class damageIndicator : MonoBehaviour
         dir.y = 0;
         float angle = (Vector3.SignedAngle(flatForward, dir,  Vector3.up));
 
-        if(Vector3.Distance(DamageLocation, PlayerObject.position) > 3)
-        angle -= 180;
-        
-        DamageImagePivot.localEulerAngles = new Vector3(0, 0, angle);
+        /*Alternative implementation
+         * if(Vector3.Distance(DamageLocation, PlayerObject.position) > 3)
+        angle -= 180;*/
+        //DamageImagePivot.localEulerAngles = new Vector3(0, 0, angle);
 
+        DamageImagePivot.localRotation = Quaternion.Euler(0, 0, -angle);
     }
 }
