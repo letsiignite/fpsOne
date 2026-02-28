@@ -34,6 +34,7 @@ namespace Game
         public void ReceiveRayHitDamage(float damage, Vector3 damagePosition)
         {
             //Debug.Log(  "  ReceiveRayHitDamage");
+            this.damagePosition = damagePosition;
             damageHandler.ProcessDamage(damageMultiplyer,damage);
             if (isPlayer)
             {
@@ -49,10 +50,15 @@ namespace Game
             Debug.Log(" Damage Indicator Enabled ");
             go.SetActive(true);
         }
-        public void ReceiveGrenadeDamage(float damage)
+        public void ReceiveGrenadeDamage(float damage, Vector3 pos)
         {
             //Debug.Log("  Grenade Damage on = "+gameObject.name);
             damageHandler.ProcessDamage(damageMultiplyer, damage); // damageMultiplyer is handeled in grenade script.
+            this.damagePosition = pos;
+            if (isPlayer)
+            {
+                damageIndicatorEnable();
+            }
         }
     } 
 }

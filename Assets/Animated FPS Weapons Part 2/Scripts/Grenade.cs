@@ -102,7 +102,7 @@ public class Grenade : MonoBehaviour
             var damageable = col.GetComponentInParent<DamageReceiver>();
 			if (damageable != null)
 			{
-				damageable.ReceiveGrenadeDamage(damage);
+				damageable.ReceiveGrenadeDamage(damage, this.transform.position);
 			}
 
 			// Apply physics force if there's a rigidbody attached (could be null)

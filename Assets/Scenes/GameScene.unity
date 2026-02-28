@@ -31616,6 +31616,10 @@ PrefabInstance:
       propertyPath: myDamageIndicator
       value: 
       objectReference: {fileID: 1932839438}
+    - target: {fileID: 1623047647020557253, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1674997808687776441, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: impactPool
       value: 
@@ -31656,6 +31660,18 @@ PrefabInstance:
       propertyPath: bulletHoleConcretePool
       value: 
       objectReference: {fileID: 424103670}
+    - target: {fileID: 1974245880828354374, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974245880828354374, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974245880828354374, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2019928478359757691, guid: d678373b8c92fd34e90c27a790ee9a49, type: 3}
       propertyPath: GunIcon
       value: 
@@ -63157,6 +63173,7 @@ MonoBehaviour:
   arrowImage: {fileID: 121359335}
   DamageImageCanvas: {fileID: 1932839439}
   FadeDuration: 1.5
+  HitIndicatorObject: {fileID: 0}
 --- !u!225 &1932839439
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -63176,14 +63193,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932839437}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: -0, z: 0.8788172, w: -0.47715867}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.38073, y: 0.38073, z: 0.38073}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 121359334}
   m_Father: {fileID: 1015834978}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 237}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
