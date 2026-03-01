@@ -81,7 +81,7 @@ public class Grenade : MonoBehaviour
 			Vector3 targetPoint = col.bounds.center;
 			Vector3 dir = targetPoint - explosionPosition;
 			float dist = dir.magnitude;
-			if (dist <= 0f) dist = 0.001f; // avoid divide by zero
+			if (dist <= 0f) dist = 0.001f; // avoid divide by zero, Heppens some times.
 
 			// Check for occlusion: if any obstacle between explosionPosition and targetPoint, skip damage.
 			// We cast a ray towards the target and test only against obstacleLayerMask.
