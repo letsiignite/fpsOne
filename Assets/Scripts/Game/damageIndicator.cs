@@ -40,7 +40,6 @@ public class damageIndicator : MonoBehaviour
         Vector3 flatForwardForPlayer = PlayerObject.forward;
         flatForwardForPlayer.y = 0;
         flatForwardForPlayer.Normalize();
-        HitIndicatorObject.transform.LookAt(DamageLocation);
 
         Vector3 flatForward =
         Quaternion.Euler(0, PlayerObject.eulerAngles.y, 0) * Vector3.forward;
