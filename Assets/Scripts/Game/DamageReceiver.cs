@@ -16,6 +16,8 @@ namespace Game
         public Vector3 damagePosition;
         public damageIndicator myDamageIndicator;
         private EnemyGun enemyGun;
+        private bool isSniperHit = false;
+        private float totalDamageRecived = 0;
 
         private void Start()
         {
@@ -24,6 +26,12 @@ namespace Game
         }
         private void OnTriggerEnter(Collider other)
         {
+            if (isSniperHit && other.gameObject.GetComponent<SniperBullet>() != null)
+            {
+                isSniperHit = false;
+                damageHandler.ProcessDamage(damageMultiplyer, totalDamageRecived);
+                return;
+            }
             damagePosition = other.transform.position;
             if (other.gameObject.GetComponent<Bullet>() != null)
             {
@@ -31,9 +39,15 @@ namespace Game
             }
         }
 
-        public void ReceiveRayHitDamage(float damage, Vector3 damagePosition)
+        public void ReceiveRayHitDamage(float damage, Vector3 damagePosition, bool isSniper = false)
         {
             //Debug.Log(  "  ReceiveRayHitDamage");
+            if (isSniper)
+            { 
+                totalDamageRecived = damage;
+                isSniperHit = true;
+                return;
+            }
             this.damagePosition = damagePosition;
             damageHandler.ProcessDamage(damageMultiplyer,damage);
             if (isPlayer)

@@ -62,7 +62,7 @@ namespace Game
                 armor = armor - totalDamage;
                 totalDamage = (armor < 0)? (armor + totalDamage): 0 ;
             }
-            //currentHealth -= totalDamage;
+            currentHealth -= totalDamage;
             healthText.text = currentHealth.ToString();
             Sprite hitImage = null;
             float delayTimer = 0;

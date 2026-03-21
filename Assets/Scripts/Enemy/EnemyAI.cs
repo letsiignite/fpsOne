@@ -6,7 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.Audio;
 namespace Enemy
 {
-    public class EnemyAI : MonoBehaviour, IDamageHandler
+    public class EnemyAI : MonoBehaviour, IDamageHandler, IEnemySolder
     {
         public Transform startPoint;
         public Transform endPoint;
@@ -80,13 +80,17 @@ namespace Enemy
             currentHealth = maxHealth;
             currentState = State.MovingToPoint;
             detectedPlayer = false;
+
             ResetAnimation();
+
+            animator.SetBool("idle", true);
+            animator.Update(0f);
             agent.SetDestination(endPoint.position);
             foreach (GameObject g in objectsToDisableOnDeath)
             {
                 g.SetActive(true);
             }
-            
+            gameObject.SetActive(true);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -177,6 +181,7 @@ namespace Enemy
             animator.SetBool("run", false);
             animator.SetBool("idle", false);
             animator.SetBool("shoot", false);
+            animator.SetBool("dead", false);
         }
        
         void DetectPlayer()
@@ -298,7 +303,7 @@ namespace Enemy
             audioSource.pitch = Random.Range(0.8f, 1.2f);
             audioSource.clip =shootAudio[index];
             audioSource.Play();
-            Debug.Log(gameObject.name + " Shooting ");
+            //Debug.Log(gameObject.name + " Shooting ");
             enemyGun.Shoot(dir, shootCount[index]);
         }
 

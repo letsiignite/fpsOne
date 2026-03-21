@@ -61,7 +61,7 @@ namespace Enemy
 
         private IEnumerator DisableFlash()
         {
-            Debug.Log(" Disable Flash Called ");
+            //Debug.Log(" Disable Flash Called ");
             yield return new WaitForSeconds(0.1f);
             Enemyflash1.SetActive(false);
             Enemyflash2.SetActive(false);
