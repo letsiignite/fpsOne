@@ -1,7 +1,8 @@
-﻿using Game;
+﻿using Enemy;
+using Game;
 using UnityEngine;
 
-public class MachineGunTurret : MonoBehaviour, IDamageHandler
+public class MachineGunTurret : MonoBehaviour, IDamageHandler, IEnemySolder
 {
     [Header("Health Settings")]
     public float maxHealth = 100f;
@@ -44,6 +45,13 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler
             GameObject p = GameObject.FindGameObjectWithTag(playerTag);
             if (p) player = p.transform;
         }
+    }
+
+    public void Reset()
+    {
+        currentHealth = maxHealth;
+        isDestroyed = false;
+        OnDestroyVfx.SetActive(false);
     }
 
     void Update()

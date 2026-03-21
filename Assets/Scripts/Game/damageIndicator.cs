@@ -49,11 +49,6 @@ public class damageIndicator : MonoBehaviour
         dir.y = 0;
         float angle = (Vector3.SignedAngle(flatForward, dir,  Vector3.up));
 
-        /*Alternative implementation
-         * if(Vector3.Distance(DamageLocation, PlayerObject.position) > 3)
-        angle -= 180;*/
-        //DamageImagePivot.localEulerAngles = new Vector3(0, 0, angle);
-
         DamageImagePivot.localRotation = Quaternion.Euler(0, 0, -angle);
     }
 }

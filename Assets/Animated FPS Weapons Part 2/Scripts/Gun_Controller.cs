@@ -6,7 +6,8 @@ using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public class Gun_Controller : MonoBehaviour
 {
-
+    [SerializeField]
+    private bool isSniper;
     [SerializeField] private Animator animator;
     private bool Idle = false;
     private bool Move = false;
@@ -108,7 +109,12 @@ public class Gun_Controller : MonoBehaviour
     [SerializeField] private AudioSource Throw;
     [SerializeField] LayerMask ignoredLayers;
     // Limit so it doesn’t go too far
-
+    private void OnEnable()
+    {
+        Debug.Log(" Register "+gameObject.name);
+        GameManager.Instance.AddOnGameRunningCallbacks(DisplayIcons);
+        GameManager.Instance.AddOnPlayerDeathCallbacks(HideIcons);
+    }
     private void Start()
     {
         transform.Rotate(0, -180, 0);
@@ -133,6 +139,7 @@ public class Gun_Controller : MonoBehaviour
        
         AmmoReserve += count;
         Debug.Log(" +++++ Adding Ammo = " + count+" | Total = "+ AmmoReserve);
+        AddAmmo();
     }
 
     private void Update()
@@ -141,11 +148,11 @@ public class Gun_Controller : MonoBehaviour
         {
             HideIcons();
             return;
-        }
+        }/*
         else
         { 
             DisplayIcons();
-        }
+        }*/
 
 
         if (HasAlternateFireMode && !IsShotgun)
@@ -653,6 +660,7 @@ public class Gun_Controller : MonoBehaviour
         }
         if (Move)
         {
+           
             animator.SetBool("Move", true);
             animator.SetBool("Idle", false);
             animator.SetBool("AlternateTo", false);
@@ -956,6 +964,8 @@ public class Gun_Controller : MonoBehaviour
             clip = AmmoQuantity;
             AmmoReserve -= shotsFired;
         }
+
+        isEmpty = (AmmoReserve > 0 || clip > 0) ? false : true;
     }
     private void AddShotgunAmmo()
     {
@@ -1199,10 +1209,12 @@ public class Gun_Controller : MonoBehaviour
     }
     private void ShowCollimator()
     {
+        Debug.Log("ShowCollimator");
         Collimator.SetActive(true);
     }
     private void HideCollimator()
     {
+        Debug.Log("HideCollimator");
         Collimator.SetActive(false);
     }
     private void PlayReloadLoop()
@@ -1281,8 +1293,17 @@ public class Gun_Controller : MonoBehaviour
             //Debug.Log(" YOU HIT TAG " + colObject.tag);
             if (hit.transform.GetComponent<DamageReceiver>())
             {
-                hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position);
 
+                if (isSniper)
+                {
+                    hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position, true);
+                    GetComponent<SniperGun>().Shoot(colObject.transform.position);
+                    Debug.Log(" ** isSniper || Shoot done - "+ colObject.name);
+                }
+                else
+                {
+                    hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position);
+                }
             }
 
             if (hit.rigidbody != null)
@@ -1290,39 +1311,43 @@ public class Gun_Controller : MonoBehaviour
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
 
-            GameObject impactObject = impactPool.GetObject(hit.point, hit.normal);
-            if (colObject.CompareTag("Metal"))
+            if (!isSniper)
             {
-                GameObject holeObject = bulletHoleMetalPool.GetObject(hit.point, hit.normal);
-                StartCoroutine(DeactivateHole(holeObject));
 
-            }
-            else if (colObject.CompareTag("Wood"))
-            {
-                GameObject holeObject = bulletHoleWoodPool.GetObject(hit.point, hit.normal);
-                StartCoroutine(DeactivateHole(holeObject));
-            }
-            else if (colObject.CompareTag("Concrete"))
-            {
-                GameObject holeObject = bulletHoleConcretePool.GetObject(hit.point, hit.normal);
-                StartCoroutine(DeactivateHole(holeObject));
-            }
-            else if (colObject.CompareTag("Flesh"))
-            {
-                GameObject holeObject = bulletHoleFleshPool.GetObject(hit.point, hit.normal);
-                StartCoroutine(DeactivateHole(holeObject));
-            }
-            else
-            {
-                GameObject holeObject = Instantiate(bulletHoleConcretePool.GetObject(hit.point, hit.normal), hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
-                //GameObject holeObject = bulletHolePool.GetObject();
+                GameObject impactObject = impactPool.GetObject(hit.point, hit.normal);
+                if (colObject.CompareTag("Metal"))
+                {
+                    GameObject holeObject = bulletHoleMetalPool.GetObject(hit.point, hit.normal);
+                    StartCoroutine(DeactivateHole(holeObject));
 
-                Debug.Log("YOU HIT " + colObject.tag);
+                }
+                else if (colObject.CompareTag("Wood"))
+                {
+                    GameObject holeObject = bulletHoleWoodPool.GetObject(hit.point, hit.normal);
+                    StartCoroutine(DeactivateHole(holeObject));
+                }
+                else if (colObject.CompareTag("Concrete"))
+                {
+                    GameObject holeObject = bulletHoleConcretePool.GetObject(hit.point, hit.normal);
+                    StartCoroutine(DeactivateHole(holeObject));
+                }
+                else if (colObject.CompareTag("Flesh"))
+                {
+                    GameObject holeObject = bulletHoleFleshPool.GetObject(hit.point, hit.normal);
+                    StartCoroutine(DeactivateHole(holeObject));
+                }
+                else
+                {
+                    GameObject holeObject = Instantiate(bulletHoleConcretePool.GetObject(hit.point, hit.normal), hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                    //GameObject holeObject = bulletHolePool.GetObject();
 
-                holeObject.transform.SetParent(colObject.transform);
-                StartCoroutine(DeactivateHole(holeObject));
+                    Debug.Log("YOU HIT " + colObject.tag);
+
+                    holeObject.transform.SetParent(colObject.transform);
+                    StartCoroutine(DeactivateHole(holeObject));
+                }
+                StartCoroutine(DeactivateHole(impactObject));
             }
-            StartCoroutine(DeactivateHole(impactObject));
             if (canShake && hit.distance < 25)
             {
                 shakePower = 1.5f - (0.04f * hit.distance);
@@ -1340,6 +1365,7 @@ public class Gun_Controller : MonoBehaviour
 
     public void HideIcons()
     {
+        Debug.Log("HideIcons for "+gameObject.name);
         Crosshair.SetActive(false);
         AmmoIcon1.SetActive(false);
         AmmoIcon2.SetActive(false);
@@ -1349,11 +1375,12 @@ public class Gun_Controller : MonoBehaviour
 
     public void DisplayIcons()
     {
-        Crosshair.SetActive(false);
-        AmmoIcon1.SetActive(false);
-        AmmoIcon2.SetActive(false);
-        Collimator.SetActive(false);
-        GrenadeSlot.SetActive(false);
+        Debug.Log("DisplayIcons");
+        Crosshair.SetActive(true);
+        AmmoIcon1.SetActive(true);
+        AmmoIcon2.SetActive(true);
+        //Collimator.SetActive(true);
+        GrenadeSlot.SetActive(true);
     }
 
 

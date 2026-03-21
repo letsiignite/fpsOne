@@ -15,9 +15,8 @@ namespace mission
         [SerializeField]
         private string checkpointInfo;
         [SerializeField]
-        private List<EnemyAI> enemySoldiers;
-        [SerializeField]
-        private List<SniperEnemy> enemySnipers;
+        private List<GameObject> enemySoldiers;
+       
 
         private bool checkpointInfoProvided = false;
 
@@ -31,10 +30,7 @@ namespace mission
             return checkpointInfo;
         }
 
-        public List<EnemyAI> GetEnemyList()
-        {
-            return enemySoldiers;
-        }
+       
         private void OnTriggerEnter(Collider other)
         {
             if(other.tag == "Player" && !checkpointInfoProvided)
@@ -55,14 +51,7 @@ namespace mission
         {
             foreach (var a in enemySoldiers)
             {
-                a.gameObject.SetActive(true);
-                a.Reset();
-            }
-
-            foreach (var a in enemySnipers)
-            {
-                a.gameObject.SetActive(true);
-                a.Reset();
+                a.GetComponent<IEnemySolder>().Reset();
             }
 
             this.gameObject.SetActive(true);

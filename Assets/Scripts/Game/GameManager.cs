@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 public enum GameState { MissionIntro, Running, Pause, PlayerKilled }
@@ -13,6 +15,8 @@ public class GameManager : MonoBehaviour
     private GameObject AssaultGun;
     [SerializeField]
     private GameObject SniperGun;
+    private List<Action> onPlayerDeathCallbacks = new List<Action>();
+    private List<Action> onGameRunningCallbacks = new List<Action>();
 
     private void Awake()
     {
@@ -26,10 +30,43 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject); // Optional: if the singleton needs to persist across scenes
         }
     }
+    private void OnDisable()
+    {
+        
+    }
+    public void AddOnPlayerDeathCallbacks(Action callback)
+    {
+        if(!onPlayerDeathCallbacks.Contains(callback))
+        onPlayerDeathCallbacks.Add(callback);
+    }
+
+    public void AddOnGameRunningCallbacks(Action callback)
+    {
+        if(!onGameRunningCallbacks.Contains(callback))
+        onGameRunningCallbacks.Add(callback);
+    }
 
     public void SetGameState(GameState gameState)
     {
         CurrentGameState = gameState;
+
+        switch (gameState)
+        {
+            case GameState.PlayerKilled:
+                foreach (Action callback in onPlayerDeathCallbacks)
+                { 
+                    callback.Invoke();
+                }
+                break;
+
+            case GameState.Running:
+                foreach (Action callback in onGameRunningCallbacks)
+                {
+                    callback.Invoke();
+                }
+                break;
+
+        } 
     }
 
     public GameState GetGameState() 

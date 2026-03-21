@@ -1,10 +1,11 @@
+using Enemy;
 using Game;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SniperEnemy : MonoBehaviour, IDamageHandler
+public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
 {
     private enum State
     {
@@ -79,12 +80,22 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler
         transform.position = startPos;
         currentHealth = maxHealth;
         currentState = State.Idle;
-       
+
+        agent.ResetPath();
+        agent.Warp(startPos);
+        agent.isStopped = false;
+
         foreach (GameObject g in objectsToDisableOnDeath)
         {
             g.SetActive(true);
         }
-       
+
+        ResetAnimation();
+
+        animator.SetBool("idle", true);
+        animator.Update(0f);
+        gameObject.SetActive(true);
+
     }
 
     void Update()
