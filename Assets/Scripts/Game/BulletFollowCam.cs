@@ -14,8 +14,12 @@ public class BulletFollowCam : MonoBehaviour
 
     void Update()
     {
-        
         if (target == null || !gameObject.activeInHierarchy || !target.gameObject.activeInHierarchy) return;
+
+        Debug.Log((starttime + duration) +" > "+Time.time);
+        if ((starttime + duration) < Time.time)
+            return;
+        
         transform.RotateAround(target.position, Vector3.up, rotationSpeed * Time.deltaTime);
         transform.LookAt(target);
     }
