@@ -356,11 +356,12 @@ namespace Enemy
             Gizmos.DrawRay(transform.position, rightBoundary * detectionRange);
         }
 
-        public void ProcessDamage(float damageMultiplyer, float damage)
+        public void ProcessDamage(float damageMultiplyer, float damage, out bool isDead)
         {
             Debug.Log($" In Enemy Ai damageMultiplyer = {damageMultiplyer} | damage = {damage}");
             float totalDamage = damageMultiplyer * damage;
             TakeDamage(totalDamage);
+            isDead = (currentHealth == 0) ? true : false;
         }
     }
 }

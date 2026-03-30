@@ -53,8 +53,9 @@ namespace Game
             damageDirection = GetComponent<DamageDirection>();
             damageArcDirection = GetComponent<DamageArcIndicator>();
         }
-        public void ProcessDamage(float damageMultiplyer, float damage)
+        public void ProcessDamage(float damageMultiplyer, float damage, out bool isDead)
         {
+            isDead = false;
             //Debug.Log(" Processing dam - "+damage);
             float totalDamage = damageMultiplyer * damage;
             if (armor > 0) 

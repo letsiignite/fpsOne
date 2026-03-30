@@ -189,7 +189,7 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
             Debug.Log(" Shot at = " + hit.collider.gameObject.name);
             if (hit.collider.gameObject.GetComponent<DamageReceiver>() != null)
             {
-                hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position);
+                hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position, out bool none);
                 Debug.Log(" Calling - ReceiveRayHitDamage "+damage);
             }
         }
@@ -271,11 +271,12 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
         }
     }
 
-    public void ProcessDamage(float damageMultiplyer, float damage)
+    public void ProcessDamage(float damageMultiplyer, float damage, out bool isDead)
     {
         Debug.Log($" In Enemy Ai damageMultiplyer = {damageMultiplyer} | damage = {damage}");
         float totalDamage = damageMultiplyer * damage;
         TakeDamage(totalDamage);
+        isDead = (currentHealth == 0) ? true : false;
     }
 
     public void TakeDamage(float damage)
@@ -300,7 +301,7 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
         {
             g.SetActive(false);
         }
-
+        agent.isStopped = true;
         gunToDrop.transform.position = enemyEyesPos.transform.position + new Vector3(0, 2, 0);
         Debug.Log(" gunToDrop.transform.position = " + gunToDrop.transform.position);
         Debug.Log("enemyEyesPos.transform.position = " + enemyEyesPos.transform.position);

@@ -39,7 +39,7 @@ namespace Enemy
                
                 if (hit.collider.gameObject.GetComponent<DamageReceiver>() != null)
                 {
-                    hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, shootPoint.transform.position);
+                    hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, shootPoint.transform.position, out bool none);
                     //Debug.Log(" Calling - ReceiveRayHitDamage "+damage);
                 }
 

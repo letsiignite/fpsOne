@@ -11,7 +11,7 @@ namespace Game
     {
         public GameObject damageHandlerObject;
         public IDamageHandler damageHandler;
-        public int damageMultiplyer = 0;        // 100 for head | 0 for legs and hand | 2 for cheast
+        public int damageMultiplier = 0;        // 100 for head | 0 for legs and hand | 2 for cheast
         public bool isPlayer = false;
         public Vector3 damagePosition;
         public damageIndicator myDamageIndicator;
@@ -29,27 +29,28 @@ namespace Game
             if (isSniperHit && other.gameObject.GetComponent<SniperBullet>() != null)
             {
                 isSniperHit = false;
-                damageHandler.ProcessDamage(damageMultiplyer, totalDamageRecived);
+                damageHandler.ProcessDamage(damageMultiplier, totalDamageRecived, out bool none);
                 return;
             }
             damagePosition = other.transform.position;
             if (other.gameObject.GetComponent<Bullet>() != null)
             {
-                damageHandler.ProcessDamage(damageMultiplyer, other.gameObject.GetComponent<Bullet>().GetDamage());
+                damageHandler.ProcessDamage(damageMultiplier, other.gameObject.GetComponent<Bullet>().GetDamage(), out bool none);
             }
         }
 
-        public void ReceiveRayHitDamage(float damage, Vector3 damagePosition, bool isSniper = false)
+        public void ReceiveRayHitDamage(float damage, Vector3 damagePosition, out bool isDead, bool isSniper = false)
         {
             //Debug.Log(  "  ReceiveRayHitDamage");
             if (isSniper)
             { 
                 totalDamageRecived = damage;
                 isSniperHit = true;
+                isDead = true;
                 return;
             }
             this.damagePosition = damagePosition;
-            damageHandler.ProcessDamage(damageMultiplyer,damage);
+            damageHandler.ProcessDamage(damageMultiplier, damage, out isDead);
             if (isPlayer)
             {
                 damageIndicatorEnable();
@@ -61,13 +62,13 @@ namespace Game
             myDamageIndicator.DamageLocation = damagePosition;
             myDamageIndicator.EnableArrow();
             GameObject go = myDamageIndicator.transform.GetChild(0).gameObject;
-            Debug.Log(" Damage Indicator Enabled ");
+            //Debug.Log(" Damage Indicator Enabled ");
             go.SetActive(true);
         }
         public void ReceiveGrenadeDamage(float damage, Vector3 pos)
         {
             //Debug.Log("  Grenade Damage on = "+gameObject.name);
-            damageHandler.ProcessDamage(damageMultiplyer, damage); // damageMultiplyer is handeled in grenade script.
+            damageHandler.ProcessDamage(damageMultiplier, damage, out bool none); // damageMultiplier is handeled in grenade script.
             this.damagePosition = pos;
             if (isPlayer)
             {
