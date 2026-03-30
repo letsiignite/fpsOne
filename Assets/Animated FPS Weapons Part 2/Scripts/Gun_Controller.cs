@@ -1290,19 +1290,21 @@ public class Gun_Controller : MonoBehaviour
             {
                 target.TakeDamage(damage);
             }
-            //Debug.Log(" YOU HIT TAG " + colObject.tag);
+            Debug.Log(" YOU HIT TAG " + colObject.name);
             if (hit.transform.GetComponent<DamageReceiver>())
             {
 
                 if (isSniper)
                 {
-                    hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position, true);
+                    HideCollimator();
+                    hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position, out bool none);
                     GetComponent<SniperGun>().Shoot(colObject.transform.position);
                     Debug.Log(" ** isSniper || Shoot done - "+ colObject.name);
                 }
                 else
                 {
-                    hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position);
+                    hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position, out bool isDead);
+                    if (isDead) GameManager.Instance.ShowOnKillCrosshair();
                 }
             }
 
@@ -1340,8 +1342,6 @@ public class Gun_Controller : MonoBehaviour
                 {
                     GameObject holeObject = Instantiate(bulletHoleConcretePool.GetObject(hit.point, hit.normal), hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
                     //GameObject holeObject = bulletHolePool.GetObject();
-
-                    Debug.Log("YOU HIT " + colObject.tag);
 
                     holeObject.transform.SetParent(colObject.transform);
                     StartCoroutine(DeactivateHole(holeObject));

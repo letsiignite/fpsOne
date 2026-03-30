@@ -7,6 +7,6 @@ namespace Game
 {
     public interface IDamageHandler
     {
-        public void ProcessDamage(float damageMultiplyer, float damage);
+        public void ProcessDamage(float damageMultiplyer, float damage, out bool isDead);
     }
 }

@@ -14,6 +14,20 @@ public class Recoil : MonoBehaviour
     [SerializeField] private float recoilY;
     [SerializeField] private float recoilZ;
 
+    public Vector2 GetRecoil()
+    {
+        Vector3 euler = transform.localRotation.eulerAngles;
+
+        float x = euler.x;
+        float z = euler.z;
+
+        // Convert from 0–360 to -180 to 180
+        if (x > 180) x -= 360;
+        if (z > 180) z -= 360;
+
+        return new Vector2(z, x); // screen X, Y
+    }
+
     private void Start()
     {
         Gun_Controller[] childElements = GetComponentsInChildren<Gun_Controller>();

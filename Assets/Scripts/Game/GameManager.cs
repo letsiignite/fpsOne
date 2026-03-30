@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private GameObject AssaultGun;
     [SerializeField]
     private GameObject SniperGun;
+    [SerializeField]
+    private GameObject OnKillCrosshair;
     private List<Action> onPlayerDeathCallbacks = new List<Action>();
     private List<Action> onGameRunningCallbacks = new List<Action>();
 
@@ -34,6 +36,13 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    public void ShowOnKillCrosshair()
+    { 
+        OnKillCrosshair.SetActive(true);
+    }
+
+
     public void AddOnPlayerDeathCallbacks(Action callback)
     {
         if(!onPlayerDeathCallbacks.Contains(callback))

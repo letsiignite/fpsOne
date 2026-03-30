@@ -28,7 +28,7 @@ namespace Game
         public void ActivateCamera(GameObject cam, Vector3 pos)
         {
             //Invoke("DisableGameobject", 2f);
-            Time.timeScale = 0.2f;
+            Time.timeScale = 0.7f;
             bulletCamera.gameObject.SetActive(true);
             cameraActive = true;
             playerCam = cam;

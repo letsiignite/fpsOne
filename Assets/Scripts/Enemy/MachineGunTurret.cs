@@ -138,7 +138,7 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler, IEnemySolder
                 if (hit.collider.gameObject.GetComponent<DamageReceiver>())
                 {
                     Debug.Log(" Set damage " +damage);
-                    hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position);
+                    hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position, out bool none);
 
                 }
             }
@@ -156,11 +156,14 @@ public class MachineGunTurret : MonoBehaviour, IDamageHandler, IEnemySolder
     // --------------------------
     // DAMAGE SYSTEM
     // --------------------------
-    public void ProcessDamage(float damageMultiplyer, float damage)
+    public void ProcessDamage(float damageMultiplyer, float damage, out bool isDead)
     {
+        isDead = false;
         if (isDestroyed) return;
 
         currentHealth -= (damageMultiplyer * damage);
+
+        isDead = (currentHealth == 0) ? true : false;
 
         if (currentHealth <= 0f)
         {
