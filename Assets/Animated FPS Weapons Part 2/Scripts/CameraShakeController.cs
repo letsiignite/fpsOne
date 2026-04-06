@@ -83,7 +83,7 @@ public class CameraShakeController : MonoBehaviour
         }
     }
 
-    IEnumerator Shake()
+    public IEnumerator Shake(float magnitude = 0.1f, float duration = 0.5f, float roughness = 10)
     {
         elapsed = duration; // Start timer
         while (elapsed > 0)

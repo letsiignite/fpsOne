@@ -36,9 +36,16 @@ namespace Game
         private DamageArcIndicator damageArcDirection;
         [SerializeField]
         private MenuManager menuManager;
-        
+        [SerializeField] 
+        private Crosshair crosshair;
+        [SerializeField]
+        private CameraShakeController cameraShake;
 
-       private const float firstHitDelay = 1;
+        private bool cameraShakeCompleted = false;
+
+        private const float crosshairHitIntensity = 20;
+        private const float cameraShakeForce = 10;
+        private const float firstHitDelay = 1;
         private const float SecondHitDelay = 1.5f;
         private const float ThirdHitDelay = 2;
         private const float fadeDuration = 0.5f;
@@ -53,6 +60,12 @@ namespace Game
             damageDirection = GetComponent<DamageDirection>();
             damageArcDirection = GetComponent<DamageArcIndicator>();
         }
+
+        public void Heal(int amount)
+        { 
+            currentHealth += amount;
+        }
+
         public void ProcessDamage(float damageMultiplyer, float damage, out bool isDead)
         {
             isDead = false;
@@ -67,7 +80,14 @@ namespace Game
             healthText.text = currentHealth.ToString();
             Sprite hitImage = null;
             float delayTimer = 0;
-           
+
+            if (currentHealth < 50 && crosshair != null && !cameraShakeCompleted)
+            {
+                cameraShakeCompleted = true;
+                crosshair.ApplyHitOffset(crosshairHitIntensity, 1f);
+                StartCoroutine(cameraShake.Shake(cameraShakeForce, 1f));
+            }
+
             audioSource.Play();
             if (currentHealth < 10)
             {

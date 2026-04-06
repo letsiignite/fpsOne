@@ -13,7 +13,6 @@ namespace Game
         [SerializeField]
         private Transform bulletPool;
 
-        public GameObject sp;
         private GameObject bullett;
         private Vector3 point;
 
@@ -26,7 +25,6 @@ namespace Game
         public void Shoot(Vector3 hitPoint)
         {
             GameObject bullet = null;
-            sp.transform.position = hitPoint;
             foreach (Transform child in bulletPool)
             {
                 if (!child.gameObject.activeSelf)

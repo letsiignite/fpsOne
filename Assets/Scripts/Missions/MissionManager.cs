@@ -31,7 +31,8 @@ namespace mission
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            StartMission();
+            //Invoke("StartMission", 0.3f); 
+           StartCoroutine(StartMission());
         }
 
         // Update is called once per frame
@@ -40,8 +41,9 @@ namespace mission
 
         }
 
-        public void StartMission()
-        { 
+        public IEnumerator StartMission()
+        {
+            yield return new WaitForSeconds (0.5f);
             GameManager.Instance.player.transform.position = PlayerSpawnPosForMission[missionIndex].transform.position;
             playerController = GameManager.Instance.player.GetComponent<PlayerController>();
             playerController.DisableMovement();

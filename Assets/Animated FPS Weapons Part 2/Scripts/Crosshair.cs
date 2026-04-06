@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Crosshair : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class Crosshair : MonoBehaviour
 
     [SerializeField] private Recoil recoil;
     [SerializeField] private float recoilMultiplier = 500f;
+
+    private Vector2 hitOffset = Vector2.zero;
+    private Coroutine hitRoutine;
+    private bool hitRoutineActive = false;
 
     [System.Serializable]
     public class spreading
@@ -53,13 +58,14 @@ public class Crosshair : MonoBehaviour
     private void OnGUI()
     {
         Vector2 centerPoint = new Vector2(Screen.width / 2, Screen.height / 2);
-        
+        centerPoint += hitOffset;
+
         Vector2 recoilOffset = Vector2.zero;
-        if (recoil != null && Input.GetButton("Fire1"))
+        /*if (recoil != null)
         {
             recoilOffset = recoil.GetRecoil() * recoilMultiplier;
             //Debug.Log(" recoilOffset = " + recoilOffset);
-        }
+        }*/
 
         centerPoint += recoilOffset;
         
@@ -83,5 +89,40 @@ public class Crosshair : MonoBehaviour
         }
 
         myTexture.Apply();
+    }
+
+    public void ApplyHitOffset(float intensity = 2f, float duration = 1f)
+    {
+        if (hitRoutineActive)
+            return;
+
+        hitRoutineActive = true;
+        StartCoroutine(HitOffsetRoutine(intensity, duration));
+    }
+
+    private IEnumerator HitOffsetRoutine(float intensity, float duration)
+    {
+        // Random offset in range (-intensity, intensity)
+        hitOffset = new Vector2(
+            Random.Range(-intensity, intensity),
+            Random.Range(-intensity, intensity)
+        );
+        Debug.Log(" ++ hitOffset = "+ hitOffset);
+        Vector2 startOffset = hitOffset;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+
+            // Smooth return (ease out)
+            hitOffset = Vector2.Lerp(startOffset, Vector2.zero, t);
+
+            yield return null;
+        }
+
+        hitOffset = Vector2.zero;
+        hitRoutineActive = false;
     }
 }

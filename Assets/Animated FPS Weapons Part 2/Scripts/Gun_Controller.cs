@@ -108,6 +108,13 @@ public class Gun_Controller : MonoBehaviour
     [SerializeField] private AudioSource RemovingSafetyPin;
     [SerializeField] private AudioSource Throw;
     [SerializeField] LayerMask ignoredLayers;
+
+    private bool isInPlayersHand = false;
+
+    public void SetIsInPlayersHand(bool value)
+    { 
+        isInPlayersHand = value;
+    }
     // Limit so it doesn’t go too far
     private void OnEnable()
     {
@@ -136,10 +143,13 @@ public class Gun_Controller : MonoBehaviour
 
     public void AddAmmoFromDroppedGun(int count)
     {
-       
-        AmmoReserve += count;
-        Debug.Log(" +++++ Adding Ammo = " + count+" | Total = "+ AmmoReserve);
-        AddAmmo();
+        if (isInPlayersHand)
+        {
+            AmmoReserve += count;
+            Debug.Log(" +++++ Adding Ammo = " + count + " | Total = " + AmmoReserve);
+            AddAmmo();
+        }
+        
     }
 
     private void Update()
@@ -1290,14 +1300,14 @@ public class Gun_Controller : MonoBehaviour
             {
                 target.TakeDamage(damage);
             }
-            Debug.Log(" YOU HIT TAG " + colObject.name);
+            //Debug.Log(" YOU HIT TAG " + colObject.name);
             if (hit.transform.GetComponent<DamageReceiver>())
             {
 
                 if (isSniper)
                 {
                     HideCollimator();
-                    hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position, out bool none);
+                    hit.transform.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position, out bool none, true);
                     GetComponent<SniperGun>().Shoot(colObject.transform.position);
                     Debug.Log(" ** isSniper || Shoot done - "+ colObject.name);
                 }
@@ -1365,7 +1375,6 @@ public class Gun_Controller : MonoBehaviour
 
     public void HideIcons()
     {
-        Debug.Log("HideIcons for "+gameObject.name);
         Crosshair.SetActive(false);
         AmmoIcon1.SetActive(false);
         AmmoIcon2.SetActive(false);
@@ -1375,7 +1384,6 @@ public class Gun_Controller : MonoBehaviour
 
     public void DisplayIcons()
     {
-        Debug.Log("DisplayIcons");
         Crosshair.SetActive(true);
         AmmoIcon1.SetActive(true);
         AmmoIcon2.SetActive(true);

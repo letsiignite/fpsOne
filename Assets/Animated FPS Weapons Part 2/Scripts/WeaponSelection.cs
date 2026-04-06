@@ -23,6 +23,7 @@ public class WeaponSelection : MonoBehaviour
 	[SerializeField] private GameObject GunPickupOptionPopup;
     [SerializeField] private Image GunIcon;
     [SerializeField] private TMP_Text GunNameForPickupPopup;
+	[SerializeField] private GrenadeSlot grenadeSlot;
 	private bool showUnarmed = true;
 	private bool keyIsPressed = false;
 
@@ -218,15 +219,18 @@ public class WeaponSelection : MonoBehaviour
 				Debug.Log(" Selected index = " + i);
 				weapon.gameObject.SetActive(true);
 				currentGun = weapon.GetComponent<Gun_Controller>();
-
-            }
+				currentGun.SetIsInPlayersHand(true);
+			}
 			else
-				weapon.GetComponent<Gun_Controller>().Deactivation();
+			{
+                currentGun.SetIsInPlayersHand(false);
+                weapon.GetComponent<Gun_Controller>().Deactivation();
+			}
 			i++;
 		}
 	}
 
-	private void AddAmmo(int index)
+	public void AddAmmo(int index)
 	{
 		int i = 0;
 		foreach (Transform weapon in transform)
@@ -242,6 +246,20 @@ public class WeaponSelection : MonoBehaviour
 			i++;
 		}
 	}
+
+	public void AddAmmoToAllGunsInHand(int count)
+	{
+		foreach (Transform weapon in transform)
+		{
+            weapon.GetComponent<Gun_Controller>().AddAmmoFromDroppedGun(count);
+        }
+
+    }
+
+	public void AddGrenade(int count)
+	{
+        grenadeSlot.grenadeQuantity += count;
+    }
 }
 
 		 

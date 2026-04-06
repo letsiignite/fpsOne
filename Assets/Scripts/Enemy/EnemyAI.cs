@@ -361,7 +361,7 @@ namespace Enemy
             Debug.Log($" In Enemy Ai damageMultiplyer = {damageMultiplyer} | damage = {damage}");
             float totalDamage = damageMultiplyer * damage;
             TakeDamage(totalDamage);
-            isDead = (currentHealth == 0) ? true : false;
+            isDead = (currentHealth <= 0) ? true : false;
         }
     }
 }

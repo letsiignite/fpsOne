@@ -29,6 +29,7 @@ namespace Game
             if (isSniperHit && other.gameObject.GetComponent<SniperBullet>() != null)
             {
                 isSniperHit = false;
+                Debug.Log("  OnTriggerEnter totalDamageRecived = "+ totalDamageRecived);
                 damageHandler.ProcessDamage(damageMultiplier, totalDamageRecived, out bool none);
                 return;
             }
