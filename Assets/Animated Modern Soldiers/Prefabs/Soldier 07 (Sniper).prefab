@@ -366,7 +366,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 4499813640984362463}
-  damageMultiplyer: 10
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!1 &383959732377763924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1920,7 +1923,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 4499813640984362463}
-  damageMultiplyer: 2
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!1 &4499813640984362463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,7 +1937,6 @@ GameObject:
   m_Component:
   - component: {fileID: 588235915000975308}
   - component: {fileID: 7395991077826994870}
-  - component: {fileID: 25416194182387976}
   - component: {fileID: 5075672739351099677}
   - component: {fileID: 4865378681696880308}
   - component: {fileID: 5851273858023297720}
@@ -1963,6 +1968,7 @@ Transform:
   - {fileID: 5802765483803578322}
   - {fileID: 2962448159481023699}
   - {fileID: 5455142772358458301}
+  - {fileID: 7624548713615857895}
   - {fileID: 4446703651217060422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1988,36 +1994,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!205 &25416194182387976
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4499813640984362463}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.14147073, y: 0.37465534, z: -0.010336909}
-  m_Size: 1.0606586
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.50225085
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 1436925817988824554}
-    - renderer: {fileID: 8448325907724095466}
-  - screenRelativeHeight: 0.24757753
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 7592458957209384408}
-    - renderer: {fileID: 6060236642402176529}
-  - screenRelativeHeight: 0.01
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 6074869012596880448}
-    - renderer: {fileID: 7510315861178196554}
-  m_Enabled: 1
 --- !u!114 &5075672739351099677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2033,7 +2009,7 @@ MonoBehaviour:
   player: {fileID: 0}
   shootPoint: {fileID: 2962448159481023699}
   agent: {fileID: 4865378681696880308}
-  viewDistance: 40
+  viewDistance: 60
   viewAngle: 100
   visionMask:
     serializedVersion: 2
@@ -2047,6 +2023,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   animator: {fileID: 7395991077826994870}
+  maxHealth: 100
+  objectsToDisableOnDeath:
+  - {fileID: 4409618330201056109}
+  - {fileID: 315899377937901501}
+  enemyEyesPos: {fileID: 6071445281470829746}
+  soldierType: 1
 --- !u!195 &4865378681696880308
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2551,6 +2533,136 @@ CapsuleCollider:
   m_Height: 19.081396
   m_Direction: 1
   m_Center: {x: 0.95901585, y: -9.540665, z: 0.56152}
+--- !u!1 &5369699856220673956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7624548713615857895}
+  - component: {fileID: 7914804801486664161}
+  - component: {fileID: 4955885636714403045}
+  - component: {fileID: 9122137658183042517}
+  - component: {fileID: 486309520729271904}
+  m_Layer: 8
+  m_Name: DamageReceiverLegs
+  m_TagString: Flesh
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7624548713615857895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5369699856220673956}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.19, z: 0}
+  m_LocalScale: {x: 0.21674195, y: 0.23158711, z: 0.14416}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 588235915000975308}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7914804801486664161
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5369699856220673956}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &4955885636714403045
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5369699856220673956}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &9122137658183042517
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5369699856220673956}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &486309520729271904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5369699856220673956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fa528a105a6baf4f89897ad598397f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
+  damageHandlerObject: {fileID: 4499813640984362463}
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!1 &5559822338098190313
 GameObject:
   m_ObjectHideFlags: 0

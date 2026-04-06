@@ -41,7 +41,7 @@ public class Recoil : MonoBehaviour
         }
 
         targetRotation = Vector3.one;
-        currentRotation = gunController.mainCamera.transform.rotation.eulerAngles;
+        currentRotation = (gunController != null)? gunController.mainCamera.transform.rotation.eulerAngles : Vector3.one;
     }
     // Update is called once per frame
     void Update()
