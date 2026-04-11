@@ -1,7 +1,9 @@
 using Collectables;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
+
 
 public class PopupHandler : MonoBehaviour
 {
@@ -33,6 +35,14 @@ public class PopupHandler : MonoBehaviour
         popupUI.SetActive(true);
     }
 
+    public void ShowObectiveCollectionPopup(string objectiveTitle, Sprite objectiveIcon)
+    {
+        itemNameText.text = objectiveTitle;
+        icon.sprite = objectiveIcon;
+
+        popupUI.SetActive(true);
+    }
+
     public void Hide()
     {
         popupUI.SetActive(false);
@@ -47,6 +57,7 @@ public class PopupHandler : MonoBehaviour
             currentItem.Collect(currentPlayer);
             audioSource.Stop();
             audioSource.clip = currentItem.GetAudioClip();
+            audioSource.Play();
             Hide();
         }
     }

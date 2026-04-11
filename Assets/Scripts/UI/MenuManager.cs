@@ -1,5 +1,5 @@
 using Game;
-using mission;
+using Mission;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +16,8 @@ public class MenuManager : MonoBehaviour
     private DeathScreen deathScreen;
     [SerializeField]
     private GameObject onDeathMenu;
+    [SerializeField]
+    private GameObject resumeButton;
     [SerializeField]
     private HitPointsSystem hitPointsSystem;
 
@@ -45,6 +47,7 @@ public class MenuManager : MonoBehaviour
     public void ExitGame()
     {
         PlayClickSound();
+        Time.timeScale = 1;
         Invoke("CloseGame", 0.3f);
     }
 
@@ -59,6 +62,27 @@ public class MenuManager : MonoBehaviour
         audioSource.clip = buttonClickAudio;
         audioSource.Play();
     }
+
+    public void DisplayPauseMenu()
+    {
+        resumeButton.SetActive(!resumeButton.activeInHierarchy);
+        if (resumeButton.activeInHierarchy)
+        {
+            deathScreen.DisplayDeathScreen();
+            onDeathMenu.SetActive(true);
+            Time.timeScale = 0f;
+            missionManager.DisablePlayerMovement();
+        }
+        else
+        {
+            deathScreen.HideDeathScreen();
+            Time.timeScale = 01f;
+            onDeathMenu.SetActive(false);
+            missionManager.EnablePlayerMovements();
+        }
+    }
+
+    
 
     public void DisplayDeathScreen()
     {

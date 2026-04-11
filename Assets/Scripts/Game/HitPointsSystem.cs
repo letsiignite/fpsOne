@@ -1,4 +1,4 @@
-using mission;
+using Mission;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -42,6 +42,7 @@ namespace Game
         private CameraShakeController cameraShake;
 
         private bool cameraShakeCompleted = false;
+        private bool godMode = false;
 
         private const float crosshairHitIntensity = 20;
         private const float cameraShakeForce = 10;
@@ -49,9 +50,6 @@ namespace Game
         private const float SecondHitDelay = 1.5f;
         private const float ThirdHitDelay = 2;
         private const float fadeDuration = 0.5f;
-
-        
-
 
         private void Start()
         {
@@ -61,9 +59,18 @@ namespace Game
             damageArcDirection = GetComponent<DamageArcIndicator>();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                godMode = !godMode;
+            }
+        }
+
         public void Heal(int amount)
         { 
             currentHealth += amount;
+            healthText.text = currentHealth.ToString();
         }
 
         public void ProcessDamage(float damageMultiplyer, float damage, out bool isDead)
@@ -76,7 +83,9 @@ namespace Game
                 armor = armor - totalDamage;
                 totalDamage = (armor < 0)? (armor + totalDamage): 0 ;
             }
-            currentHealth -= totalDamage;
+            if (!godMode)
+                currentHealth -= totalDamage;
+
             healthText.text = currentHealth.ToString();
             Sprite hitImage = null;
             float delayTimer = 0;

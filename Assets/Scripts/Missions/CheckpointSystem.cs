@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace mission
+namespace Mission
 {
     public class CheckpointSystem : MonoBehaviour
     {
@@ -12,6 +12,15 @@ namespace mission
 
         private Checkpoint lastCheckpoint;
 
+        public void OnCompletingObjective(string objectiveText, AudioClip clip)
+        {
+            checkpointDialogText.text = objectiveText;
+            voiceOverAudioSource.Stop();
+            voiceOverAudioSource.clip = clip;
+            voiceOverAudioSource.Play();
+
+            Invoke("ResetCheckpointData", clip.length + 1);
+        }
         public void ProvideCheckpointInfo(Checkpoint checkpoint)
         {
             checkpointDialogText.text = checkpoint.GetCheckpointInfo();

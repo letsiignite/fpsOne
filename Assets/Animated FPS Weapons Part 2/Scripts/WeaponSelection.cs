@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+#if UNITY_EDITOR
 using UnityEditor.Localization.Plugins.XLIFF.V12;
+#endif
+
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -41,6 +44,9 @@ public class WeaponSelection : MonoBehaviour
         GunsInHandIndex.Add(2);
 		currentGunIndex = 0;
         selectedWeapon = GunsInHandIndex[currentGunIndex];
+		transform.GetChild(1).gameObject.GetComponent<Gun_Controller>().SetIsInPlayersHand(true);
+
+        transform.GetChild(1).gameObject.GetComponent<Gun_Controller>().SetIsInPlayersHand(true);
         SelectWeapon();
 	}
 
@@ -75,9 +81,11 @@ public class WeaponSelection : MonoBehaviour
 		{
             //ThrowWeapon(gunDetails[GunsInHandIndex[currentGunIndex]].gun);
             GunsInHandIndex.RemoveAt(currentGunIndex);
+            transform.GetChild(currentGunIndex).gameObject.GetComponent<Gun_Controller>().SetIsInPlayersHand(false);
 
         }
         GunsInHandIndex.Add(gunIndex); // need to add the gun index
+        transform.GetChild(gunIndex).gameObject.GetComponent<Gun_Controller>().SetIsInPlayersHand(true);
         selectedWeapon = gunIndex;
         currentGunIndex = GunsInHandIndex.Count - 1;
         showUnarmed = false;
@@ -112,7 +120,7 @@ public class WeaponSelection : MonoBehaviour
 			keyIsPressed = false;
 		}
 
-        if (Input.GetKeyDown(KeyCode.F) && GunPickupOptionPopup.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.F) && GunPickupOptionPopup.activeInHierarchy && droppedGun != null)
         {
 			DropAndPickupGun(pickupGunIndex);
             droppedGun.SetActive(false);
@@ -212,18 +220,20 @@ public class WeaponSelection : MonoBehaviour
 	void SelectWeapon()
 	{
 		int i = 0;
-		foreach (Transform weapon in transform)
+        currentGun?.SetIsInPlayersHand(false);
+        foreach (Transform weapon in transform)
 		{
+
 			if (i == selectedWeapon)
 			{
-				Debug.Log(" Selected index = " + i);
+				Debug.Log(" Selected index = " + i); 
 				weapon.gameObject.SetActive(true);
 				currentGun = weapon.GetComponent<Gun_Controller>();
 				currentGun.SetIsInPlayersHand(true);
 			}
 			else
 			{
-                currentGun.SetIsInPlayersHand(false);
+                
                 weapon.GetComponent<Gun_Controller>().Deactivation();
 			}
 			i++;
