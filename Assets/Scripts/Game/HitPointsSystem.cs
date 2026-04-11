@@ -64,6 +64,7 @@ namespace Game
             if (Input.GetKeyDown(KeyCode.K))
             {
                 godMode = !godMode;
+                healthText.text = "GOD";
             }
         }
 
