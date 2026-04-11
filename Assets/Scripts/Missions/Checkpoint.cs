@@ -100,6 +100,11 @@ namespace Mission
             this.gameObject.SetActive(true);
         }
 
+        public void HandleObjectiveCompleted(string objectiveText, AudioClip clip, float delay)
+        {
+            StartCoroutine(ObjectiveCompleted(objectiveText, clip, delay)); // ✅ runs on Checkpoint
+        }
+
         public IEnumerator ObjectiveCompleted(string objectiveText, AudioClip clip, float delay)
         {
             yield return new WaitForSeconds(delay);

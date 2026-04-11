@@ -57,8 +57,9 @@ namespace Mission
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.F) && playerInRange)
-            { 
-                StartCoroutine( checkpoint.ObjectiveCompleted(infoText, audioClip, delayToPlayAudio));
+            {
+                checkpoint.HandleObjectiveCompleted(infoText, audioClip, delayToPlayAudio);
+                
                 popupHandler.Hide();
                 playerInRange = false;
                 foreach (GameObject obj in objectsToHide) 
