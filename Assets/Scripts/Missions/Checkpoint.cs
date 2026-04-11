@@ -1,9 +1,10 @@
 using Enemy;
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace mission
+namespace Mission
 {
     [RequireComponent(typeof(BoxCollider))]
     public class Checkpoint : MonoBehaviour
@@ -15,8 +16,17 @@ namespace mission
         [SerializeField]
         private string checkpointInfo;
         [SerializeField]
+        private GameObject nextCheckpoint;
+        [SerializeField]
+        private GameObject objectiveMarker;
+
+      [SerializeField]
         private List<GameObject> enemySoldiers;
-       
+        [SerializeField]
+        private Objective checkpointObj;
+        [SerializeField]
+        private PopupHandler popupHandler;
+
 
         private bool checkpointInfoProvided = false;
 
@@ -30,14 +40,47 @@ namespace mission
             return checkpointInfo;
         }
 
-       
+        private void OnEnable()
+        {
+            
+           
+        }
+
+        private void HideObjects()
+        { 
+            objectiveMarker?.SetActive(false);
+        }
+
+        private void Start()
+        {
+            Debug.Log(" START "+gameObject.name);
+            checkpointSystem = GameObject.FindAnyObjectByType<CheckpointSystem>();
+            checkpointObj.init(this, popupHandler);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                Debug.Log(" Show Objective");
+                objectiveMarker?.SetActive(true);
+            }
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                Debug.Log(" Hide Objective");
+                objectiveMarker?.SetActive(false);
+            }
+        }
+
+
         private void OnTriggerEnter(Collider other)
         {
             if(other.tag == "Player" && !checkpointInfoProvided)
             {
                 checkpointSystem.ProvideCheckpointInfo(this);
                 checkpointInfoProvided = true;
-                this.gameObject.SetActive(false);
+                Invoke("HideObjects", 4f);
+                //this.gameObject.SetActive(false);
             }
         }
 
@@ -57,9 +100,14 @@ namespace mission
             this.gameObject.SetActive(true);
         }
 
-        private void Start()
+        public IEnumerator ObjectiveCompleted(string objectiveText, AudioClip clip, float delay)
         {
-            checkpointSystem = GameObject.FindAnyObjectByType<CheckpointSystem>();
+            yield return new WaitForSeconds(delay);
+            Debug.Log(" CP Objective Completed");
+            checkpointSystem.OnCompletingObjective(objectiveText, clip);
+            nextCheckpoint.SetActive(true);
         }
+
+        
     }
 }

@@ -50,8 +50,8 @@ namespace Collectables
         {
             IPickupHandler handler = PickupFactory.GetHandler(type);
             handler.Apply(player, value);
-
-            Destroy(gameObject);
+            Debug.Log(" -- CollectableItem -- Collect");
+            gameObject.SetActive(false); // must be activated on restart
         }
     }
 }

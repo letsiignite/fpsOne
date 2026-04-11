@@ -7,6 +7,7 @@ namespace Collectables
         private HitPointsSystem hitPointsSystem;
         public void Apply(GameObject player, int value)
         {
+            Debug.Log(" -- HealthPickupHandler -- Apply");
             hitPointsSystem  = (hitPointsSystem == null)? GameObject.FindFirstObjectByType<HitPointsSystem>() : hitPointsSystem;
             hitPointsSystem.Heal(value);
         }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace mission
+namespace Mission
 {
     [CreateAssetMenu(fileName = "MissionIntroData", menuName = "Scriptable Objects/MissionIntroData")]
     public class MissionIntroData : ScriptableObject

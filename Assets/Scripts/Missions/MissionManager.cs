@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 
 
-namespace mission
+namespace Mission
 {
     public class MissionManager : MonoBehaviour
     {
@@ -38,7 +38,10 @@ namespace mission
         // Update is called once per frame
         void Update()
         {
-
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                menuManager.DisplayPauseMenu();
+            }
         }
 
         public IEnumerator StartMission()
@@ -87,6 +90,13 @@ namespace mission
         public void DisablePlayerMovement()
         {
             playerController.DisableMovement();
+        }
+
+        public void EnablePlayerMovements()
+        {
+
+            playerController.EnableMovement();
+
         }
 
         public void Respawn()

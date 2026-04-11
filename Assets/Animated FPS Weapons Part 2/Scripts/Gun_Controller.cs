@@ -112,7 +112,8 @@ public class Gun_Controller : MonoBehaviour
     private bool isInPlayersHand = false;
 
     public void SetIsInPlayersHand(bool value)
-    { 
+    {
+        Debug.Log(gameObject.name + " > SetIsInPlayersHand = "+ value);
         isInPlayersHand = value;
     }
     // Limit so it doesn’t go too far

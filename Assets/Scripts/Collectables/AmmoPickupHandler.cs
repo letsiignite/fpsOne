@@ -6,7 +6,7 @@ namespace Collectables
         WeaponSelection weaponSelectionObject;
         public void Apply(GameObject player, int value)
         {
-            Debug.Log("Ammo Added: " + value);
+            Debug.Log(" -- Ammo Added: " + value);
             if (weaponSelectionObject == null)
             {
                 weaponSelectionObject = GameObject.FindFirstObjectByType<WeaponSelection>();
