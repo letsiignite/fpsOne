@@ -48,6 +48,7 @@ namespace Enemy
         private List<int> numbers = new List<int> { 0, 1, 2, 3};
 
         private UniqueRandom<int> randomInts;
+        private bool initCompleted = false;
 
 
         void Start()
@@ -59,6 +60,12 @@ namespace Enemy
             currentState = State.MovingToPoint;
             agent.SetDestination(endPoint.position);
             randomInts = new UniqueRandom<int>(numbers);
+        }
+
+        private void OnEnable()
+        {
+            if(initCompleted)
+            Reset();
         }
 
         public void Reset()
@@ -145,6 +152,7 @@ namespace Enemy
                     if (!agent.pathPending && agent.remainingDistance < 0.5f)
                     {
                         currentState = State.Idle;
+                        initCompleted = true;
                     }
                     ResetAnimation();
                     animator.SetBool("run", true);

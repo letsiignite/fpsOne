@@ -19,13 +19,18 @@ namespace Mission
         private GameObject nextCheckpoint;
         [SerializeField]
         private GameObject objectiveMarker;
-
-      [SerializeField]
-        private List<GameObject> enemySoldiers;
         [SerializeField]
         private Objective checkpointObj;
         [SerializeField]
         private PopupHandler popupHandler;
+
+
+        [Header("Objects of this CP")]
+        [SerializeField]
+        private List<GameObject> enemySoldiers;
+        [SerializeField]
+        private List<GameObject> hiddenObjects;
+
 
 
         private bool checkpointInfoProvided = false;
@@ -55,7 +60,7 @@ namespace Mission
         {
             Debug.Log(" START "+gameObject.name);
             checkpointSystem = GameObject.FindAnyObjectByType<CheckpointSystem>();
-            checkpointObj.init(this, popupHandler);
+            checkpointObj?.init(this, popupHandler);
         }
 
         private void Update()
@@ -92,9 +97,20 @@ namespace Mission
 
         public void Respawn()
         {
+           
             foreach (var a in enemySoldiers)
             {
                 a.GetComponent<IEnemySolder>().Reset();
+            }
+
+            foreach (var obj in hiddenObjects)
+            {
+                obj.SetActive(false);
+            }
+
+            foreach (var obj in hiddenObjects)
+            {
+                obj.SetActive(false);
             }
 
             this.gameObject.SetActive(true);
