@@ -8,15 +8,19 @@ public class ThrowGrenade : MonoBehaviour {
 
 	private float extraForceMultiplier = 0.5f;
 
+    private void OnEnable()
+    {
+        Debug.Log(" Grenade OnEnable");
+       
+    }
 
-    private void Update()
-	{
-		GameObject gren = Instantiate(grenade, startPoint.position, startPoint.rotation) as GameObject;
-		float extraForce = (startPoint.rotation.x > 0) ? 
-							(startPoint.rotation.x * extraForceMultiplier) : 
-							(startPoint.rotation.x * extraForceMultiplier) * -1;
+    public void HandleThrowGrenade()
+    {
+        GameObject gren = Instantiate(grenade, startPoint.position, startPoint.rotation) as GameObject;
+        float extraForce = (startPoint.rotation.x > 0) ?
+                            (startPoint.rotation.x * extraForceMultiplier) :
+                            (startPoint.rotation.x * extraForceMultiplier) * -1;
 
-		gren.GetComponent<Rigidbody>().AddForce(startPoint.forward * (throwForce + extraForce), ForceMode.Impulse);
-
-	}
+        gren.GetComponent<Rigidbody>().AddForce(startPoint.forward * (throwForce + extraForce), ForceMode.Impulse);
+    }
 }

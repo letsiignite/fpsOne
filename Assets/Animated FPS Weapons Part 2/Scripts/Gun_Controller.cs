@@ -1183,7 +1183,9 @@ public class Gun_Controller : MonoBehaviour
     }
     private IEnumerator ThrowGrenade()
     {
+        Debug.Log(" Gun - Throw Grenade");
         Grenade.SetActive(true);
+        Grenade.GetComponent<ThrowGrenade>().HandleThrowGrenade();
         GrenadeSlot.GetComponent<GrenadeSlot>().grenadeQuantity -= 1;
         yield return new WaitForSeconds(0.0f);
         Grenade.SetActive(false);

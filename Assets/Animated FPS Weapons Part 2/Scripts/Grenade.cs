@@ -7,7 +7,7 @@ public class Grenade : MonoBehaviour
 {
 
 	[SerializeField] private float delay = 3f;
-	[SerializeField] private float radius = 5f;
+	[SerializeField] private float radius = 10f;
 	[SerializeField] private float force = 500f;
 	[SerializeField] private float maxDamage = 70f;
 

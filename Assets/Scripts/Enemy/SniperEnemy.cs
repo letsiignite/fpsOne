@@ -73,6 +73,7 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
         animator.SetBool("run", false);
         animator.SetBool("idle", false);
         animator.SetBool("shoot", false);
+        animator.SetBool("dead", false);
     }
 
     public void Reset()
@@ -273,7 +274,7 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
 
     public void ProcessDamage(float damageMultiplyer, float damage, out bool isDead)
     {
-        Debug.Log($" In Enemy Ai damageMultiplyer = {damageMultiplyer} | damage = {damage}");
+        Debug.Log($" In Sniper damageMultiplyer = {damageMultiplyer} | damage = {damage}");
         float totalDamage = damageMultiplyer * damage;
         TakeDamage(totalDamage);
         isDead = (currentHealth == 0) ? true : false;
