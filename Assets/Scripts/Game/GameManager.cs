@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     private List<Action> onPlayerDeathCallbacks = new List<Action>();
     private List<Action> onGameRunningCallbacks = new List<Action>();
 
+    private PlayerController playerController;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -40,6 +42,18 @@ public class GameManager : MonoBehaviour
     public void ShowOnKillCrosshair()
     { 
         OnKillCrosshair.SetActive(true);
+    }
+
+    public void ApplySniperHitToPlayer()
+    {
+        if (CurrentGameState != GameState.Running)
+            return;
+
+        if (player != null)
+        {
+            playerController = (playerController == null) ? player.GetComponent<PlayerController>(): playerController;
+            playerController.ApplySniperHitEffect();
+        }
     }
 
 

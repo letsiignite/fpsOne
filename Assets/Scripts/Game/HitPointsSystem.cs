@@ -45,7 +45,7 @@ namespace Game
         private bool godMode = false;
 
         private const float crosshairHitIntensity = 20;
-        private const float cameraShakeForce = 10;
+        private const float cameraShakeForce = 0.1f;
         private const float firstHitDelay = 1;
         private const float SecondHitDelay = 1.5f;
         private const float ThirdHitDelay = 2;
@@ -95,9 +95,19 @@ namespace Game
             {
                 cameraShakeCompleted = true;
                 crosshair.ApplyHitOffset(crosshairHitIntensity, 1f);
-                StartCoroutine(cameraShake.Shake(cameraShakeForce, 1f));
+               
             }
 
+            if (totalDamage > 50)
+            {
+                cameraShake.Shake(0.5f, cameraShakeForce * 2);
+                GameManager.Instance.ApplySniperHitToPlayer();
+            }
+            else
+            {
+                cameraShake.Shake(0.5f, cameraShakeForce);
+            }
+            
             audioSource.Play();
             if (currentHealth < 10)
             {
