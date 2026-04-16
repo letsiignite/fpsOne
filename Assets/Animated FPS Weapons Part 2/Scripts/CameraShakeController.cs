@@ -1,103 +1,44 @@
-﻿//using UnityEngine;
-//using System.Collections;
-//using System.Collections.Generic;
-//using System.Runtime.CompilerServices;
-//public class CameraShakeController : MonoBehaviour
-//{
-//    [SerializeField] private float shakePower = 0.5f;
-//    [SerializeField] private float duration = 1f;
-//    private Gun_Controller gunController;
-
-
-//    void Start()
-//    {
-//        gunController = GetComponentInParent<Gun_Controller>();
-//    }
-//    void Update()
-//    {
-//        CameraShake();
-//    }
-//    public IEnumerator Shake(float duration, float magnitude)
-//    {
-
-//        Vector3 originalPos = transform.localPosition;
-//        float elapsed = 0.0f;
-//        while (elapsed < duration)
-//        {
-//            float x = Random.Range(-1f, 1f) * magnitude;
-//            float y = Random.Range(-1f, 1f) * magnitude;
-//            transform.localPosition = new Vector3(x, y, originalPos.z);
-//            elapsed += Time.deltaTime;
-//            yield return null;
-//        }
-//        transform.localPosition = originalPos;
-//    }
-
-//    void CameraShake()
-//    {
-//        if (!gunController.canShake) {return; }
-//        float elapsed1 = 0.0f;
-//        {
-//            //float elapsed = 0.0f;
-//            if ( elapsed1 < duration)
-//            {
-//                //float elapsed = 0.0f;
-//                shakePower = (26) * 0.04f;
-//                StartCoroutine(Shake(duration, shakePower));
-//                elapsed1 += Time.deltaTime;
-//                Debug.Log(elapsed1);
-//                //while(elapsed < duration)
-//                {
-//                }
-//                //Destroy(target);
-//            }
-//        }
-//    }
-//}
-
-// CameraShake.cs (Attach to Main Camera)
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class CameraShakeController : MonoBehaviour
 {
-    [SerializeField] public float duration = 0.5f; // How long the shake lasts
-    [SerializeField] public float magnitude = 0.1f; // How strong the shake is (Unity units)
-    [SerializeField] public float roughness = 10f; // Frequency of shake
-    private Gun_Controller gunController;
-    Vector3 originalPos;
-    float elapsed;
+    private Vector3 originalPos;
+    private Coroutine currentShake;
 
-    void Start()
+    void Awake()
     {
         originalPos = transform.localPosition;
-        gunController = GetComponentInParent<Gun_Controller>();
     }
 
-    public void TriggerShake(float shakePower)
+    public void Shake(float duration = 0.1f, float intensity = 0.05f)
     {
-        magnitude = shakePower;
-        if (elapsed == 0)
-        { // Prevent overlapping shakes
-            StartCoroutine(Shake());
-        }
-    }
-
-    public IEnumerator Shake(float magnitude = 0.1f, float duration = 0.5f, float roughness = 10)
-    {
-        elapsed = duration; // Start timer
-        while (elapsed > 0)
+        if (currentShake != null)
         {
-            // Calculate random offset
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
-            transform.localPosition = new Vector3(x, y, originalPos.z);
-
-            elapsed -= Time.deltaTime * roughness; // Decrease timer with roughness
-            yield return null; // Wait for next frame
+            StopCoroutine(currentShake);
         }
-        transform.localPosition = originalPos; // Return to original position
-        elapsed = 0; // Reset timer
+
+        currentShake = StartCoroutine(ShakeRoutine(duration, intensity));
+    }
+
+    private IEnumerator ShakeRoutine(float duration, float intensity)
+    {
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            float damper = 1f - (timer / duration); // smooth fade out
+
+            Vector3 offset = Random.insideUnitSphere * intensity * damper;
+            offset.z = 0f; // keep FPS camera stable in depth
+
+            transform.localPosition = originalPos + offset;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localPosition = originalPos;
+        currentShake = null;
     }
 }
-

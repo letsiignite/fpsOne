@@ -1,5 +1,6 @@
 using Enemy;
 using Game;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
@@ -61,10 +62,18 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
     [Tooltip("What type of gun this solder has")]
     public DropGunType soldierType;
 
+    [Header("Laser")]
+    [SerializeField] private LineRenderer laserLine;
+    [SerializeField] private float laserDuration = 1f;
+    [SerializeField] private Color laserColor = Color.red;
+
+    private bool isPreparingShot = false;
+
     void Start()
     {
         randomCover = new UniqueRandom<Transform>(coverPoints);
         animator = GetComponent<Animator>();
+        laserLine.enabled = false;
         startPos = transform.position;
     }
 
@@ -143,22 +152,64 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
     {
         LookAtPlayer();
         //Debug.Log(" CanSeePlayer() = " + CanSeePlayer()+ 
-         //   " | Time.time > lastFireTime + fireCooldown = "+(Time.time > lastFireTime + fireCooldown));
-        if (CanSeePlayer() && Time.time > lastFireTime + fireCooldown)
+        //   " | Time.time > lastFireTime + fireCooldown = "+(Time.time > lastFireTime + fireCooldown));
+        if (CanSeePlayer() && Time.time > lastFireTime + fireCooldown && !isPreparingShot)
         {
-            currentState = State.Shooting;
+            StartCoroutine(PrepareAndShoot());
         }
+    }
+
+    IEnumerator PrepareAndShoot()
+    {
+        isPreparingShot = true;
+
+        currentState = State.Shooting;
+        ResetAnimation();
+        animator.SetBool("shoot", true);
+
+        float timer = 0f;
+        laserLine.enabled = true;
+        //laserLine.startColor = laserColor;
+        //laserLine.endColor = laserColor;
+
+        while (timer < laserDuration)
+        {
+            if (player != null)
+            {
+                Vector3 start = shootPoint.position;
+                Vector3 end = player.position;
+
+                laserLine.SetPosition(0, start);
+                laserLine.SetPosition(1, end);
+
+                LookAtPlayer();
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        laserLine.enabled = false;
+
+        // 🔥 Shoot after laser warning
+        audioSource.Stop();
+        audioSource.clip = shootSound;
+        audioSource.Play();
+
+        ShootOnce();
+        lastFireTime = Time.time;
+
+        isPreparingShot = false;
+
+        Invoke("ShootAndScoot", 1f);
     }
 
     void HandleShooting()
     {
-        audioSource.Stop();
-        audioSource.clip = shootSound;
-        audioSource.Play();
-        ShootOnce();
-        lastFireTime = Time.time;
-        currentState = State.Alert;
-        Invoke("ShootAndScoot", 1f);
+        if (!isPreparingShot && CanSeePlayer() && Time.time > lastFireTime + fireCooldown)
+        {
+            StartCoroutine(PrepareAndShoot());
+        }
     }
 
     private void ShootAndScoot()

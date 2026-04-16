@@ -1364,7 +1364,7 @@ public class Gun_Controller : MonoBehaviour
             if (canShake && hit.distance < 25)
             {
                 shakePower = 1.5f - (0.04f * hit.distance);
-                mainCamera.TriggerShake(shakePower);
+                mainCamera.Shake(shakePower);
             }
         }
 
