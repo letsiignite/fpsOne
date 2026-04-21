@@ -1,0 +1,15 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v3.1.172307092)
+
+newmtl Light_Machine_Gun
+kd 0.588235 0.588235 0.588235
+illum 1
+
+newmtl Light_Machine_Gun_Scope_Glass
+kd 0.588 0.588 0.588
+illum 1
+
+newmtl Red_Dot_Sight
+kd 0.588 0.588 0.588
+illum 1
+

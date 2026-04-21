@@ -34,7 +34,18 @@ namespace Enemy
         [SerializeField]
         private List<GameObject> objectsToDisableOnDeath;
 
-        private enum State { MovingToPoint, Idle, Combat, TakingCover, Dead }
+        private enum State
+        {
+            MovingToPoint,
+            Idle,
+            Combat,
+            TakingCover,
+            InCoverWait,
+            MovingToShootPoint,
+            Charging,
+            Dead
+        }
+
         private State currentState;
         private const float CLOSE_COMBAT_THRESHOLD = 5f;
         private Vector3 dir;
@@ -47,9 +58,25 @@ namespace Enemy
         private int[] shootCount = new int[4];
         private List<int> numbers = new List<int> { 0, 1, 2, 3};
 
+        [SerializeField] 
+        private CombatPositionProvider combatPositionProviderObj;
+        
+
+        [SerializeField] 
+        private float hitReactionProbability = 0.6f;
+        [SerializeField] 
+        private float lowHealthThreshold = 0.4f;
+        [SerializeField] 
+        private float coverWaitTime = 2f;
+
+        private float coverTimer;
+        private Transform currentTargetPoint;
+
         private UniqueRandom<int> randomInts;
         private bool initCompleted = false;
-
+        private Transform reservedCover;
+        private bool isTakingCover = false;
+        Transform bestCover;
 
         void Start()
         {
@@ -60,6 +87,7 @@ namespace Enemy
             currentState = State.MovingToPoint;
             agent.SetDestination(endPoint.position);
             randomInts = new UniqueRandom<int>(numbers);
+            combatPositionProviderObj = GameObject.FindAnyObjectByType<CombatPositionProvider>();
         }
 
         private void OnEnable()
@@ -70,6 +98,9 @@ namespace Enemy
 
         public void Reset()
         {
+            Debug.Log(" Reseting "+gameObject.name);
+            // If agent is null then this enemy has not been activated yet, so no need to reset
+            if (agent == null) return;
             transform.position = startPos;
             agent.ResetPath();
             agent.Warp(startPos);
@@ -97,6 +128,13 @@ namespace Enemy
             {
                 g.SetActive(true);
             }
+
+            if (reservedCover != null)
+            {
+                combatPositionProviderObj.ReleaseCover(reservedCover, this);
+                reservedCover = null;
+            }
+            enemyGun.gameObject.SetActive(true);
             gameObject.SetActive(true);
         }
 
@@ -178,6 +216,23 @@ namespace Enemy
                     //agent.speed = (animator.deltaPosition / Time.deltaTime).magnitude;
                     TakingCoverBehavior();
                     break;
+                case State.InCoverWait:
+                    ResetAnimation();
+                    animator.SetBool("idle", true);
+                    InCoverWaitBehavior();
+                    break;
+
+                case State.MovingToShootPoint:
+                    ResetAnimation();
+                    animator.SetBool("run", true);
+                    MovingToShootPointBehavior();
+                    break;
+
+                case State.Charging:
+                    ResetAnimation();
+                    animator.SetBool("run", true);
+                    ChargingBehavior();
+                    break;
                 default:
 
                     break;
@@ -239,17 +294,17 @@ namespace Enemy
 
         void TakingCoverBehavior()
         {
-            Transform bestCover = FindClosestCover();
+            if (bestCover == null)
+            {
+                bestCover = combatPositionProviderObj.GetNearestCover(transform.position, this);
+            }
             float distanceToCover = Vector3.Distance(transform.position, bestCover.position);
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
             if(distanceToPlayer < CLOSE_COMBAT_THRESHOLD)
             {
-                if(distanceToPlayer < CLOSE_COMBAT_THRESHOLD)
-                {
-                    inCover = true;
-                    currentState = State.Combat;
-                }
+                inCover = true;
+                currentState = State.Combat;
             }
             if (bestCover != null)
             {
@@ -258,32 +313,70 @@ namespace Enemy
                 if (!agent.pathPending && agent.remainingDistance < 0.5f)
                 {
                     inCover = true;
+                    currentState = State.InCoverWait;
+                    coverTimer = coverWaitTime;
+                    bestCover = null;
+                }
+            }
+        }
+
+        void InCoverWaitBehavior()
+        {
+            agent.isStopped = true;
+            coverTimer -= Time.deltaTime;
+
+            if (coverTimer <= 0f)
+            {
+                combatPositionProviderObj.ReleaseCover(reservedCover, this);
+                reservedCover = null;
+
+                currentTargetPoint = combatPositionProviderObj.GetNearestShootingPoint(transform.position);
+                isTakingCover = false;
+                if (currentTargetPoint != null)
+                {
+                    currentState = State.MovingToShootPoint;
+                    agent.isStopped = false;
+                    agent.SetDestination(currentTargetPoint.position);
+                }
+                else
+                {
                     currentState = State.Combat;
                 }
             }
         }
 
-        Transform FindClosestCover()
+        void MovingToShootPointBehavior()
         {
-            Transform best = null;
-            float shortestDist = Mathf.Infinity;
-            foreach (Transform cover in coverPoints)
+
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                float dist = Vector3.Distance(transform.position, cover.position);
-                if (dist < shortestDist)
-                {
-                    shortestDist = dist;
-                    best = cover;
-                }
+                Debug.Log(gameObject.name + " --> Shooting");
+                currentState = State.Combat;
             }
-            return best;
         }
+
+        void ChargingBehavior()
+        {
+            agent.isStopped = false;
+            agent.SetDestination(player.position);
+
+            Vector3 targetPositionAdjusted = new Vector3(player.position.x, transform.position.y, player.position.z);
+            transform.LookAt(targetPositionAdjusted);
+
+            if (Time.time >= nextFireTime)
+            {
+                ShootAtPlayer();
+                nextFireTime = Time.time + 1f / fireRate;
+            }
+        }
+
         
         void OnDrawGizmos()
         {
             Gizmos.color = Color.whiteSmoke;
             dir = (player.position - enemyEyesPos.transform.position).normalized;
             Gizmos.DrawRay(enemyEyesPos.transform.position, dir * detectionRange);
+
         }
         bool HasLineOfSight()
         {
@@ -318,14 +411,85 @@ namespace Enemy
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
-            if ((currentHealth < maxHealth / 2) && !inCover && currentState != State.Dead)
+
+            if (currentState == State.Dead) return;
+
+            float healthPercent = currentHealth / maxHealth;
+
+            // LOW HEALTH BEHAVIOR
+            if (healthPercent < lowHealthThreshold)
             {
-                currentState = State.TakingCover;
+                DecideLowHealthBehavior();
             }
+            else
+            {
+                // PROBABILITY-BASED REACTION
+                if (Random.value < hitReactionProbability)
+                {
+                    Debug.Log(" --> On Hit | Random.value = " + Random.value);
+                    StartTakingCover();
+                }
+            }
+
             if (currentHealth <= 0)
             {
                 Die();
             }
+        }
+
+        void DecideLowHealthBehavior()
+        {
+            float choice = Random.value;
+            Debug.Log(" --> Low Health | choice = "+ choice);
+            if (choice < 0.5f)
+            {
+                StartTakingCover(); 
+            }
+            else
+            {
+                StartCharging();
+            }
+        }
+
+        void StartTakingCover()
+        {
+            if (combatPositionProviderObj == null || isTakingCover) return;
+            Debug.Log(" --> StartTakingCover");
+            isTakingCover = true;
+            Transform cover = combatPositionProviderObj.GetNearestCover(transform.position, this);
+
+            if (cover == null)
+            {
+                Debug.Log(" --> cover == null");
+                StartCharging();
+                return;
+            }
+
+            float distanceToCover = Vector3.Distance(transform.position, cover.position);
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+            if (distanceToCover > distanceToPlayer)
+            {
+                Debug.Log(" --> Dist");
+                combatPositionProviderObj.ReleaseCover(cover, this);
+                StartCharging();
+                return;
+            }
+
+            reservedCover = cover;
+            currentTargetPoint = cover;
+
+            currentState = State.TakingCover;
+            agent.isStopped = false;
+            agent.SetDestination(currentTargetPoint.position);
+        }
+
+        void StartCharging()
+        {
+            Debug.Log(" --> StartCharging");
+            currentState = State.Charging;
+            agent.isStopped = false;
+            agent.SetDestination(player.position);
         }
 
         void Die()
@@ -345,6 +509,12 @@ namespace Enemy
             Debug.Log(" gunToDrop.transform.position = " + gunToDrop.transform.position);
             Debug.Log("enemyEyesPos.transform.position = " + enemyEyesPos.transform.position);
             Debug.Log("Enemy died!");
+            if (reservedCover != null)
+            {
+                combatPositionProviderObj.ReleaseCover(reservedCover, this);
+                reservedCover = null;
+            }
+            enemyGun.gameObject.SetActive(false);
             //GameManager.Instance.SetGameState(GameState.PlayerKilled);
             //Destroy(gameObject);
         }

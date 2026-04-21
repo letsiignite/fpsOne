@@ -1,5 +1,6 @@
 using Game;
 using Mission;
+using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,8 +21,12 @@ public class MenuManager : MonoBehaviour
     private GameObject resumeButton;
     [SerializeField]
     private HitPointsSystem hitPointsSystem;
+    [SerializeField]
+    private TMP_Text fpsText;
 
     private string GAME_SCENE_NAME = "GameScene";
+    private float deltaTime = 0.0f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,7 +36,11 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+
+        float fps = 1.0f / deltaTime;
+
+        fpsText.text = Mathf.Ceil(fps).ToString();
     }
 
     public void StartGame()

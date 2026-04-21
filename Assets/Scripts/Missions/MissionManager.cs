@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Video;
 
 
 namespace Mission
@@ -22,11 +23,15 @@ namespace Mission
         private PlayerController playerController;
         [SerializeField]
         private CheckpointSystem checkpointSystem;
-        [SerializeField]
-        private GameObject[] missionIntroObject;
+       
         [SerializeField]
         private MenuManager menuManager;
-
+        [SerializeField] 
+        private VideoPlayer videoPlayer;
+        [SerializeField]
+        private GameObject missionIntroImage;
+       [SerializeField]
+        private GameObject[] objectsToHideForIntro;
        public float RESPAWN_DELAY = 0;  
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -46,40 +51,54 @@ namespace Mission
 
         public IEnumerator StartMission()
         {
-            yield return new WaitForSeconds (0.5f);
+            missionIntroImage.SetActive(true);
+            yield return null;
+            //yield return new WaitForSeconds (0.5f);
             GameManager.Instance.player.transform.position = PlayerSpawnPosForMission[missionIndex].transform.position;
             playerController = GameManager.Instance.player.GetComponent<PlayerController>();
             playerController.DisableMovement();
-            /*bgAudioSource.Stop();
-            bgAudioSource.clip = introData[missionIndex].bgMusic;
-            bgAudioSource.Play();*/
-            missionIntroObject[missionIndex].SetActive(true);
+            bgAudioSource.Stop();
+            //bgAudioSource.clip = introData[missionIndex].audioClip;
+            //bgAudioSource.Play();
+          
             GameManager.Instance.SetGameState(GameState.MissionIntro);
             DialogText.text = "...";
-            //bgAudioSource.Stop();
+            //foreach (GameObject obj in objectsToHideForIntro)
+            //{ 
+            //    obj.SetActive(false);
+            //}
+            bgAudioSource.Stop();
             GameManager.Instance.SetGameState(GameState.Running);
             playerController.EnableMovement();
-            missionIntroObject[missionIndex].SetActive(false);
+            missionIntroImage.SetActive(false);
             //StartCoroutine(HandleNerration());
         }
 
         IEnumerator HandleNerration()
         {
-            while (nerrationIndex < introData[missionIndex].nerrationClips.Length)
-            {
-                //Debug.Log(" Start Nerration - " + nerrationIndex);
-                voiceOverAudioSource.Stop();
-                voiceOverAudioSource.clip = introData[missionIndex].nerrationClips[nerrationIndex];
-                voiceOverAudioSource.Play();
-                DialogText.text = introData[missionIndex].nerrationText[nerrationIndex++];
-                yield return new WaitForSeconds(voiceOverAudioSource.clip.length);
-            }
+            Debug.Log("HandleNerration - "+Time.time);
+           
+            videoPlayer.clip = introData[missionIndex].nerrationVideoClip;
+            videoPlayer.Prepare();
+            yield return new WaitUntil(() => videoPlayer.isPrepared);
+            Debug.Log("Prepare - " + Time.time);
+            videoPlayer.Play();
+            DialogText.text = introData[missionIndex].nerrationText;
+
+            yield return new WaitWhile(() => videoPlayer.isPlaying);
+            Debug.Log("Play time - " + Time.time);
+            videoPlayer.Stop();
+            videoPlayer.gameObject.SetActive(false);
+
             GameManager.Instance.SetGameState(GameState.Running);
             DialogText.text = "...";
             bgAudioSource.Stop();
+            foreach (GameObject obj in objectsToHideForIntro)
+            {
+                obj.SetActive(true);
+            }
+            missionIntroImage.SetActive(false);
             playerController.EnableMovement();
-            missionIntroObject[missionIndex].SetActive(false);
-            yield return null;
         }
 
         public void EndMission()
@@ -105,10 +124,18 @@ namespace Mission
         }
 
         IEnumerator ProcessRespawn(float delay)
-        { 
-            yield return new WaitForSeconds(delay);
+        {
+            CharacterController cc = GameManager.Instance.player.GetComponent<CharacterController>();
+
+            cc.enabled = false;
+
             GameManager.Instance.player.transform.position = checkpointSystem.GetLastCheckpointPos();
-            Debug.Log(" Plr Pos = " + GameManager.Instance.player.transform.position+" | Chk Pos = "+ checkpointSystem.GetLastCheckpointPos());
+            Debug.Log(" Plr Pos = " + GameManager.Instance.player.transform.position + " | Chk Pos = " + checkpointSystem.GetLastCheckpointPos());
+            cc.enabled = true;
+
+            playerController.ResetMovement();
+            yield return new WaitForSeconds(delay);
+           
             checkpointSystem.Respawn();
             playerController.EnableMovement();
             menuManager.HideMissionMenus();

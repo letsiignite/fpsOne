@@ -1,0 +1,15 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v3.1.172307092)
+
+newmtl Russian_Assault_Rifle
+kd 0.588236 0.238316 0.20164
+illum 1
+
+newmtl Russian_Assault_Rifle_Collimator_Glass
+kd 0.588 0.588 0.588
+illum 1
+
+newmtl Red_Dot_Sight
+kd 0.588 0.588 0.588
+illum 1
+

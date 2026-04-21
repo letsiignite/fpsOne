@@ -16,7 +16,7 @@ MonoBehaviour:
   m_TableCollectionNameGuidString: cadf0a386fd095f4e8ca390451e76d78
   m_Entries:
   - m_Id: 661937119232
-    m_Key: HP
+    m_Key: FPS
     m_Metadata:
       m_Items: []
   - m_Id: 16029179109376

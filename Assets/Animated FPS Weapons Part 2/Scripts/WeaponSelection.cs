@@ -128,7 +128,7 @@ public class WeaponSelection : MonoBehaviour
 
         int previousSelectedWeapon = selectedWeapon;
 
-		if (Input.GetAxis("Mouse ScrollWheel") < 0f && keyIsPressed == false)
+		/*if (Input.GetAxis("Mouse ScrollWheel") < 0f && keyIsPressed == false)
 		{
 			showUnarmed = false;
 			if (selectedWeapon >= transform.childCount - 1)
@@ -143,7 +143,7 @@ public class WeaponSelection : MonoBehaviour
 				selectedWeapon = transform.childCount - 1;
 			else
 				selectedWeapon--;
-		}
+		}*/
 
 		if (Input.GetKeyDown(KeyCode.Alpha1) && transform.childCount >= 1 && keyIsPressed == false || Input.GetKeyDown(KeyCode.Keypad1) && transform.childCount >= 1 && keyIsPressed == false)
 		{
@@ -161,7 +161,7 @@ public class WeaponSelection : MonoBehaviour
 			return;
         }
 
-
+		/*
 		if (Input.GetKeyDown(KeyCode.Alpha0) || showUnarmed == true || Input.GetKeyDown(KeyCode.Keypad0))
 		{
 			selectedWeapon = 0;
@@ -210,7 +210,7 @@ public class WeaponSelection : MonoBehaviour
 				selectedWeapon = 7;
 				showUnarmed = false;
 			}
-		}
+		}*/
 		if (previousSelectedWeapon != selectedWeapon)
 		{
 			SelectWeapon();
