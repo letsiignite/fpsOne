@@ -54,6 +54,7 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
     private UniqueRandom<Transform> randomCover;
     private Transform currentCover;
     private Vector3 startPos;
+    private Quaternion startRotation;
     public int maxHealth = 100;
     private float currentHealth;
     [SerializeField]
@@ -75,6 +76,7 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
         animator = GetComponent<Animator>();
         laserLine.enabled = false;
         startPos = transform.position;
+        startRotation = transform.rotation;
     }
 
     private void ResetAnimation()
@@ -88,6 +90,7 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
     public void Reset()
     {
         transform.position = startPos;
+        transform.rotation = startRotation;
         currentHealth = maxHealth;
         currentState = State.Idle;
 

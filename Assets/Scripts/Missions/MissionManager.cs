@@ -32,7 +32,13 @@ namespace Mission
         private GameObject missionIntroImage;
        [SerializeField]
         private GameObject[] objectsToHideForIntro;
-       public float RESPAWN_DELAY = 0;  
+
+        [SerializeField]
+        private MissionIntroUI missionIntroUI;
+        [SerializeField]
+        private MissionData[] missionDataSet;
+
+        public float RESPAWN_DELAY = 0;  
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -70,6 +76,7 @@ namespace Mission
             bgAudioSource.Stop();
             GameManager.Instance.SetGameState(GameState.Running);
             playerController.EnableMovement();
+            missionIntroUI.ShowMission(missionDataSet[missionIndex]);
             missionIntroImage.SetActive(false);
             //StartCoroutine(HandleNerration());
         }
@@ -98,6 +105,7 @@ namespace Mission
                 obj.SetActive(true);
             }
             missionIntroImage.SetActive(false);
+            missionIntroUI.ShowMission(missionDataSet[missionIndex]);
             playerController.EnableMovement();
         }
 
