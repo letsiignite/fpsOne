@@ -8,8 +8,7 @@ namespace Enemy
     public class EnemyGun : MonoBehaviour, IEnemyGun
     {
         public LayerMask layerMask;
-        [SerializeField]
-        private Transform shootPoint;
+        public Transform shootPoint;
         [SerializeField]
         private float range;
         [SerializeField]
@@ -35,7 +34,7 @@ namespace Enemy
             this.shootCount = shootCount;
             if (Physics.Raycast(shootPoint.transform.position, dir, out hit, range, layerMask))
             {
-                //Debug.Log(" Hit = "+hit.collider.gameObject.name);
+               //Debug.Log(" Hit = "+hit.collider.gameObject.name);
                
                 if (hit.collider.gameObject.GetComponent<DamageReceiver>() != null)
                 {

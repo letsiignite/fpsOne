@@ -113,13 +113,13 @@ public class Gun_Controller : MonoBehaviour
 
     public void SetIsInPlayersHand(bool value)
     {
-        Debug.Log(gameObject.name + " > SetIsInPlayersHand = "+ value);
+        //Debug.Log(gameObject.name + " > SetIsInPlayersHand = "+ value);
         isInPlayersHand = value;
     }
     // Limit so it doesn’t go too far
     private void OnEnable()
     {
-        Debug.Log(" Register "+gameObject.name);
+        //Debug.Log(" Register "+gameObject.name);
         GameManager.Instance.AddOnGameRunningCallbacks(DisplayIcons);
         GameManager.Instance.AddOnPlayerDeathCallbacks(HideIcons);
     }
@@ -147,7 +147,7 @@ public class Gun_Controller : MonoBehaviour
         if (isInPlayersHand)
         {
             AmmoReserve += count;
-            Debug.Log(" +++++ Adding Ammo = " + count + " | Total = " + AmmoReserve);
+            //Debug.Log(" +++++ Adding Ammo = " + count + " | Total = " + AmmoReserve);
             AddAmmo();
         }
         
@@ -1290,7 +1290,11 @@ public class Gun_Controller : MonoBehaviour
     {
 
         RaycastHit hit;
-        recoilScript.RecoilFire();
+        if (recoilScript == null)
+        {
+            recoilScript = GameObject.FindAnyObjectByType<Recoil>();
+        }
+        recoilScript.FireRecoil();
         if (Physics.Raycast(mainCamera.transform.position,
                             mainCamera.transform.forward,
                             out hit,

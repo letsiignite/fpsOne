@@ -34,7 +34,7 @@ namespace Collectables
         {
             if (other.CompareTag("Player"))
             {
-                PopupHandler.Instance.Show(this, other.gameObject);
+                PopupHandler.Instance.ShowCollectablesPopup(this, other.gameObject);
             }
         }
 

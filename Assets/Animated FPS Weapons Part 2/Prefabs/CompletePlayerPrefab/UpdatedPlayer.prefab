@@ -2246,7 +2246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396781908356674568}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.684, z: 0}
   m_LocalScale: {x: 1.5, y: 0.4, z: 1.5}
   m_ConstrainProportionsScale: 0
@@ -2346,7 +2346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
-  damageMultiplyer: 2
+  damageMultiplier: 0
   isPlayer: 1
   damagePosition: {x: 0, y: 0, z: 0}
   myDamageIndicator: {fileID: 0}
@@ -2555,6 +2555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d121855c5191747829cbb05b69fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSniper: 0
   animator: {fileID: 2673346248352101777}
   canShake: 0
   recoilScript: {fileID: 8419231712901066384}
@@ -2651,6 +2652,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   MuzzleFlash1: {fileID: 2172841916213038912}
   MuzzleFlash2: {fileID: 8942336861126912527}
   MuzzleFlashLight: {fileID: 7892970951657346041}
@@ -3509,6 +3511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d121855c5191747829cbb05b69fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSniper: 0
   animator: {fileID: 1861882624242915118}
   canShake: 0
   recoilScript: {fileID: 8419231712901066384}
@@ -3605,6 +3608,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   MuzzleFlash1: {fileID: 3601991881577374150}
   MuzzleFlash2: {fileID: 4866819636108375659}
   MuzzleFlashLight: {fileID: 5782411246062832010}
@@ -8949,6 +8953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d121855c5191747829cbb05b69fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSniper: 0
   animator: {fileID: 8793970107595661100}
   canShake: 0
   recoilScript: {fileID: 8419231712901066384}
@@ -9045,6 +9050,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   MuzzleFlash1: {fileID: 1309724713287418153}
   MuzzleFlash2: {fileID: 2566597683693541293}
   MuzzleFlashLight: {fileID: 6140181640799144891}
@@ -9367,7 +9373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
-  damageMultiplyer: 2
+  damageMultiplier: 0
   isPlayer: 0
   damagePosition: {x: 0, y: 0, z: 0}
   myDamageIndicator: {fileID: 0}
@@ -25022,7 +25028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
-  damageMultiplyer: 5
+  damageMultiplier: 0
   isPlayer: 1
   damagePosition: {x: 0, y: 0, z: 0}
   myDamageIndicator: {fileID: 0}
@@ -26639,9 +26645,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6535a78242c2241aad9a428332b0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.5
-  magnitude: 0.1
-  roughness: 10
 --- !u!114 &7330187537161512822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27139,6 +27142,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
 --- !u!1 &2118147987897651124
 GameObject:
   m_ObjectHideFlags: 0
@@ -50680,6 +50684,23 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: 008c69f25dc1fa240bf4eb1be3293a08, type: 3}
   crouchSound: {fileID: 8300000, guid: a5736fe6b94057d408ca7cdb569ca5df, type: 3}
   weaponSelection: {fileID: 2019928478359757691}
+  slowMultiplier: 0.4
+  effectDuration: 5
+  damageOverlay: {fileID: 0}
+  heartbeatSource: {fileID: 0}
+  heartbeatClip: {fileID: 0}
+  recoil: {fileID: 0}
+  controller: {fileID: 0}
+  cameraPivot: {fileID: 0}
+  standHeight: 1.8
+  crouchHeight: 1.2
+  standEye: 1.6
+  crouchEye: 1
+  crouchSmooth: 12
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  headCheckRadius: 0.2
   isCrouching: 0
   isJumping: 0
   isZooming: 0
@@ -50707,6 +50728,8 @@ MonoBehaviour:
   damageDirection: {fileID: 0}
   damageArcDirection: {fileID: 0}
   menuManager: {fileID: 0}
+  crosshair: {fileID: 0}
+  cameraShake: {fileID: 0}
 --- !u!136 &1118106360081527704
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -52627,6 +52650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d121855c5191747829cbb05b69fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSniper: 0
   animator: {fileID: 5109149025774310950}
   canShake: 0
   recoilScript: {fileID: 8419231712901066384}
@@ -52723,6 +52747,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   MuzzleFlash1: {fileID: 4393927410570939499}
   MuzzleFlash2: {fileID: 2248627013233447143}
   MuzzleFlashLight: {fileID: 3840291245928587314}
@@ -54931,6 +54956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d121855c5191747829cbb05b69fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSniper: 0
   animator: {fileID: 4321467530538416157}
   canShake: 0
   recoilScript: {fileID: 8419231712901066384}
@@ -55027,6 +55053,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   MuzzleFlash1: {fileID: 1576640392710838855}
   MuzzleFlash2: {fileID: 3844243185153012321}
   MuzzleFlashLight: {fileID: 1237234873377256582}
@@ -55670,6 +55697,7 @@ MonoBehaviour:
   GunPickupOptionPopup: {fileID: 0}
   GunIcon: {fileID: 0}
   GunNameForPickupPopup: {fileID: 0}
+  grenadeSlot: {fileID: 0}
 --- !u!114 &8419231712901066384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55682,11 +55710,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17bc3f1b5998e347b2bb0d21d999b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Recoil
-  recoilSmoothness: 1
-  recoilSpeed: 2
-  recoilX: -2
-  recoilY: 2
-  recoilZ: 0
+  recoilAmount: {x: 0.3, y: 0.15}
+  snappiness: 6
+  returnSpeed: 2
+  returnDelay: 0.1
+  recoilType: 0
 --- !u!1 &4742826741325895954
 GameObject:
   m_ObjectHideFlags: 0
@@ -62706,6 +62734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d121855c5191747829cbb05b69fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSniper: 0
   animator: {fileID: 724729755876968340}
   canShake: 0
   recoilScript: {fileID: 8419231712901066384}
@@ -62802,6 +62831,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   MuzzleFlash1: {fileID: 2994578215710301207}
   MuzzleFlash2: {fileID: 4392441905668816321}
   MuzzleFlashLight: {fileID: 343888805936484950}
@@ -63473,7 +63503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
-  damageMultiplyer: 1
+  damageMultiplier: 0
   isPlayer: 0
   damagePosition: {x: 0, y: 0, z: 0}
   myDamageIndicator: {fileID: 0}
@@ -66059,6 +66089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d121855c5191747829cbb05b69fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSniper: 0
   animator: {fileID: 245948378816020168}
   canShake: 0
   recoilScript: {fileID: 0}
@@ -66155,6 +66186,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   MuzzleFlash1: {fileID: 7136947566157283324}
   MuzzleFlash2: {fileID: 7136947566157283324}
   MuzzleFlashLight: {fileID: 7136947566157283324}
@@ -67626,6 +67658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d121855c5191747829cbb05b69fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSniper: 0
   animator: {fileID: 8954015199866501}
   canShake: 0
   recoilScript: {fileID: 8419231712901066384}
@@ -67722,6 +67755,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+    m_IsSDF: 0
   MuzzleFlash1: {fileID: 6367701763110317477}
   MuzzleFlash2: {fileID: 4821244660783373155}
   MuzzleFlashLight: {fileID: 6400552331131515352}
@@ -74225,7 +74259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
-  damageMultiplyer: 5
+  damageMultiplier: 0
   isPlayer: 0
   damagePosition: {x: 0, y: 0, z: 0}
   myDamageIndicator: {fileID: 0}
@@ -75389,6 +75423,8 @@ MonoBehaviour:
   crosshairColor: {r: 1, g: 1, b: 1, a: 1}
   width: 3
   height: 20
+  recoil: {fileID: 0}
+  recoilMultiplier: 500
   spread:
     spread: 20
     maxSpread: 60
@@ -76625,7 +76661,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7896303986086019665}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1.518, z: 0}
   m_LocalScale: {x: 1.5, y: 0.4, z: 1.5}
   m_ConstrainProportionsScale: 0
@@ -76725,7 +76761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 3791739501736092353}
-  damageMultiplyer: 1
+  damageMultiplier: 0
   isPlayer: 1
   damagePosition: {x: 0, y: 0, z: 0}
   myDamageIndicator: {fileID: 0}

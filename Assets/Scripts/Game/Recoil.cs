@@ -1,57 +1,65 @@
 using UnityEngine;
 
+public enum RecoilType
+{
+    Accumulate,   // AR, SMG
+    SingleKick    // Sniper, Shotgun
+}
+
 public class Recoil : MonoBehaviour
 {
-    private Gun_Controller gunController;
-    private Vector3 currentRotation;
-    private Vector3 targetRotation;
-    private Crosshair crosshair;
+    [SerializeField] private Vector2 recoilAmount = new Vector2(0.3f, 0.15f);
+    [SerializeField] private float snappiness = 6f;
+    [SerializeField] private float returnSpeed = 2f;
+    [SerializeField] private float returnDelay = 0.1f;
+    private float lastFireTime;
 
-
-    [SerializeField] private float recoilSmoothness = 1f;
-    [SerializeField] private float recoilSpeed = 5f;
-    [SerializeField] private float recoilX;
-    [SerializeField] private float recoilY;
-    [SerializeField] private float recoilZ;
-
-    public Vector2 GetRecoil()
+    private Vector2 currentRotation;
+    private Vector2 targetRotation;
+    
+    [SerializeField] private RecoilType recoilType;
+    public void FireRecoil()
     {
-        Vector3 euler = transform.localRotation.eulerAngles;
+        lastFireTime = Time.time;
 
-        float x = euler.x;
-        float z = euler.z;
+        float x = Random.Range(recoilAmount.x * 0.8f, recoilAmount.x);
+        float y = Random.Range(-recoilAmount.y, recoilAmount.y);
 
-        // Convert from 0–360 to -180 to 180
-        if (x > 180) x -= 360;
-        if (z > 180) z -= 360;
+        Vector2 recoil = new Vector2(x, y);
 
-        return new Vector2(z, x); // screen X, Y
-    }
-
-    private void Start()
-    {
-        Gun_Controller[] childElements = GetComponentsInChildren<Gun_Controller>();
-        foreach (var ele in childElements)
+        if (recoilType == RecoilType.Accumulate)
         {
-            // Check if the child GameObject is active in the hierarchy
-            if (ele.gameObject.activeInHierarchy)
-            {
-                gunController = ele.GetComponent<Gun_Controller>();
-            }
+            targetRotation += recoil;
+        }
+        else if (recoilType == RecoilType.SingleKick)
+        {
+            targetRotation = recoil;
         }
 
-        targetRotation = Vector3.one;
-        currentRotation = (gunController != null)? gunController.mainCamera.transform.rotation.eulerAngles : Vector3.one;
+        // Clamp vertical recoil (prevents sky aiming)
+        targetRotation.x = Mathf.Clamp(targetRotation.x, 0f, 5f);
     }
-    // Update is called once per frame
-    void Update()
+
+    public Vector2 GetRecoilRotation()
     {
-        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, recoilSpeed * Time.deltaTime);
-        currentRotation = Vector3.Slerp(currentRotation, targetRotation, recoilSmoothness * Time.deltaTime);
-        transform.localRotation = Quaternion.Euler(currentRotation);
+        return currentRotation;
     }
-    public void RecoilFire()
+
+    public void UpdateRecoil()
     {
-        targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
+        // Only start returning after delay (COD feel)
+        if (Time.time > lastFireTime + returnDelay)
+        {
+            targetRotation = Vector2.Lerp(targetRotation, Vector2.zero, returnSpeed * Time.deltaTime);
+        }
+
+        // Smooth follow (snappy movement)
+        currentRotation = Vector2.Lerp(currentRotation, targetRotation, snappiness * Time.deltaTime);
+
+        // Snap to zero when very close (prevents drifting forever)
+        if (currentRotation.magnitude < 0.01f)
+        {
+            currentRotation = Vector2.zero;
+        }
     }
 }

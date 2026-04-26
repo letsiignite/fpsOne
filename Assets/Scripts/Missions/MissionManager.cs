@@ -37,6 +37,8 @@ namespace Mission
         private MissionIntroUI missionIntroUI;
         [SerializeField]
         private MissionData[] missionDataSet;
+        [SerializeField]
+        private SquadSpawner squadSpawner;
 
         public float RESPAWN_DELAY = 0;  
         // Start is called once before the first execution of Update after the MonoBehaviour is created

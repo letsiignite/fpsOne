@@ -241,11 +241,11 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
                              viewDistance,
                              visionMask))
         {
-            Debug.Log(" Shot at = " + hit.collider.gameObject.name);
+            Debug.Log(" Sniper Shot at = " + hit.collider.gameObject.name);
             if (hit.collider.gameObject.GetComponent<DamageReceiver>() != null)
             {
                 hit.collider.gameObject.GetComponent<DamageReceiver>().ReceiveRayHitDamage(damage, transform.position, out bool none);
-                Debug.Log(" Calling - ReceiveRayHitDamage "+damage);
+                //Debug.Log(" Calling - ReceiveRayHitDamage "+damage);
             }
         }
     }

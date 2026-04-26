@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
 
         if (player != null)
         {
+            Debug.Log(" ++ ApplySniperHitToPlayer ++");
             playerController = (playerController == null) ? player.GetComponent<PlayerController>(): playerController;
             playerController.ApplySniperHitEffect();
         }

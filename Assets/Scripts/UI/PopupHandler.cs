@@ -9,9 +9,12 @@ public class PopupHandler : MonoBehaviour
 {
     public static PopupHandler Instance;
 
-    public GameObject popupUI;
+    public GameObject popupUIForGun;
+    public GameObject popupUIForCollectables;
     public TMP_Text itemNameText;
     public Image icon;
+    public TMP_Text collectablesItemNameText;
+    public Image collectablesIcon;
 
     private CollectableItem currentItem;
     private GameObject currentPlayer;
@@ -21,31 +24,31 @@ public class PopupHandler : MonoBehaviour
    private void Awake()
     {
         Instance = this;
-        popupUI.SetActive(false);
+        popupUIForCollectables.SetActive(false);
     }
 
-    public void Show(CollectableItem item, GameObject player)
+    public void ShowCollectablesPopup(CollectableItem item, GameObject player)
     {
         currentItem = item;
         currentPlayer = player;
 
-        itemNameText.text = item.GetDisplayName();
-        icon.sprite = item.GetIcon();
+        collectablesItemNameText.text = item.GetDisplayName();
+        collectablesIcon.sprite = item.GetIcon();
 
-        popupUI.SetActive(true);
+        popupUIForCollectables.SetActive(true);
     }
 
     public void ShowObectiveCollectionPopup(string objectiveTitle, Sprite objectiveIcon)
     {
-        itemNameText.text = objectiveTitle;
-        icon.sprite = objectiveIcon;
+        collectablesItemNameText.text = objectiveTitle;
+        collectablesIcon.sprite = objectiveIcon;
 
-        popupUI.SetActive(true);
+        popupUIForCollectables.SetActive(true);
     }
 
     public void Hide()
     {
-        popupUI.SetActive(false);
+        popupUIForCollectables.SetActive(false);
         currentItem = null;
         currentPlayer = null;
     }

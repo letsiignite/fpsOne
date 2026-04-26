@@ -58,8 +58,7 @@ namespace Enemy
         private int[] shootCount = new int[4];
         private List<int> numbers = new List<int> { 0, 1, 2, 3};
 
-        [SerializeField] 
-        private CombatPositionProvider combatPositionProviderObj;
+        private CombatPositionProvider provider;
         
 
         [SerializeField] 
@@ -70,13 +69,12 @@ namespace Enemy
         private float coverWaitTime = 2f;
 
         private float coverTimer;
-        private Transform currentTargetPoint;
 
         private UniqueRandom<int> randomInts;
         private bool initCompleted = false;
-        private Transform reservedCover;
+        private Transform reservedPoint;
         private bool isTakingCover = false;
-        Transform bestCover;
+        private Transform currentTarget;
 
         void Start()
         {
@@ -85,9 +83,13 @@ namespace Enemy
             startPos = transform.position;
             currentHealth = maxHealth;
             currentState = State.MovingToPoint;
-            agent.SetDestination(endPoint.position);
+            if (endPoint != null)
+            {
+                agent.SetDestination(endPoint.position);
+            }
+            
             randomInts = new UniqueRandom<int>(numbers);
-            combatPositionProviderObj = GameObject.FindAnyObjectByType<CombatPositionProvider>();
+            provider = GameObject.FindAnyObjectByType<CombatPositionProvider>();
         }
 
         private void OnEnable()
@@ -129,13 +131,41 @@ namespace Enemy
                 g.SetActive(true);
             }
 
-            if (reservedCover != null)
+            if (reservedPoint != null)
             {
-                combatPositionProviderObj.ReleaseCover(reservedCover, this);
-                reservedCover = null;
+                ReleaseCurrentPoint();
+                reservedPoint = null;
             }
             enemyGun.gameObject.SetActive(true);
             gameObject.SetActive(true);
+        }
+
+        void ReleaseCurrentPoint()
+        {
+            if (reservedPoint != null)
+            {
+                provider.Release(reservedPoint, this);
+                reservedPoint = null;
+            }
+        }
+
+        public void SetPlayer(Transform player)
+        {
+            this.player = player;
+
+        }
+
+        public void SetInitialPosition(Transform point)
+        {
+            reservedPoint = point;
+            currentTarget = point;
+           
+            endPoint = point;
+            agent = GetComponent<NavMeshAgent>();
+            agent.isStopped = false;
+            agent.SetDestination(point.position);
+
+            currentState = State.TakingCover; // or MovingToShootPoint depending on type
         }
 
         private void OnTriggerEnter(Collider other)
@@ -292,31 +322,73 @@ namespace Enemy
             }
         }
 
+        void ChargingBehavior()
+        {
+            Debug.Log(" --> ChargingBehavior");
+            if (player == null) return;
+
+            // Always chase moving player
+            agent.isStopped = false;
+            // 🔥 Zig-zag movement
+            Vector3 toPlayer = (player.position - transform.position).normalized;
+
+            // Perpendicular direction (left/right)
+            Vector3 side = Vector3.Cross(Vector3.up, toPlayer);
+
+            // Oscillation
+            float zigZagSpeed = Random.Range(4f, 7f);
+            float zigZagAmount = Random.Range(1f, 2f);
+            agent.speed = 7f;
+            float offset = Mathf.Sin(Time.time * zigZagSpeed) * zigZagAmount;
+            Debug.Log(" --> zigZagSpeed = " + zigZagSpeed + " || zigZagAmount = " + zigZagAmount+ " | offset = "+ offset);
+            // Final target
+            Vector3 target = player.position + side * offset;
+
+            agent.SetDestination(target);
+
+            float dist = Vector3.Distance(transform.position, player.position);
+
+            // 🔥 1. Close combat → switch to shooting
+            if (dist < CLOSE_COMBAT_THRESHOLD)
+            {
+                agent.isStopped = true;
+                currentState = State.Combat;
+                return;
+            }
+
+            // 🔥 2. Lost line of sight → stop dumb chasing
+            if (!HasLineOfSight())
+            {
+                currentState = State.Idle;
+                return;
+            }
+
+            // 🔥 3. Optional: if mid-range → take cover instead of charging blindly
+            if (dist > CLOSE_COMBAT_THRESHOLD && dist < detectionRange * 0.8f)
+            {
+                // small probability to break charge → more natural
+                if (Random.value < 0.02f)
+                {
+                    StartTakingCover();
+                    return;
+                }
+            }
+        }
+
         void TakingCoverBehavior()
         {
-            if (bestCover == null)
+            agent.speed = 5f;
+            Debug.Log(" --> TakingCoverBehavior");
+            if (reservedPoint == null)
             {
-                bestCover = combatPositionProviderObj.GetNearestCover(transform.position, this);
-            }
-            float distanceToCover = Vector3.Distance(transform.position, bestCover.position);
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-            if(distanceToPlayer < CLOSE_COMBAT_THRESHOLD)
-            {
-                inCover = true;
                 currentState = State.Combat;
+                return;
             }
-            if (bestCover != null)
+
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                agent.isStopped = false;
-                agent.SetDestination(bestCover.position);
-                if (!agent.pathPending && agent.remainingDistance < 0.5f)
-                {
-                    inCover = true;
-                    currentState = State.InCoverWait;
-                    coverTimer = coverWaitTime;
-                    bestCover = null;
-                }
+                currentState = State.InCoverWait;
+                coverTimer = coverWaitTime;
             }
         }
 
@@ -327,50 +399,62 @@ namespace Enemy
 
             if (coverTimer <= 0f)
             {
-                combatPositionProviderObj.ReleaseCover(reservedCover, this);
-                reservedCover = null;
-
-                currentTargetPoint = combatPositionProviderObj.GetNearestShootingPoint(transform.position);
+                ReleaseCurrentPoint();
                 isTakingCover = false;
-                if (currentTargetPoint != null)
-                {
-                    currentState = State.MovingToShootPoint;
-                    agent.isStopped = false;
-                    agent.SetDestination(currentTargetPoint.position);
-                }
-                else
+
+                Transform shootPoint = provider.GetBestPosition(
+                    CombatPositionType.Shooting,
+                    player.position,
+                    transform.position,
+                    this
+                );
+
+                if (shootPoint == null)
                 {
                     currentState = State.Combat;
+                    return;
                 }
+
+                reservedPoint = shootPoint;
+                currentTarget = shootPoint;
+
+                agent.isStopped = false;
+                agent.SetDestination(shootPoint.position);
+
+                currentState = State.MovingToShootPoint;
             }
         }
 
         void MovingToShootPointBehavior()
         {
+            Debug.Log(" --> MovingToShootPointBehavior");
+            if (reservedPoint == null)
+            {
+                currentState = State.Combat;
+                return;
+            }
 
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                Debug.Log(gameObject.name + " --> Shooting");
-                currentState = State.Combat;
+                currentState = State.Combat; // start shooting
             }
         }
 
-        void ChargingBehavior()
+        void StartCharging()
         {
+            Debug.Log(" --> StartCharging");
+            ReleaseCurrentPoint();
+            if (agent == null)
+            {
+                agent = GetComponent<NavMeshAgent>();
+            }
             agent.isStopped = false;
             agent.SetDestination(player.position);
 
-            Vector3 targetPositionAdjusted = new Vector3(player.position.x, transform.position.y, player.position.z);
-            transform.LookAt(targetPositionAdjusted);
-
-            if (Time.time >= nextFireTime)
-            {
-                ShootAtPlayer();
-                nextFireTime = Time.time + 1f / fireRate;
-            }
+            currentState = State.Charging;
         }
 
-        
+
         void OnDrawGizmos()
         {
             Gizmos.color = Color.whiteSmoke;
@@ -381,7 +465,7 @@ namespace Enemy
         bool HasLineOfSight()
         {
             RaycastHit hit;
-            dir = (player.position - enemyEyesPos.transform.position).normalized;
+            dir = (player.position - enemyGun.shootPoint.transform.position).normalized;
             if (Physics.Raycast(enemyEyesPos.transform.position, dir, out hit, detectionRange, enemyGun.layerMask))
             {
                 //Debug.Log(gameObject.name+ " >> In sight = " + hit.transform.name);
@@ -453,43 +537,28 @@ namespace Enemy
 
         void StartTakingCover()
         {
-            if (combatPositionProviderObj == null || isTakingCover) return;
-            Debug.Log(" --> StartTakingCover");
-            isTakingCover = true;
-            Transform cover = combatPositionProviderObj.GetNearestCover(transform.position, this);
+            ReleaseCurrentPoint();
+
+            Transform cover = provider.GetBestPosition(
+                CombatPositionType.Cover,
+                player.position,
+                transform.position,
+                this
+            );
 
             if (cover == null)
             {
-                Debug.Log(" --> cover == null");
                 StartCharging();
                 return;
             }
 
-            float distanceToCover = Vector3.Distance(transform.position, cover.position);
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            reservedPoint = cover;
+            currentTarget = cover;
 
-            if (distanceToCover > distanceToPlayer)
-            {
-                Debug.Log(" --> Dist");
-                combatPositionProviderObj.ReleaseCover(cover, this);
-                StartCharging();
-                return;
-            }
-
-            reservedCover = cover;
-            currentTargetPoint = cover;
+            agent.isStopped = false;
+            agent.SetDestination(cover.position);
 
             currentState = State.TakingCover;
-            agent.isStopped = false;
-            agent.SetDestination(currentTargetPoint.position);
-        }
-
-        void StartCharging()
-        {
-            Debug.Log(" --> StartCharging");
-            currentState = State.Charging;
-            agent.isStopped = false;
-            agent.SetDestination(player.position);
         }
 
         void Die()
@@ -509,10 +578,10 @@ namespace Enemy
             Debug.Log(" gunToDrop.transform.position = " + gunToDrop.transform.position);
             Debug.Log("enemyEyesPos.transform.position = " + enemyEyesPos.transform.position);
             Debug.Log("Enemy died!");
-            if (reservedCover != null)
+            if (reservedPoint != null)
             {
-                combatPositionProviderObj.ReleaseCover(reservedCover, this);
-                reservedCover = null;
+                ReleaseCurrentPoint();
+                reservedPoint = null;
             }
             enemyGun.gameObject.SetActive(false);
             //GameManager.Instance.SetGameState(GameState.PlayerKilled);

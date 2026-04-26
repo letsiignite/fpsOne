@@ -3,6 +3,12 @@ using UnityEngine;
 
 namespace Enemy
 {
+    public enum CombatPositionType
+    {
+        Cover,
+        Shooting
+    }
+
     public class CombatPositionProvider : MonoBehaviour
     {
         [SerializeField] private Transform[] coverPoints;
@@ -10,77 +16,147 @@ namespace Enemy
         [SerializeField] private Transform player;
         [Tooltip("anything behind which enemy can hide")]
         [SerializeField] private LayerMask obstructionMask; // Walls, obstacles or anything behind which enemy can hide.
+        private float randomness = 2f;
+        private float maxCheckDistance = 100f;
         [SerializeField] private float coverCheckHeight = 1.5f;
         [SerializeField] private AudioSource EnemyDialogs;
         [SerializeField] private AudioClip onHit;
         [SerializeField] private AudioClip charge;
-        private Dictionary<Transform, EnemyAI> reservedCovers = new Dictionary<Transform, EnemyAI>();
+        //private Dictionary<Transform, EnemyAI> reservedCovers = new Dictionary<Transform, EnemyAI>();
+        private Dictionary<Transform, EnemyAI> reservedPoints = new Dictionary<Transform, EnemyAI>();
 
-        public Transform GetNearestCover(Vector3 fromPosition, EnemyAI requester)
+
+        public Transform GetBestPosition(
+            CombatPositionType type,
+            Vector3 playerPos,
+            Vector3 enemyPos,
+            EnemyAI requester
+            )
         {
+            Transform[] points = (type == CombatPositionType.Cover)
+                ? coverPoints
+                : shootingPoints;
+
             Transform best = null;
-            float shortestDist = Mathf.Infinity;
-            EnemyDialogs.Stop();
-            EnemyDialogs.clip = onHit;
-            EnemyDialogs.Play();
-            foreach (var cover in coverPoints)
+            float bestScore = Mathf.Infinity;
+
+            float distToPlayer = Vector3.Distance(enemyPos, playerPos);
+            if (type == CombatPositionType.Cover && distToPlayer < 5f)
             {
-                // ❌ Skip if reserved by someone else
-                if (reservedCovers.ContainsKey(cover) && reservedCovers[cover] != requester)
-                    continue;
+                EnemyDialogs.clip = charge;
+                EnemyDialogs.Play();
+                return null; // force charging
+            }
 
-                // ❌ Skip unsafe cover
-                if (!IsCoverSafe(cover))
-                    continue;
+            foreach (Transform point in points)
+            {
+                if (point == null) continue;
 
-                float dist = Vector3.Distance(fromPosition, cover.position);
+                // ❌ Skip reserved
+                if (IsReserved(point)) continue;
 
-                if (dist < shortestDist)
+                // ---------------- STATE RULES ----------------
+
+                float playerDist = Vector3.Distance(point.position, playerPos);
+
+                if (type == CombatPositionType.Cover)
                 {
-                    shortestDist = dist;
-                    best = cover;
+                    // ❌ Skip covers that are farther from player than current enemy position
+                    if (playerDist > distToPlayer)
+                        continue;
+
+                    // Must block line of sight
+                    if (!IsCoverSafe(point, playerPos))
+                        continue;
                 }
-            }
-
-            // ✅ Reserve selected cover
-            if (best != null)
-            {
-                reservedCovers[best] = requester;
-            }
-
-            return best;
-        }
-
-        public Transform GetNearestShootingPoint(Vector3 fromPosition)
-        {
-            Transform best = null;
-            float shortestDist = Mathf.Infinity;
-            EnemyDialogs.Stop();
-            EnemyDialogs.clip = charge;
-            EnemyDialogs.Play();
-            foreach (var point in shootingPoints)
-            {
-                float dist = Vector3.Distance(fromPosition, point.position);
-
-                if (dist < shortestDist)
+                else // Shooting
                 {
-                    shortestDist = dist;
+                    if (!HasLineOfSight(point, playerPos))
+                        continue;
+                }
+
+                // ---------------- SCORING ----------------
+
+                float score = playerDist + Random.Range(0f, randomness);
+
+                if (score < bestScore)
+                {
+                    bestScore = score;
                     best = point;
                 }
             }
 
+            // ✅ Reserve before returning
+            if (best != null)
+            {
+                EnemyDialogs.clip = onHit;
+                EnemyDialogs.Play();
+                Reserve(best, requester);
+            }
+            else
+            {
+                EnemyDialogs.clip = charge;
+                EnemyDialogs.Play();
+            }
+
             return best;
         }
 
-        public void ReleaseCover(Transform cover, EnemyAI requester)
+        #region Reservation
+        bool IsReserved(Transform point)
         {
-            if (cover == null) return;
+            return reservedPoints.ContainsKey(point);
+        }
 
-            if (reservedCovers.ContainsKey(cover) && reservedCovers[cover] == requester)
+        void Reserve(Transform point, EnemyAI ai)
+        {
+            if (!reservedPoints.ContainsKey(point))
             {
-                reservedCovers.Remove(cover);
+                reservedPoints.Add(point, ai);
             }
         }
+
+        public void Release(Transform point, EnemyAI ai)
+        {
+            if (point == null) return;
+
+            if (reservedPoints.TryGetValue(point, out var owner))
+            {
+                if (owner == ai)
+                {
+                    reservedPoints.Remove(point);
+                }
+            }
+        }
+        #endregion
+
+        #region Validation
+        bool IsCoverSafe(Transform point, Vector3 playerPos)
+        {
+            Vector3 origin = point.position + Vector3.up * 1.5f;
+            Vector3 dir = (playerPos - origin).normalized;
+
+            if (Physics.Raycast(origin, dir, out RaycastHit hit, maxCheckDistance, obstructionMask))
+            {
+                return !hit.transform.CompareTag("Player");
+            }
+
+            return false;
+        }
+
+        bool HasLineOfSight(Transform point, Vector3 playerPos)
+        {
+            Vector3 origin = point.position + Vector3.up * 1.5f;
+            Vector3 dir = (playerPos - origin).normalized;
+
+            if (Physics.Raycast(origin, dir, out RaycastHit hit, maxCheckDistance))
+            {
+                return hit.transform.CompareTag("Player");
+            }
+
+            return false;
+        }
+        #endregion
 
         bool IsCoverSafe(Transform cover)
         {
@@ -111,7 +187,13 @@ namespace Enemy
 
             foreach (var cover in coverPoints)
             {
-                Gizmos.color = reservedCovers.ContainsKey(cover) ? Color.red : Color.green;
+                Gizmos.color = reservedPoints.ContainsKey(cover) ? Color.red : Color.greenYellow;
+                Gizmos.DrawSphere(cover.position, 0.3f);
+            }
+
+            foreach (var cover in shootingPoints)
+            {
+                Gizmos.color = Color.blueViolet;
                 Gizmos.DrawSphere(cover.position, 0.3f);
             }
         }

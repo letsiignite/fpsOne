@@ -20,6 +20,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private GameObject resumeButton;
     [SerializeField]
+    private GameObject quitButton;
+    [SerializeField]
+    private GameObject missionCompleteScreen;
+    [SerializeField]
     private HitPointsSystem hitPointsSystem;
     [SerializeField]
     private TMP_Text fpsText;
@@ -91,6 +95,12 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void DisplayMissionComplitionScreen()
+    {
+        missionCompleteScreen.SetActive(true);
+        onDeathMenu.SetActive(true);
+        GameManager.Instance.SetGameState(GameState.PlayerKilled);
+    }
     
 
     public void DisplayDeathScreen()

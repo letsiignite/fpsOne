@@ -77,8 +77,11 @@ namespace Game
         public void ProcessDamage(float damageMultiplyer, float damage, out bool isDead)
         {
             isDead = false;
-            //Debug.Log(" Processing dam - "+damage);
+           
             float totalDamage = damageMultiplyer * damage;
+
+            Debug.Log(" Processing dam - " + damage+ " | totalDamage = "+ totalDamage);
+
             if (armor > 0) 
             {
                 armor = armor - totalDamage;
@@ -100,6 +103,7 @@ namespace Game
 
             if (totalDamage > 50)
             {
+                Debug.Log(" ++ Sniped ++");
                 cameraShake.Shake(0.5f, cameraShakeForce * 2);
                 GameManager.Instance.ApplySniperHitToPlayer();
             }
