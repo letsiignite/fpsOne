@@ -164,8 +164,7 @@ public class Gun_Controller : MonoBehaviour
         { 
             DisplayIcons();
         }*/
-
-
+       
         if (HasAlternateFireMode && !IsShotgun)
         {
             if (Input.GetKeyDown(KeyCode.X))
@@ -1295,6 +1294,7 @@ public class Gun_Controller : MonoBehaviour
             recoilScript = GameObject.FindAnyObjectByType<Recoil>();
         }
         recoilScript.FireRecoil();
+
         if (Physics.Raycast(mainCamera.transform.position,
                             mainCamera.transform.forward,
                             out hit,

@@ -1,0 +1,2517 @@
+#usda 1.0
+(
+    "Exported from Adobe Substance 3D Painter 12.0.0"
+    defaultPrim = "apartment4_obj"
+)
+
+def "apartment4_obj"
+{
+    def Scope "material"
+    {
+        def Material "barthroon_glass" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/barthroon_glass_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/barthroon_glass_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/barthroon_glass_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/barthroon_glass_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/barthroon_glass_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/barthroon_glass_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/barthroon_glass_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/barthroon_glass.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/barthroon_glass.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/barthroon_glass.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/barthroon_glass.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/barthroon_glass.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/barthroon_glass/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/barthroon_glass.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/barthroon_glass.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/barthroon_glass.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/barthroon_glass.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/barthroon_glass.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/barthroon_glass/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "cielling_and_floor" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/cielling_and_floor_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/cielling_and_floor_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/cielling_and_floor_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/cielling_and_floor_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/cielling_and_floor_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/cielling_and_floor_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/cielling_and_floor_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/cielling_and_floor.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/cielling_and_floor.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/cielling_and_floor.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/cielling_and_floor.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/cielling_and_floor.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/cielling_and_floor/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/cielling_and_floor.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/cielling_and_floor.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/cielling_and_floor.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/cielling_and_floor.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/cielling_and_floor.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/cielling_and_floor/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "door_border" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/door_border_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/door_border_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/door_border_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/door_border_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/door_border_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/door_border_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/door_border_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/door_border.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/door_border.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/door_border.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/door_border.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/door_border.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/door_border/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/door_border.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/door_border.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/door_border.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/door_border.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/door_border.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/door_border/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "parking_walls" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/parking_walls_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/parking_walls_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/parking_walls_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/parking_walls_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/parking_walls_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/parking_walls_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/parking_walls_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/parking_walls.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/parking_walls.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/parking_walls.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/parking_walls.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/parking_walls.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/parking_walls/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/parking_walls.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/parking_walls.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/parking_walls.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/parking_walls.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/parking_walls.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/parking_walls/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "pillars" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/pillars_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/pillars_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/pillars_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/pillars_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/pillars_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/pillars_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/pillars_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/pillars.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/pillars.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/pillars.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/pillars.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/pillars.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/pillars/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/pillars.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/pillars.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/pillars.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/pillars.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/pillars.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/pillars/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "railling" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/railling_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/railling_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/railling_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/railling_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/railling_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/railling_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/railling_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/railling/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/railling/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/railling/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/railling/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/railling/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/railling/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/railling/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/railling.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/railling/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/railling.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/railling/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/railling.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/railling/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/railling.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/railling/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/railling.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/railling/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/railling.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/railling.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/railling.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/railling.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/railling.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/railling/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "stairs" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/stairs_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/stairs_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/stairs_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/stairs_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/stairs_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/stairs_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/stairs_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/stairs.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/stairs.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/stairs.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/stairs.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/stairs.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/stairs/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/stairs.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/stairs.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/stairs.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/stairs.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/stairs.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/stairs/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "terrace_border" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/terrace_border_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/terrace_border_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/terrace_border_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/terrace_border_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/terrace_border_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/terrace_border_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/terrace_border_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_border.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_border.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_border.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_border.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_border.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_border/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_border.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_border.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_border.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_border.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_border.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_border/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "terrace_floor" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/terrace_floor_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/terrace_floor_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/terrace_floor_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/terrace_floor_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/terrace_floor_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/terrace_floor_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/terrace_floor_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_floor.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_floor.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_floor.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_floor.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_floor.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_floor/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_floor.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_floor.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_floor.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_floor.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/terrace_floor.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/terrace_floor/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "trreace" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/trreace_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/trreace_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/trreace_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/trreace_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/trreace_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/trreace_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/trreace_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/trreace.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/trreace.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/trreace.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/trreace.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/trreace.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/trreace/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/trreace.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/trreace.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/trreace.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/trreace.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/trreace.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/trreace/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "walls" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/walls_Base_color_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/walls_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/walls_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/walls_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/walls_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/walls_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/walls/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/walls/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/walls/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/walls/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/walls/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/walls/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/walls/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/walls.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/walls/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/walls.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/walls/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/walls.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/walls/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/walls.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/walls/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/walls/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/walls/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/walls/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/walls/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/walls.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/walls/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/walls.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/walls/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/walls.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/walls/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/walls.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/walls/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+        }
+
+        def Material "window" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/window_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/window_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/window_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/window_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/window_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/window_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/window_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/window/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/window/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/window/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/window/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/window/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/window/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/window/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/window/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/window.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/window.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+
+        def Material "window_glass" (
+            customData = {
+                dictionary adobe = {
+                    dictionary painter = {
+                        asset painterProject_spp = @D:/freelane work/VR GAME work/part  2/apartment.spp@
+                    }
+                }
+            }
+        )
+        {
+            asset inputs:basecolor_tex = @apartment_textures/window_glass_Base_color_1001.png@
+            asset inputs:compositedAmbientOcclusion_tex = @apartment_textures/window_glass_Mixed_AO_1001.png@
+            asset inputs:compositedNormalGL_tex = @apartment_textures/window_glass_Normal_OpenGL_1001.png@
+            asset inputs:height_tex = @apartment_textures/window_glass_Height_1001.png@
+            asset inputs:metallic_tex = @apartment_textures/window_glass_Metallic_1001.png@
+            asset inputs:normal_tex = @apartment_textures/window_glass_Normal_1001.png@
+            asset inputs:roughness_tex = @apartment_textures/window_glass_Roughness_1001.png@
+            token outputs:adobe:surface.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/AdobeStandardMaterial_4_0Shader.outputs:surface>
+            token outputs:displacement.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:displacement>
+            token outputs:surface.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/UsdPreviewSurfaceShader.outputs:surface>
+
+            def NodeGraph "UsdPreviewSurface"
+            {
+                def Shader "UsdPreviewSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    float3 inputs:diffuseColor.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/diffuseColorTextureShader.outputs:rgb>
+                    float inputs:ior = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/normalTextureShader.outputs:rgb>
+                    float inputs:occlusion.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/occlusionTextureShader.outputs:r>
+                    float inputs:roughness.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/roughnessTextureShader.outputs:r>
+                    token outputs:displacement
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "diffuseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window_glass.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window_glass.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window_glass.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "occlusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window_glass.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/window_glass.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window_glass/UsdPreviewSurface/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+            }
+
+            def NodeGraph "AdobeStandardMaterial_4_0"
+            {
+                def Shader "AdobeStandardMaterial_4_0Shader"
+                {
+                    uniform token info:id = "AdobeStandardMaterial_4_0"
+                    float inputs:ambientOcclusion.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/ambientOcclusionTextureShader.outputs:r>
+                    float3 inputs:baseColor.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/baseColorTextureShader.outputs:rgb>
+                    float inputs:IOR = 1.5
+                    float inputs:metallic.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/metallicTextureShader.outputs:r>
+                    normal3f inputs:normal.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/normalTextureShader.outputs:rgb>
+                    float inputs:roughness.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/roughnessTextureShader.outputs:r>
+                    token outputs:surface
+                }
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname = "st"
+                    float2 outputs:result
+                }
+
+                def Shader "baseColorTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window_glass.inputs:basecolor_tex>
+                    token inputs:sourceColorSpace = "sRGB"
+                    float2 inputs:st.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float3 outputs:rgb
+                }
+
+                def Shader "roughnessTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window_glass.inputs:roughness_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "metallicTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window_glass.inputs:metallic_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+
+                def Shader "normalTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    float4 inputs:bias = (-1, -1, -1, 0)
+                    asset inputs:file.connect = </apartment4_obj/material/window_glass.inputs:compositedNormalGL_tex>
+                    float4 inputs:scale = (2, 2, 2, 1)
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    normal3f outputs:rgb
+                }
+
+                def Shader "ambientOcclusionTextureShader"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file.connect = </apartment4_obj/material/window_glass.inputs:compositedAmbientOcclusion_tex>
+                    token inputs:sourceColorSpace = "raw"
+                    float2 inputs:st.connect = </apartment4_obj/material/window_glass/AdobeStandardMaterial_4_0/TexCoordReader.outputs:result>
+                    token inputs:wrapS = "repeat"
+                    token inputs:wrapT = "repeat"
+                    float outputs:r
+                }
+            }
+        }
+    }
+
+    over "window_001"
+    {
+        over "window_001" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/window_glass>
+        }
+
+        over "window_001_1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/window>
+        }
+    }
+
+    over "_13"
+    {
+        over "_13" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/door_border>
+        }
+    }
+
+    over "_13_002"
+    {
+        over "_13_002" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/door_border>
+        }
+    }
+
+    over "_13_004"
+    {
+        over "_13_004" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/door_border>
+        }
+    }
+
+    over "Cube"
+    {
+        over "Cube" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/walls>
+        }
+    }
+
+    over "Cube_019"
+    {
+        over "Cube_019" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/parking_walls>
+        }
+    }
+
+    over "Cube_063"
+    {
+        over "Cube_063" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/trreace>
+        }
+    }
+
+    over "Cube_065"
+    {
+        over "Cube_065" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/terrace_border>
+        }
+    }
+
+    over "Cube_001"
+    {
+        over "Cube_001" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/pillars>
+        }
+    }
+
+    over "Cube_004"
+    {
+        over "Cube_004" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/stairs>
+        }
+    }
+
+    over "Cube_002"
+    {
+        over "Cube_002" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/barthroon_glass>
+        }
+    }
+
+    over "Cube_006"
+    {
+        over "Cube_006" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/stairs>
+        }
+    }
+
+    over "Cube_008"
+    {
+        over "Cube_008" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/railling>
+        }
+    }
+
+    over "Cube_005"
+    {
+        over "Cube_005" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/railling>
+        }
+    }
+
+    over "Cube_009"
+    {
+        over "Cube_009" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/terrace_floor>
+        }
+    }
+
+    over "Cube_003"
+    {
+        over "Cube_003" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/cielling_and_floor>
+        }
+    }
+
+    over "Cube_007"
+    {
+        over "Cube_007" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </apartment4_obj/material/cielling_and_floor>
+        }
+    }
+}
+

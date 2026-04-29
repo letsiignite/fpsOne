@@ -41,6 +41,7 @@ namespace Enemy
             Combat,
             TakingCover,
             InCoverWait,
+            PeekState,
             MovingToShootPoint,
             Charging,
             Dead
@@ -75,6 +76,9 @@ namespace Enemy
         private Transform reservedPoint;
         private bool isTakingCover = false;
         private Transform currentTarget;
+        private EnemyAssets enemyAssets;
+        private Transform peekPoint;
+        private bool isMovingToPeek = false;
 
         void Start()
         {
@@ -87,7 +91,7 @@ namespace Enemy
             {
                 agent.SetDestination(endPoint.position);
             }
-            
+            enemyAssets = GameObject.FindAnyObjectByType<EnemyAssets>();
             randomInts = new UniqueRandom<int>(numbers);
             provider = GameObject.FindAnyObjectByType<CombatPositionProvider>();
         }
@@ -263,6 +267,11 @@ namespace Enemy
                     animator.SetBool("run", true);
                     ChargingBehavior();
                     break;
+                case State.PeekState:
+                    ResetAnimation();
+                    animator.SetBool("run", true);
+                    PeekBehavior();
+                    break;
                 default:
 
                     break;
@@ -397,7 +406,7 @@ namespace Enemy
             agent.isStopped = true;
             coverTimer -= Time.deltaTime;
 
-            if (coverTimer <= 0f)
+            /*if (coverTimer <= 0f)
             {
                 ReleaseCurrentPoint();
                 isTakingCover = false;
@@ -422,7 +431,80 @@ namespace Enemy
                 agent.SetDestination(shootPoint.position);
 
                 currentState = State.MovingToShootPoint;
+            }*/
+
+            if (coverTimer <= 0f)
+            {
+                provider.Release(reservedPoint, this);
+                reservedPoint = null;
+
+                currentState = State.PeekState;
             }
+        }
+
+        void PeekBehavior()
+        {
+            // =========================================================
+            // 🔹 Step 1: Get closest shooting point (once)
+            // =========================================================
+            if (peekPoint == null)
+            {
+                peekPoint = provider.GetClosestShootingPoint(this.transform.position, this);
+
+                if (peekPoint == null)
+                {
+                    currentState = State.Combat;
+                    return;
+                }
+
+                agent.isStopped = false;
+                agent.SetDestination(peekPoint.position);
+                isMovingToPeek = true;
+            }
+
+            // =========================================================
+            // 🔹 Step 2: Move to peek point
+            // =========================================================
+            if (isMovingToPeek)
+            {
+                //RotateTowardsPlayer(5f);
+
+                if (!agent.pathPending && agent.remainingDistance < 0.5f)
+                {
+                    isMovingToPeek = false;
+                    agent.isStopped = true;
+                }
+            }
+            else
+            {
+                // =========================================================
+                // 🔹 Step 3: Wait & watch player
+                // =========================================================
+                RotateTowardsPlayer(8f);
+
+                if (HasLineOfSight())
+                {
+                    currentState = State.Combat;
+                    peekPoint = null;
+                }
+            }
+        }
+
+        void RotateTowardsPlayer(float speed)
+        {
+            if (player == null) return;
+
+            Vector3 dir = player.position - transform.position;
+            dir.y = 0f;
+
+            if (dir.sqrMagnitude < 0.01f) return;
+
+            Quaternion targetRot = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRot,
+                Time.deltaTime * speed
+            );
         }
 
         void MovingToShootPointBehavior()
@@ -566,6 +648,7 @@ namespace Enemy
             
             ResetAnimation();
             animator.SetBool("dead", true);
+            enemyGun.gameObject.SetActive(false);
             currentState = State.Dead;
             GameObject gunToDrop = GameManager.Instance.GetGunPrefabToDrop(soldierType);
            
@@ -583,7 +666,8 @@ namespace Enemy
                 ReleaseCurrentPoint();
                 reservedPoint = null;
             }
-            enemyGun.gameObject.SetActive(false);
+            
+            enemyAssets.PlayRandomAudioOnDeath();
             //GameManager.Instance.SetGameState(GameState.PlayerKilled);
             //Destroy(gameObject);
         }

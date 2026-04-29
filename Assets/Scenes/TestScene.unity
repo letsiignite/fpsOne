@@ -167,7 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 269156422}
-  damageMultiplyer: 2
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!136 &33549105
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -238,6 +241,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &33549107
 MeshFilter:
@@ -295,7 +299,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 269156422}
-  damageMultiplyer: 2
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!65 &45525397
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -364,6 +371,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &45525399
 MeshFilter:
@@ -714,14 +722,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353409725}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -910,6 +918,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1054,6 +1063,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &408626362
 MeshFilter:
@@ -1076,7 +1086,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 695355453}
-  damageMultiplyer: 10
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!1001 &408699423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1778,7 +1791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3341494469715003236, guid: 074071508bd36f64ab089b557313853b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3629404918042588082, guid: 074071508bd36f64ab089b557313853b, type: 3}
       propertyPath: m_Layer
@@ -1908,7 +1921,23 @@ MonoBehaviour:
   fireRate: 1
   maxHealth: 100
   enemyEyesPos: {fileID: 1678482030}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  gunFireAudioClip: {fileID: 0}
+  audioSource: {fileID: 0}
+  soldierType: 0
   enemyGun: {fileID: 1658908807}
+  objectsToDisableOnDeath: []
+  shootAudio:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  shootCount: 00000000000000000000000000000000
+  hitReactionProbability: 0.6
+  lowHealthThreshold: 0.4
+  coverWaitTime: 2
 --- !u!195 &695355455
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2005,7 +2034,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 695355453}
-  damageMultiplyer: 2
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!65 &734200282
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2074,6 +2106,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &734200284
 MeshFilter:
@@ -2131,7 +2164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 269156422}
-  damageMultiplyer: 1
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!136 &752249628
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2202,6 +2238,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &752249630
 MeshFilter:
@@ -2522,6 +2559,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &907717574
 MeshFilter:
@@ -2638,6 +2676,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1018197761
 MeshFilter:
@@ -2832,6 +2871,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3366,6 +3406,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1183225998
 MeshFilter:
@@ -3487,6 +3528,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3623,6 +3665,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3796,6 +3839,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3925,7 +3969,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 269156422}
-  damageMultiplyer: 1
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!65 &1295456238
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3994,6 +4041,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1295456240
 MeshFilter:
@@ -4165,7 +4213,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 269156422}
-  damageMultiplyer: 5
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!136 &1352928691
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4236,6 +4287,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1352928693
 MeshFilter:
@@ -4422,6 +4474,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1506708661
 MeshFilter:
@@ -4585,9 +4638,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f0adc4844f8a3488c355805a3de5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy.EnemyGun
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   shootPoint: {fileID: 1506708659}
   range: 40
   damage: 10
+  bulletHitEffect: {fileID: 0}
+  BulletTrailPrefab: {fileID: 0}
+  Enemyflash1: {fileID: 0}
+  Enemyflash2: {fileID: 0}
 --- !u!1 &1677815064
 GameObject:
   m_ObjectHideFlags: 0
@@ -4743,6 +4803,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1678482032
 MeshFilter:
@@ -8518,6 +8579,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.HitPointsSystem
   totalHealth: 100
   healthText: {fileID: 1277361624}
+  firstHit: {fileID: 0}
+  SecondHit: {fileID: 0}
+  ThirdHit: {fileID: 0}
+  HitIndicatorImage: {fileID: 0}
+  audioSource: {fileID: 0}
+  normalHit: {fileID: 0}
+  heavyHit: {fileID: 0}
+  gameManager: {fileID: 0}
+  missionManager: {fileID: 0}
+  damageDirection: {fileID: 0}
+  damageArcDirection: {fileID: 0}
+  menuManager: {fileID: 0}
+  crosshair: {fileID: 0}
+  cameraShake: {fileID: 0}
 --- !u!136 &1880672661
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8663,6 +8738,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -8855,7 +8931,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.DamageReceiver
   damageHandlerObject: {fileID: 269156422}
-  damageMultiplyer: 5
+  damageMultiplier: 0
+  isPlayer: 0
+  damagePosition: {x: 0, y: 0, z: 0}
+  myDamageIndicator: {fileID: 0}
 --- !u!135 &1941652268
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8924,6 +9003,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1941652270
 MeshFilter:
@@ -9063,14 +9143,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1983463581}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 3
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 0
     m_Resolution: -1
@@ -9393,6 +9473,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2078085640
 MeshFilter:

@@ -102,6 +102,38 @@ namespace Enemy
             return best;
         }
 
+        public Transform GetClosestShootingPoint(Vector3 requesterPos, Enemy.EnemyAI requester)
+        {
+            Transform bestPoint = null;
+            float bestDist = float.MaxValue;
+
+            foreach (Transform point in shootingPoints)
+            {
+                if (point == null) continue;
+
+                // 🔒 Skip already reserved points
+                if (reservedPoints.ContainsKey(point))
+                    continue;
+
+                float dist = (point.position - requesterPos).sqrMagnitude; // faster than Distance
+
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    bestPoint = point;
+                }
+            }
+
+            // 🔒 Reserve it
+            if (bestPoint != null)
+            {
+                reservedPoints[bestPoint] = requester;
+            }
+
+            return bestPoint;
+        }
+
+
         #region Reservation
         bool IsReserved(Transform point)
         {

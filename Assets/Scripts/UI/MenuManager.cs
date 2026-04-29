@@ -27,6 +27,8 @@ public class MenuManager : MonoBehaviour
     private HitPointsSystem hitPointsSystem;
     [SerializeField]
     private TMP_Text fpsText;
+    [SerializeField]
+    private GameObject keyMapping;
 
     private string GAME_SCENE_NAME = "GameScene";
     private float deltaTime = 0.0f;
@@ -127,5 +129,10 @@ public class MenuManager : MonoBehaviour
     {
         onDeathMenu.SetActive(false);
         deathScreen.HideDeathScreen();
+    }
+
+    public void ShowKeyMapping()
+    {
+        keyMapping.SetActive(!keyMapping.activeInHierarchy);
     }
 }

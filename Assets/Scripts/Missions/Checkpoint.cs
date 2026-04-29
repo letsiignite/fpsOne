@@ -84,7 +84,7 @@ namespace Mission
             {
                 checkpointSystem.ProvideCheckpointInfo(this);
                 checkpointInfoProvided = true;
-                Invoke("HideObjects", 4f);
+                Invoke("HideObjects", 10f);
                 //this.gameObject.SetActive(false);
             }
         }

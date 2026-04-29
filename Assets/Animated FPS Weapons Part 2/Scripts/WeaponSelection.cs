@@ -202,7 +202,7 @@ public class WeaponSelection : MonoBehaviour
 		{
 			selectedWeapon = 6;
 			showUnarmed = false;
-		}
+		}*/
 		if (numberOfSlots >= 7)
 		{
 			if (Input.GetKeyDown(KeyCode.Alpha7) && transform.childCount >= 7 && keyIsPressed == false || Input.GetKeyDown(KeyCode.Keypad7) && transform.childCount >= 7 && keyIsPressed == false)
@@ -210,7 +210,7 @@ public class WeaponSelection : MonoBehaviour
 				selectedWeapon = 7;
 				showUnarmed = false;
 			}
-		}*/
+		}
 		if (previousSelectedWeapon != selectedWeapon)
 		{
 			SelectWeapon();

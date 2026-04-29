@@ -13,16 +13,35 @@ namespace Game
         private GameObject bulletMesh;
         [SerializeField]
         private Rigidbody rb;
+        [SerializeField]
         private Transform parent;
         private Vector3 hitPosition;
-
+        private Vector3 startPosition;
+        private Quaternion startRotation;
 
         bool cameraActive = false;
 
+        private void Awake()
+        {
+            startPosition = bulletCamera.gameObject.transform.localPosition;
+            startRotation = bulletCamera.gameObject.transform.localRotation;
+            Debug.Log("0) startPosition = " + startPosition + " | startRotation = " + startRotation);
+        }
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            parent = transform.parent;
+          
+            Debug.Log("1) startPosition = "+ startPosition+ " | startRotation = "+ startRotation);
+        }
+
+        private void OnEnable()
+        {
+            if (rb != null)
+            {
+                bulletCamera.gameObject.transform.localPosition = startPosition;
+                bulletCamera.gameObject.transform.localRotation = startRotation;
+                Debug.Log("2) startPosition = " + startPosition + " | startRotation = " + startRotation);
+            }
         }
 
         public void ActivateCamera(GameObject cam, Vector3 pos)
@@ -32,6 +51,7 @@ namespace Game
             bulletCamera.gameObject.SetActive(true);
             cameraActive = true;
             playerCam = cam;
+          
             hitPosition = pos;
             Debug.Log(" >>  bullet cam Active - "+ playerCam.name);
         }
@@ -40,9 +60,6 @@ namespace Game
         {
             if (collision.gameObject.GetComponent<DamageReceiver>() == null)
                 return;
-
-            if (bulletCamera != null)
-                bulletCamera.gameObject.SetActive(false);
 
             ContactPoint contact = collision.contacts[0];
             Vector3 hitPoint = contact.point;

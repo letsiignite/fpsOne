@@ -25,8 +25,12 @@ namespace Game
         private Image HitIndicatorImage;
         [SerializeField]
         private AudioSource audioSource;
-       
         [SerializeField]
+        private AudioClip normalHit;
+        [SerializeField]
+        private AudioClip heavyHit;
+
+       [SerializeField]
         private GameManager gameManager;
         [SerializeField]
         private MissionManager missionManager;
@@ -104,15 +108,22 @@ namespace Game
             if (totalDamage > 50)
             {
                 Debug.Log(" ++ Sniped ++");
+                audioSource.Stop();
+                audioSource.clip = heavyHit;
+                audioSource.Play();
                 cameraShake.Shake(0.5f, cameraShakeForce * 2);
                 GameManager.Instance.ApplySniperHitToPlayer();
             }
             else
             {
+                audioSource.Stop();
+                audioSource.pitch = Random.Range(0.8f, 1.2f);
+                audioSource.clip = normalHit;
+                audioSource.Play();
                 cameraShake.Shake(0.5f, cameraShakeForce);
             }
             
-            audioSource.Play();
+           
             if (currentHealth < 10)
             {
                 delayTimer = ThirdHitDelay;
