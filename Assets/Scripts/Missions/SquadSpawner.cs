@@ -13,7 +13,7 @@ public class SquadSpawner : MonoBehaviour
 
     [Header("Settings")]
     public int squadSize = 4;
-    public float spawnInterval = 10f;
+    public float spawnInterval = 15f;
 
     private List<GameObject> activeSoldiers = new List<GameObject>();
     private Coroutine spawnRoutine;
@@ -92,7 +92,7 @@ public class SquadSpawner : MonoBehaviour
 
         Transform point = provider.GetBestPosition(
             type,
-            player.position,
+            player,
             ai.transform.position,
             ai
         );

@@ -522,7 +522,7 @@ MonoBehaviour:
   missionCompleteScreen: {fileID: 0}
   hitPointsSystem: {fileID: 0}
   fpsText: {fileID: 0}
-  keyMapping: {fileID: 0}
+  keyMapping: {fileID: 1268517595}
 --- !u!4 &254934406
 Transform:
   m_ObjectHideFlags: 0
@@ -1481,7 +1481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1268517596
 RectTransform:
   m_ObjectHideFlags: 0

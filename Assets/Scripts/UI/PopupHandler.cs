@@ -55,12 +55,20 @@ public class PopupHandler : MonoBehaviour
 
     private void Update()
     {
+        if (
+            GameManager.Instance.GetGameState() == GameState.Pause ||
+            GameManager.Instance.GetGameState() == GameState.PlayerKilled
+            )
+        {
+            popupUIForCollectables.SetActive(false);
+        }
         if (currentItem != null && Input.GetKeyDown(KeyCode.F))
         {
             currentItem.Collect(currentPlayer);
             audioSource.Stop();
             audioSource.clip = currentItem.GetAudioClip();
             audioSource.Play();
+            
             Hide();
         }
     }

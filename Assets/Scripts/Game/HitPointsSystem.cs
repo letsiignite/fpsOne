@@ -74,7 +74,8 @@ namespace Game
 
         public void Heal(int amount)
         { 
-            currentHealth += amount;
+            currentHealth = (currentHealth + amount > 100)? 100 : (currentHealth + amount);
+            if(!godMode)
             healthText.text = currentHealth.ToString();
         }
 
@@ -92,9 +93,11 @@ namespace Game
                 totalDamage = (armor < 0)? (armor + totalDamage): 0 ;
             }
             if (!godMode)
+            {
                 currentHealth -= totalDamage;
-
-            healthText.text = currentHealth.ToString();
+                healthText.text = currentHealth.ToString();
+            }
+                
             Sprite hitImage = null;
             float delayTimer = 0;
 

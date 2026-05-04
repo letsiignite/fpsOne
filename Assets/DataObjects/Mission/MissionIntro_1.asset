@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137d736288a659c42acfb0d2fab1bf73, type: 3}
   m_Name: MissionIntro_1
   m_EditorClassIdentifier: Assembly-CSharp::mission.MissionIntroData
-  nerrationVideoClip: {fileID: 32900000, guid: b08d5454f1ff72141aca0f77408ebd8b, type: 3}
+  nerrationVideoClip: {fileID: 32900000, guid: 28367a42ac8740943abaecd17d401ce4, type: 3}
   nerrationText: 'We are interested in 2 things at this point. A radio piece that
     holds data that we need and a communication antenna. '

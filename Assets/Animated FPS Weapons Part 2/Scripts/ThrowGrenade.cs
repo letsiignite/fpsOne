@@ -21,6 +21,6 @@ public class ThrowGrenade : MonoBehaviour {
                             (startPoint.rotation.x * extraForceMultiplier) :
                             (startPoint.rotation.x * extraForceMultiplier) * -1;
 
-        gren.GetComponent<Rigidbody>().AddForce(startPoint.forward * (throwForce + extraForce), ForceMode.Impulse);
+        gren.GetComponent<Rigidbody>().AddForce(startPoint.forward * (throwForce), ForceMode.Impulse);
     }
 }

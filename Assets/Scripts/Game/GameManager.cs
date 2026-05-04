@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     private List<Action> onGameRunningCallbacks = new List<Action>();
 
     private PlayerController playerController;
+    private bool bulletCamActive = false;
 
     private void Awake()
     {
@@ -38,6 +39,8 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+
 
     public void ShowOnKillCrosshair()
     { 
@@ -114,6 +117,13 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
+    public void UpdateBulletCamActiveState( bool isCamActive)
+    { 
+        bulletCamActive = isCamActive;
+    }
+
+    public bool GetBulletCamState() =>  bulletCamActive;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

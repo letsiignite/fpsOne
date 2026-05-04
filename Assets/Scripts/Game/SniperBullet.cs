@@ -18,6 +18,7 @@ namespace Game
         private Vector3 hitPosition;
         private Vector3 startPosition;
         private Quaternion startRotation;
+        private int TTL = 5;
 
         bool cameraActive = false;
 
@@ -25,13 +26,10 @@ namespace Game
         {
             startPosition = bulletCamera.gameObject.transform.localPosition;
             startRotation = bulletCamera.gameObject.transform.localRotation;
-            Debug.Log("0) startPosition = " + startPosition + " | startRotation = " + startRotation);
         }
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-          
-            Debug.Log("1) startPosition = "+ startPosition+ " | startRotation = "+ startRotation);
         }
 
         private void OnEnable()
@@ -40,7 +38,8 @@ namespace Game
             {
                 bulletCamera.gameObject.transform.localPosition = startPosition;
                 bulletCamera.gameObject.transform.localRotation = startRotation;
-                Debug.Log("2) startPosition = " + startPosition + " | startRotation = " + startRotation);
+                GameManager.Instance.UpdateBulletCamActiveState(true);
+                
             }
         }
 
@@ -51,9 +50,17 @@ namespace Game
             bulletCamera.gameObject.SetActive(true);
             cameraActive = true;
             playerCam = cam;
-          
+            bulletMesh.SetActive(true);
+            bloodSplashParticals.SetActive(false);
             hitPosition = pos;
             Debug.Log(" >>  bullet cam Active - "+ playerCam.name);
+            Invoke("SelfDistruct", TTL);
+        }
+
+        private void SelfDistruct()
+        {
+            GameManager.Instance.UpdateBulletCamActiveState(false);
+            DisableGameobject();
         }
 
         void OnCollisionEnter(Collision collision)
@@ -68,6 +75,7 @@ namespace Game
             bulletMesh.SetActive(false);
             //bloodSplashParticals.GetComponent<ParticleSystem>().Stop();
             bloodSplashParticals.SetActive(true);
+            GameManager.Instance.UpdateBulletCamActiveState(false);
             //bloodSplashParticals.GetComponent<ParticleSystem>().Play();
             Invoke("DisableGameobject", 1f);
             Debug.Log("++ >>  OnCollisionEnter");
@@ -82,6 +90,7 @@ namespace Game
             rb.linearVelocity = Vector3.zero;
             bloodSplashParticals.transform.position = bulletMesh.transform.position;
             bulletMesh.SetActive(false);
+            GameManager.Instance.UpdateBulletCamActiveState(false);
             //bloodSplashParticals.GetComponent<ParticleSystem>().Stop();
             bloodSplashParticals.SetActive(true);
             //bloodSplashParticals.GetComponent<ParticleSystem>().Play();

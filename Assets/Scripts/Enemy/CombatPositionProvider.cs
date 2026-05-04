@@ -28,7 +28,7 @@ namespace Enemy
 
         public Transform GetBestPosition(
             CombatPositionType type,
-            Vector3 playerPos,
+            Transform playerPos,
             Vector3 enemyPos,
             EnemyAI requester
             )
@@ -37,17 +37,17 @@ namespace Enemy
                 ? coverPoints
                 : shootingPoints;
 
-            Transform best = null;
+            Transform bestPoint = null;
             float bestScore = Mathf.Infinity;
 
-            float distToPlayer = Vector3.Distance(enemyPos, playerPos);
-            if (type == CombatPositionType.Cover && distToPlayer < 5f)
+            float PlayerDistToenemy = Vector3.Distance(enemyPos, playerPos.position);
+            if (type == CombatPositionType.Cover && PlayerDistToenemy < 5f)
             {
-                EnemyDialogs.clip = charge;
-                EnemyDialogs.Play();
+                /*EnemyDialogs.clip = charge;
+                EnemyDialogs.Play();*/
                 return null; // force charging
             }
-
+            Debug.Log("++ Checking points");
             foreach (Transform point in points)
             {
                 if (point == null) continue;
@@ -57,49 +57,60 @@ namespace Enemy
 
                 // ---------------- STATE RULES ----------------
 
-                float playerDist = Vector3.Distance(point.position, playerPos);
-
+                float pointDistanceToPlayer = Vector3.Distance(point.position , playerPos.position);
+                float pointDistanceToEnemy = Vector3.Distance(point.position , enemyPos);
+                Debug.Log(point.name+ " - pointDistanceToEnemy = " + pointDistanceToEnemy + " | IsCoverSafe(point, playerPos) = "+ IsCoverSafe(point, playerPos.position));
                 if (type == CombatPositionType.Cover)
                 {
                     // ❌ Skip covers that are farther from player than current enemy position
-                    if (playerDist > distToPlayer)
+                    if (pointDistanceToEnemy > PlayerDistToenemy)
                         continue;
 
                     // Must block line of sight
-                    if (!IsCoverSafe(point, playerPos))
+                    if (!IsCoverSafe(point, playerPos.position))
                         continue;
                 }
                 else // Shooting
                 {
-                    if (!HasLineOfSight(point, playerPos))
+                    if (!HasLineOfSight(point, playerPos.position))
                         continue;
                 }
 
                 // ---------------- SCORING ----------------
 
-                float score = playerDist + Random.Range(0f, randomness);
-
+                float score = pointDistanceToEnemy + Random.Range(0f, randomness);
+                Debug.Log("++ score = "+ score+ " | bestScore = "+ bestScore);
                 if (score < bestScore)
                 {
                     bestScore = score;
-                    best = point;
+                    bestPoint = point;
                 }
             }
 
             // ✅ Reserve before returning
-            if (best != null)
+            
+            if (bestPoint != null)
             {
-                EnemyDialogs.clip = onHit;
-                EnemyDialogs.Play();
-                Reserve(best, requester);
+                bool isPlayerCloserThanCover = PlayerDistToenemy < (Vector3.Distance(enemyPos, bestPoint.position));
+                if (!isPlayerCloserThanCover)
+                {
+                   /* EnemyDialogs.clip = onHit;
+                    EnemyDialogs.Play();*/
+                    Reserve(bestPoint, requester);
+                }
+                else
+                {
+                    bestPoint = null; // Player is closer to the AI, so AI connot get to cover.
+                }
+                
             }
             else
             {
-                EnemyDialogs.clip = charge;
-                EnemyDialogs.Play();
+                /*EnemyDialogs.clip = charge;
+                EnemyDialogs.Play();*/
             }
 
-            return best;
+            return bestPoint;
         }
 
         public Transform GetClosestShootingPoint(Vector3 requesterPos, Enemy.EnemyAI requester)
@@ -115,7 +126,7 @@ namespace Enemy
                 if (reservedPoints.ContainsKey(point))
                     continue;
 
-                float dist = (point.position - requesterPos).sqrMagnitude; // faster than Distance
+                float dist = Vector3.Distance(point.position , requesterPos); 
 
                 if (dist < bestDist)
                 {
@@ -216,7 +227,11 @@ namespace Enemy
         void OnDrawGizmos()
         {
             if (coverPoints == null) return;
-
+            foreach (var pt in reservedPoints)
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawSphere(pt.Key.position, 0.3f);
+            }
             foreach (var cover in coverPoints)
             {
                 Gizmos.color = reservedPoints.ContainsKey(cover) ? Color.red : Color.greenYellow;

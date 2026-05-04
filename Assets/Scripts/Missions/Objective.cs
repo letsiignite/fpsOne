@@ -73,5 +73,18 @@ namespace Mission
                 }
             }
         }
+
+        public void Reset()
+        {
+            foreach (GameObject obj in objectsToHide)
+            {
+                obj.SetActive(true);
+            }
+
+            foreach (GameObject obj in objectsToShow)
+            {
+                obj.SetActive(false);
+            }
+        }
     }
 }

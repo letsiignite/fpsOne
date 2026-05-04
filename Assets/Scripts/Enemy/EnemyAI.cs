@@ -31,6 +31,7 @@ namespace Enemy
         private Animator animator;
         private bool detectedPlayer = false;
         private bool inCover = false;
+        private float fireRateAlterationForCharge = 0.3f;
         [SerializeField]
         private List<GameObject> objectsToDisableOnDeath;
 
@@ -48,7 +49,7 @@ namespace Enemy
         }
 
         private State currentState;
-        private const float CLOSE_COMBAT_THRESHOLD = 5f;
+        private const float CLOSE_COMBAT_THRESHOLD = 10f;
         private Vector3 dir;
         private Vector3 startPos;
 
@@ -305,6 +306,7 @@ namespace Enemy
 
         void CombatBehavior()
         {
+            PeekBehavior(); // Peek and shoot
             if (player == null) return;
             //Debug.Log(gameObject.name + " can see - "+ HasLineOfSight());
             if (!HasLineOfSight())
@@ -333,7 +335,7 @@ namespace Enemy
 
         void ChargingBehavior()
         {
-            Debug.Log(" --> ChargingBehavior");
+            //Debug.Log(" --> ChargingBehavior");
             if (player == null) return;
 
             // Always chase moving player
@@ -349,7 +351,7 @@ namespace Enemy
             float zigZagAmount = Random.Range(1f, 2f);
             agent.speed = 7f;
             float offset = Mathf.Sin(Time.time * zigZagSpeed) * zigZagAmount;
-            Debug.Log(" --> zigZagSpeed = " + zigZagSpeed + " || zigZagAmount = " + zigZagAmount+ " | offset = "+ offset);
+            //Debug.Log(" --> zigZagSpeed = " + zigZagSpeed + " || zigZagAmount = " + zigZagAmount+ " | offset = "+ offset);
             // Final target
             Vector3 target = player.position + side * offset;
 
@@ -372,6 +374,13 @@ namespace Enemy
                 return;
             }
 
+
+            if (Time.time >= nextFireTime)
+            {
+                ShootAtPlayer();
+                nextFireTime = (Time.time + 1f / (fireRate * fireRateAlterationForCharge)) + Random.Range(-0.1f, 0.1f);
+            }
+
             // 🔥 3. Optional: if mid-range → take cover instead of charging blindly
             if (dist > CLOSE_COMBAT_THRESHOLD && dist < detectionRange * 0.8f)
             {
@@ -387,8 +396,14 @@ namespace Enemy
         void TakingCoverBehavior()
         {
             agent.speed = 5f;
-            Debug.Log(" --> TakingCoverBehavior");
             if (reservedPoint == null)
+            {
+                currentState = State.Combat;
+                return;
+            }
+
+            if (HasLineOfSight() &&
+                agent.remainingDistance > Vector3.Distance(transform.position, player.position))
             {
                 currentState = State.Combat;
                 return;
@@ -405,33 +420,6 @@ namespace Enemy
         {
             agent.isStopped = true;
             coverTimer -= Time.deltaTime;
-
-            /*if (coverTimer <= 0f)
-            {
-                ReleaseCurrentPoint();
-                isTakingCover = false;
-
-                Transform shootPoint = provider.GetBestPosition(
-                    CombatPositionType.Shooting,
-                    player.position,
-                    transform.position,
-                    this
-                );
-
-                if (shootPoint == null)
-                {
-                    currentState = State.Combat;
-                    return;
-                }
-
-                reservedPoint = shootPoint;
-                currentTarget = shootPoint;
-
-                agent.isStopped = false;
-                agent.SetDestination(shootPoint.position);
-
-                currentState = State.MovingToShootPoint;
-            }*/
 
             if (coverTimer <= 0f)
             {
@@ -468,6 +456,13 @@ namespace Enemy
             if (isMovingToPeek)
             {
                 //RotateTowardsPlayer(5f);
+
+                if (HasLineOfSight() && 
+                    Vector3.Distance(transform.position, peekPoint.position) > Vector3.Distance(transform.position, player.position))
+                {
+                    currentState = State.Combat;
+                    peekPoint = null;
+                }
 
                 if (!agent.pathPending && agent.remainingDistance < 0.5f)
                 {
@@ -509,7 +504,6 @@ namespace Enemy
 
         void MovingToShootPointBehavior()
         {
-            Debug.Log(" --> MovingToShootPointBehavior");
             if (reservedPoint == null)
             {
                 currentState = State.Combat;
@@ -524,7 +518,7 @@ namespace Enemy
 
         void StartCharging()
         {
-            Debug.Log(" --> StartCharging");
+            //enemyAssets.PlayAudioForAttackBehavior(true);
             ReleaseCurrentPoint();
             if (agent == null)
             {
@@ -613,23 +607,25 @@ namespace Enemy
             }
             else
             {
-                StartCharging();
+                StartTakingCover();
             }
         }
 
         void StartTakingCover()
         {
+            //enemyAssets.PlayAudioForAttackBehavior(false);
             ReleaseCurrentPoint();
-
+            Debug.Log(" ++ Req for cover");
             Transform cover = provider.GetBestPosition(
                 CombatPositionType.Cover,
-                player.position,
+                player,
                 transform.position,
                 this
             );
 
             if (cover == null)
             {
+                Debug.Log(" ++ NULL for cover");
                 StartCharging();
                 return;
             }

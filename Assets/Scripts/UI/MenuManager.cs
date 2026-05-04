@@ -46,6 +46,7 @@ public class MenuManager : MonoBehaviour
 
         float fps = 1.0f / deltaTime;
 
+        if(fpsText != null)
         fpsText.text = Mathf.Ceil(fps).ToString();
     }
 
@@ -84,7 +85,9 @@ public class MenuManager : MonoBehaviour
         if (resumeButton.activeInHierarchy)
         {
             deathScreen.DisplayDeathScreen();
+            AudioListener.pause = true;
             onDeathMenu.SetActive(true);
+            GameManager.Instance.SetGameState(GameState.Pause);
             Time.timeScale = 0f;
             missionManager.DisablePlayerMovement();
         }
@@ -92,6 +95,8 @@ public class MenuManager : MonoBehaviour
         {
             deathScreen.HideDeathScreen();
             Time.timeScale = 01f;
+            AudioListener.pause = false;
+            GameManager.Instance.SetGameState(GameState.Running);
             onDeathMenu.SetActive(false);
             missionManager.EnablePlayerMovements();
         }
@@ -102,6 +107,7 @@ public class MenuManager : MonoBehaviour
         missionCompleteScreen.SetActive(true);
         onDeathMenu.SetActive(true);
         GameManager.Instance.SetGameState(GameState.PlayerKilled);
+        missionManager.DisablePlayerMovement();
     }
     
 
@@ -133,6 +139,7 @@ public class MenuManager : MonoBehaviour
 
     public void ShowKeyMapping()
     {
+        PlayClickSound();
         keyMapping.SetActive(!keyMapping.activeInHierarchy);
     }
 }

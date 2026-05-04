@@ -52,7 +52,7 @@ namespace Game
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             rb.isKinematic = false;  
             rb.AddForce(bullet.transform.forward * bulletForce);
-
+          
             SniperBullet camFollow = bullet.GetComponent<SniperBullet>();
             camFollow.ActivateCamera(playerCam, hitPoint);
         }

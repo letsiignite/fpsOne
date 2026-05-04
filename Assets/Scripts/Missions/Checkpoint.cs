@@ -47,8 +47,12 @@ namespace Mission
 
         private void OnEnable()
         {
-            
-           
+            foreach (var a in enemySoldiers)
+            {
+                if(!hiddenObjects.Contains(a))
+                a.SetActive(true);
+            }
+
         }
 
         private void HideObjects()

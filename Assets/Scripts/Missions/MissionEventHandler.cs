@@ -6,6 +6,12 @@ public class MissionEventHandler : MonoBehaviour
 {
     [SerializeField]
     private GameObject helicopter;
+    private Vector3 helicopterPosition;
+
+    private void Start()
+    {
+        helicopterPosition = helicopter.transform.position;
+    }
     // 🔥 Call this to execute any method after delay
     public void ExecuteAfterDelay(float delay, Action action)
     {
@@ -25,5 +31,11 @@ public class MissionEventHandler : MonoBehaviour
         {
             helicopter.SetActive(true);
         });
+    }
+
+    private void OnDisable()
+    {
+        helicopter.SetActive(false);
+        helicopter.transform.position = helicopterPosition;
     }
 }

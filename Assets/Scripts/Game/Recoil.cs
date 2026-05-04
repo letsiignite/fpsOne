@@ -22,9 +22,9 @@ public class Recoil : MonoBehaviour
     {
         lastFireTime = Time.time;
 
-        float x = Random.Range(recoilAmount.x * 0.8f, recoilAmount.x);
+        float x = Random.Range(-recoilAmount.x  , - recoilAmount.x * 0.8f);
         float y = Random.Range(-recoilAmount.y, recoilAmount.y);
-
+        Debug.Log(" X = "+x+" , Y = "+y);
         Vector2 recoil = new Vector2(x, y);
 
         if (recoilType == RecoilType.Accumulate)
@@ -37,7 +37,7 @@ public class Recoil : MonoBehaviour
         }
 
         // Clamp vertical recoil (prevents sky aiming)
-        targetRotation.x = Mathf.Clamp(targetRotation.x, 0f, 5f);
+        targetRotation.x = Mathf.Clamp(targetRotation.x, -5f, 0f);
     }
 
     public Vector2 GetRecoilRotation()

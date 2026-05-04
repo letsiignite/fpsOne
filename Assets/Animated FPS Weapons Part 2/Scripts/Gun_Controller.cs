@@ -164,6 +164,11 @@ public class Gun_Controller : MonoBehaviour
         { 
             DisplayIcons();
         }*/
+
+        if (GameManager.Instance.GetBulletCamState())
+        {
+            Crosshair.SetActive(false);
+        }
        
         if (HasAlternateFireMode && !IsShotgun)
         {
@@ -635,6 +640,7 @@ public class Gun_Controller : MonoBehaviour
         }
         else
         {
+            if(!GameManager.Instance.GetBulletCamState())
             Crosshair.SetActive(true);
             animatedCamera.fieldOfView = Mathf.Lerp(animatedCamera.fieldOfView, normalFOV, Time.deltaTime * zoomSmooth);
             Weapon.transform.localPosition = Vector3.Lerp(transform.localPosition, WeaponPosition, aimSpeed * Time.deltaTime);

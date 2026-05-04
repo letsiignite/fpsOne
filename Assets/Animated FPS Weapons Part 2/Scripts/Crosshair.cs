@@ -93,7 +93,7 @@ public class Crosshair : MonoBehaviour
 
     public void ApplyHitOffset(float intensity = 2f, float duration = 1f)
     {
-        if (hitRoutineActive)
+        if (hitRoutineActive && !gameObject.activeInHierarchy)
             return;
 
         hitRoutineActive = true;

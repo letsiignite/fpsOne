@@ -20,6 +20,8 @@ namespace Mission
         [SerializeField]
         private TMP_Text DialogText;
         [SerializeField]
+        private TMP_Text missionText;
+        [SerializeField]
         private PlayerController playerController;
         [SerializeField]
         private CheckpointSystem checkpointSystem;
@@ -44,8 +46,9 @@ namespace Mission
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
+            missionIntroImage.SetActive(true);
             //Invoke("StartMission", 0.3f); 
-           StartCoroutine(StartMission());
+            StartCoroutine(StartMission());
         }
 
         // Update is called once per frame
@@ -71,16 +74,23 @@ namespace Mission
           
             GameManager.Instance.SetGameState(GameState.MissionIntro);
             DialogText.text = "...";
-            //foreach (GameObject obj in objectsToHideForIntro)
-            //{ 
-            //    obj.SetActive(false);
-            //}
+            missionText.text = "...";
+            foreach (GameObject obj in objectsToHideForIntro)
+            {
+                obj.SetActive(false);
+            }
             bgAudioSource.Stop();
+
+            //StartCoroutine(HandleNerration());
+            // For testing without intro
             GameManager.Instance.SetGameState(GameState.Running);
             playerController.EnableMovement();
             missionIntroUI.ShowMission(missionDataSet[missionIndex]);
             missionIntroImage.SetActive(false);
-            //StartCoroutine(HandleNerration());
+            foreach (GameObject obj in objectsToHideForIntro)
+            {
+                obj.SetActive(true);
+            }
         }
 
         IEnumerator HandleNerration()
@@ -92,15 +102,16 @@ namespace Mission
             yield return new WaitUntil(() => videoPlayer.isPrepared);
             Debug.Log("Prepare - " + Time.time);
             videoPlayer.Play();
-            DialogText.text = introData[missionIndex].nerrationText;
-
+          
+            missionText.text = introData[missionIndex].nerrationText;
             yield return new WaitWhile(() => videoPlayer.isPlaying);
             Debug.Log("Play time - " + Time.time);
             videoPlayer.Stop();
             videoPlayer.gameObject.SetActive(false);
 
             GameManager.Instance.SetGameState(GameState.Running);
-            DialogText.text = "...";
+           
+            missionText.text = "...";
             bgAudioSource.Stop();
             foreach (GameObject obj in objectsToHideForIntro)
             {
