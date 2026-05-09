@@ -18,7 +18,7 @@ namespace Game
         private Vector3 hitPosition;
         private Vector3 startPosition;
         private Quaternion startRotation;
-        private int TTL = 5;
+        private int TTL = 3;
 
         bool cameraActive = false;
 
@@ -59,14 +59,15 @@ namespace Game
 
         private void SelfDistruct()
         {
-            GameManager.Instance.UpdateBulletCamActiveState(false);
             DisableGameobject();
         }
 
         void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.GetComponent<DamageReceiver>() == null)
-                return;
+            {
+                DisableGameobject();
+            }
 
             ContactPoint contact = collision.contacts[0];
             Vector3 hitPoint = contact.point;
@@ -75,7 +76,7 @@ namespace Game
             bulletMesh.SetActive(false);
             //bloodSplashParticals.GetComponent<ParticleSystem>().Stop();
             bloodSplashParticals.SetActive(true);
-            GameManager.Instance.UpdateBulletCamActiveState(false);
+           
             //bloodSplashParticals.GetComponent<ParticleSystem>().Play();
             Invoke("DisableGameobject", 1f);
             Debug.Log("++ >>  OnCollisionEnter");
@@ -84,13 +85,15 @@ namespace Game
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.GetComponent<DamageReceiver>() == null)
-                return;
+            {
+                DisableGameobject();
+            }
 
             rb.isKinematic = true;
             rb.linearVelocity = Vector3.zero;
             bloodSplashParticals.transform.position = bulletMesh.transform.position;
             bulletMesh.SetActive(false);
-            GameManager.Instance.UpdateBulletCamActiveState(false);
+           
             //bloodSplashParticals.GetComponent<ParticleSystem>().Stop();
             bloodSplashParticals.SetActive(true);
             //bloodSplashParticals.GetComponent<ParticleSystem>().Play();
@@ -102,6 +105,7 @@ namespace Game
         {
             if (!gameObject.activeInHierarchy)
                 return;
+            GameManager.Instance.UpdateBulletCamActiveState(false);
             Time.timeScale = 1;
             gameObject.SetActive(false);
             playerCam.SetActive(true);

@@ -1,9 +1,42 @@
 fileFormatVersion: 2
 guid: fe3e9b54b7ff09e4bae9e1b62e91c995
+AssetOrigin:
+  serializedVersion: 1
+  productId: 303398
+  packageName: Versatile Building Kit - 15 Medium Poly Models for Game Development
+  packageVersion: 1.0.0
+  assetPath: Assets/Mellow Fox studios/Versatile Building Kit - 15 Medium Poly Models
+    for Game Development/Meshes/Building 10/Building 10.fbx
+  uploadId: 714464
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: proxy_mat_general_reflective.032
+    second: {fileID: 2100000, guid: 3912ea679c064584ca1fea40c615eeae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: proxy_mat_grey.032
+    second: {fileID: 2100000, guid: dc7344f90e4e18c4abee78536c0eb55e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: proxy_mat_roof.032
+    second: {fileID: 2100000, guid: 079c8c5377531c34e94b44b566b28ced, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: proxy_mat_stone.032
+    second: {fileID: 2100000, guid: 5e5abf9581c49094894c50dd2ce44734, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: proxy_mat_yellow.032
+    second: {fileID: 2100000, guid: 2dfeba910b386fd49a089a58e31803d8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -56,6 +89,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -105,11 +141,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 303398
-  packageName: Versatile Building Kit - 15 Medium Poly Models for Game Development
-  packageVersion: 1.0.0
-  assetPath: Assets/Mellow Fox studios/Versatile Building Kit - 15 Medium Poly Models
-    for Game Development/Meshes/Building 10/Building 10.fbx
-  uploadId: 714464

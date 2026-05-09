@@ -420,12 +420,16 @@ namespace Enemy
         {
             agent.isStopped = true;
             coverTimer -= Time.deltaTime;
-
+            RotateTowardsPlayer(1f);
+            if (HasLineOfSight())
+            {
+                currentState = State.PeekState;
+            }
             if (coverTimer <= 0f)
             {
                 provider.Release(reservedPoint, this);
                 reservedPoint = null;
-
+                RotateTowardsPlayer(1f);
                 currentState = State.PeekState;
             }
         }
@@ -509,7 +513,11 @@ namespace Enemy
                 currentState = State.Combat;
                 return;
             }
-
+            if (HasLineOfSight() &&
+                   agent.remainingDistance > Vector3.Distance(transform.position, player.position))
+            {
+                currentState = State.Combat;
+            }
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
                 currentState = State.Combat; // start shooting
