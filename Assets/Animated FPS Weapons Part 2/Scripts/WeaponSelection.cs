@@ -27,7 +27,8 @@ public class WeaponSelection : MonoBehaviour
     [SerializeField] private Image GunIcon;
     [SerializeField] private TMP_Text GunNameForPickupPopup;
 	[SerializeField] private GrenadeSlot grenadeSlot;
-	private bool showUnarmed = true;
+    [SerializeField] private PlayerController playerController;
+    private bool showUnarmed = true;
 	private bool keyIsPressed = false;
 
 	private List<int> GunsInHandIndex;
@@ -230,6 +231,7 @@ public class WeaponSelection : MonoBehaviour
 				weapon.gameObject.SetActive(true);
 				currentGun = weapon.GetComponent<Gun_Controller>();
 				currentGun.SetIsInPlayersHand(true);
+				playerController.SetCurrrentGun(currentGun);
 			}
 			else
 			{

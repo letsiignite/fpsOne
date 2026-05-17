@@ -23,11 +23,13 @@ namespace Mission
         private float delayToPlayAudio = 0;
 
         private bool playerInRange = false;
+        private ObjectiveMarker objectiveMarker;
 
-        public void init(Checkpoint chk, PopupHandler popupHandler)
+        public void init(Checkpoint chk, PopupHandler popupHandler, ObjectiveMarker objectiveMarker)
         { 
             checkpoint = chk;
             this.popupHandler = popupHandler;
+            this.objectiveMarker = objectiveMarker;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -58,6 +60,7 @@ namespace Mission
         {
             if (Input.GetKeyDown(KeyCode.F) && playerInRange)
             {
+                objectiveMarker.ObjectiveMarkerHiddenState(true);
                 checkpoint.HandleObjectiveCompleted(infoText, audioClip, delayToPlayAudio);
                 
                 popupHandler.Hide();

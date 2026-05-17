@@ -53,6 +53,7 @@ public class Gun_Controller : MonoBehaviour
     [SerializeField] private int AmmoReserve;
     [SerializeField] private float damage = 10f;
     [SerializeField] private float range = 100f;
+    [SerializeField] private float gunWeight = 0;
     [SerializeField] private int zoom;
     [SerializeField] private int normalFOV;
     [SerializeField] private float zoomSmooth;
@@ -141,6 +142,8 @@ public class Gun_Controller : MonoBehaviour
 
         //recoilScript = transform.Find("UpdatedPlayer/CameraHolder/Camera").GetComponent<Recoil>();
     }
+
+    public float GetWeight() => gunWeight;
 
     public void AddAmmoFromDroppedGun(int count)
     {

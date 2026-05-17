@@ -30,7 +30,8 @@ namespace Mission
         private List<GameObject> enemySoldiers;
         [SerializeField]
         private List<GameObject> hiddenObjects;
-
+        [SerializeField]
+        private ObjectiveMarker objectiveMarkerUI;
 
 
         private bool checkpointInfoProvided = false;
@@ -64,7 +65,13 @@ namespace Mission
         {
             Debug.Log(" START "+gameObject.name);
             checkpointSystem = GameObject.FindAnyObjectByType<CheckpointSystem>();
-            checkpointObj?.init(this, popupHandler);
+            checkpointObj?.init(this, popupHandler,objectiveMarkerUI);
+            //objectiveMarkerUI = Transform.FindAnyObjectByType<ObjectiveMarker>();
+            if (!objectiveMarkerUI.gameObject.activeInHierarchy)
+            {
+                objectiveMarkerUI.SetTarget(this.transform);
+                objectiveMarkerUI.gameObject.SetActive(true);
+            }
         }
 
         private void Update()
@@ -89,6 +96,7 @@ namespace Mission
                 checkpointSystem.ProvideCheckpointInfo(this);
                 checkpointInfoProvided = true;
                 Invoke("HideObjects", 10f);
+                objectiveMarkerUI.SetTarget(objectiveMarker.transform);
                 //this.gameObject.SetActive(false);
             }
         }
@@ -130,7 +138,17 @@ namespace Mission
             yield return new WaitForSeconds(delay);
             Debug.Log(" CP Objective Completed");
             checkpointSystem.OnCompletingObjective(objectiveText, clip);
-            nextCheckpoint.SetActive(true);
+            if (nextCheckpoint != null)
+            {
+                nextCheckpoint.SetActive(true);
+                objectiveMarkerUI.SetTarget(nextCheckpoint.transform);
+                objectiveMarkerUI.ObjectiveMarkerHiddenState(false);
+            }
+            else
+            {
+                objectiveMarkerUI.ObjectiveMarkerHiddenState(true);
+            }
+            
         }
 
         
