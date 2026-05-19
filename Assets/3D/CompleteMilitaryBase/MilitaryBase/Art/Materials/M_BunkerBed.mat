@@ -208,7 +208,7 @@ Material:
     - Vector1_AF65C65C: 0
     - Vector1_BDF4927C: 1
     - Vector1_D39B6A9D: 1
-    - Vector1_ED619312: 0
+    - Vector1_ED619312: 0.2
     - Vector1_df308df77fb1465d88917f755a5df14a: 1
     - Vector1_e44edfc2f5b444f890d1ea79d66e4764: 1
     - Vector1_eb681cc57c3e46829a9e2c40614de15c: 1.1
@@ -229,8 +229,17 @@ Material:
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Anisotropy: 0
+    - _BUILTIN_AlphaClip: 0
+    - _BUILTIN_Blend: 0
+    - _BUILTIN_CullMode: 2
+    - _BUILTIN_DstBlend: 0
     - _BUILTIN_QueueControl: 1
     - _BUILTIN_QueueOffset: 0
+    - _BUILTIN_SrcBlend: 1
+    - _BUILTIN_Surface: 0
+    - _BUILTIN_ZTest: 4
+    - _BUILTIN_ZWrite: 1
+    - _BUILTIN_ZWriteControl: 0
     - _BlendMode: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
@@ -292,6 +301,7 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
+    - _SecUvBool: 0
     - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0

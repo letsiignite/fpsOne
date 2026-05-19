@@ -1,6 +1,7 @@
 ﻿using Game;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
@@ -51,6 +52,7 @@ public class Gun_Controller : MonoBehaviour
     [SerializeField] private ObjectPool impactPool;
     [SerializeField] private int AmmoQuantity;
     [SerializeField] private int AmmoReserve;
+    [SerializeField] private TMP_Text ammoCountDisplay;
     [SerializeField] private float damage = 10f;
     [SerializeField] private float range = 100f;
     [SerializeField] private float gunWeight = 0;
@@ -172,7 +174,10 @@ public class Gun_Controller : MonoBehaviour
         {
             Crosshair.SetActive(false);
         }
-       
+
+        ammoCountDisplay.text = clip + " | " + AmmoReserve;
+
+
         if (HasAlternateFireMode && !IsShotgun)
         {
             if (Input.GetKeyDown(KeyCode.X))
@@ -965,7 +970,7 @@ public class Gun_Controller : MonoBehaviour
     {
         if (!isUnarmed)
         {
-            GUI.Label(new Rect(20, Screen.height - 40, 100, 50), clip + "/" + AmmoReserve, mystyle);
+            //GUI.Label(new Rect(20, Screen.height - 40, 100, 50), clip + "/" + AmmoReserve, mystyle);
         }
 
     }
