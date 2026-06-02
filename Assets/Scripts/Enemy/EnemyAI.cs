@@ -127,7 +127,7 @@ namespace Enemy
             detectedPlayer = false;
 
             ResetAnimation();
-
+            enemyGun.gameObject.SetActive(true);
             animator.SetBool("idle", true);
             animator.Update(0f);
             agent.SetDestination(endPoint.position);
@@ -175,7 +175,8 @@ namespace Enemy
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player")
+            Debug.Log(" -- OnTriggerEnter | Tag = "+ other.tag);
+            if (other.CompareTag("Player") && currentState != State.Dead)
             {
                 FacePlayer();
             }
@@ -183,7 +184,7 @@ namespace Enemy
 
         void OnTriggerStay(Collider other)      // No need to rotate in update method
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && currentState != State.Dead)
             {
                 FacePlayer();
             }
@@ -191,7 +192,7 @@ namespace Enemy
 
         void FacePlayer()
         {
-            return;
+            //return;
             Vector3 direction = player.position - transform.position;
             direction.y = 0f; // Ignore vertical axis
 
@@ -230,7 +231,7 @@ namespace Enemy
                     ResetAnimation();
                     animator.SetBool("run", true);
                     //agent.speed = (animator.deltaPosition / Time.deltaTime).magnitude;
-                    DetectPlayer();
+                    //DetectPlayer();
                     break;
 
                 case State.Idle:
@@ -662,6 +663,7 @@ namespace Enemy
             }
             agent.isStopped = true;    
             gunToDrop.transform.position = enemyEyesPos.transform.position + new Vector3(0,2,0);
+            enemyGun.gameObject.SetActive(false);
             Debug.Log(" gunToDrop.transform.position = " + gunToDrop.transform.position);
             Debug.Log("enemyEyesPos.transform.position = " + enemyEyesPos.transform.position);
             Debug.Log("Enemy died!");

@@ -81,16 +81,16 @@ namespace Mission
             }
             bgAudioSource.Stop();
 
-            //StartCoroutine(HandleNerration());
+            StartCoroutine(HandleNerration());
             // For testing without intro
-            GameManager.Instance.SetGameState(GameState.Running);
-            playerController.EnableMovement();
-            missionIntroUI.ShowMission(missionDataSet[missionIndex]);
-            missionIntroImage.SetActive(false);
-            foreach (GameObject obj in objectsToHideForIntro)
-            {
-                obj.SetActive(true);
-            }
+            //GameManager.Instance.SetGameState(GameState.Running);
+            //playerController.EnableMovement();
+            //missionIntroUI.ShowMission(missionDataSet[missionIndex]);
+            //missionIntroImage.SetActive(false);
+            //foreach (GameObject obj in objectsToHideForIntro)
+            //{
+            //    obj.SetActive(true);
+            //}
         }
 
         IEnumerator HandleNerration()

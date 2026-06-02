@@ -24,7 +24,7 @@ public class Recoil : MonoBehaviour
 
         float x = Random.Range(-recoilAmount.x  , - recoilAmount.x * 0.8f);
         float y = Random.Range(-recoilAmount.y, recoilAmount.y);
-        Debug.Log(" X = "+x+" , Y = "+y);
+        //Debug.Log(" X = "+x+" , Y = "+y);
         Vector2 recoil = new Vector2(x, y);
 
         if (recoilType == RecoilType.Accumulate)

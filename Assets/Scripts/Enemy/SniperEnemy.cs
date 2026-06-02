@@ -57,6 +57,8 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
     private Quaternion startRotation;
     public int maxHealth = 100;
     private float currentHealth;
+    [SerializeField] GameObject enemyGun;
+
     [SerializeField]
     private List<GameObject> objectsToDisableOnDeath;
     public GameObject enemyEyesPos;
@@ -104,7 +106,7 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
         }
 
         ResetAnimation();
-
+        enemyGun.SetActive(true);
         animator.SetBool("idle", true);
         animator.Update(0f);
         gameObject.SetActive(true);
@@ -351,7 +353,7 @@ public class SniperEnemy : MonoBehaviour, IDamageHandler, IEnemySolder
         animator.SetBool("dead", true);
         currentState = State.Dead;
         GameObject gunToDrop = GameManager.Instance.GetGunPrefabToDrop(soldierType);
-
+        enemyGun.SetActive(false);
         foreach (GameObject g in objectsToDisableOnDeath)
         {
             g.SetActive(false);

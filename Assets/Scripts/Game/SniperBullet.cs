@@ -64,41 +64,41 @@ namespace Game
 
         void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.GetComponent<DamageReceiver>() == null)
+            if (collision.gameObject.GetComponent<DamageReceiver>() != null)
             {
-                DisableGameobject();
+                ContactPoint contact = collision.contacts[0];
+                Vector3 hitPoint = contact.point;
+                bloodSplashParticals.transform.position = hitPoint;
+
+                bulletMesh.SetActive(false);
+                //bloodSplashParticals.GetComponent<ParticleSystem>().Stop();
+                bloodSplashParticals.SetActive(true);
+
+                //bloodSplashParticals.GetComponent<ParticleSystem>().Play();
+                Invoke("DisableGameobject", 1f);
+                Debug.Log("++ >>  OnCollisionEnter");
             }
 
-            ContactPoint contact = collision.contacts[0];
-            Vector3 hitPoint = contact.point;
-            bloodSplashParticals.transform.position = hitPoint;
-
-            bulletMesh.SetActive(false);
-            //bloodSplashParticals.GetComponent<ParticleSystem>().Stop();
-            bloodSplashParticals.SetActive(true);
-           
-            //bloodSplashParticals.GetComponent<ParticleSystem>().Play();
-            Invoke("DisableGameobject", 1f);
-            Debug.Log("++ >>  OnCollisionEnter");
+            
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.GetComponent<DamageReceiver>() == null)
+            if (other.gameObject.GetComponent<DamageReceiver>() != null)
             {
-                DisableGameobject();
+                rb.isKinematic = true;
+                rb.linearVelocity = Vector3.zero;
+                bloodSplashParticals.transform.position = bulletMesh.transform.position;
+                bulletMesh.SetActive(false);
+
+                //bloodSplashParticals.GetComponent<ParticleSystem>().Stop();
+                bloodSplashParticals.SetActive(true);
+                //bloodSplashParticals.GetComponent<ParticleSystem>().Play();
+                Invoke("DisableGameobject", 1f);
+                Debug.Log("++ >>  OnTriggerEnter for - " + other.name);
             }
 
-            rb.isKinematic = true;
-            rb.linearVelocity = Vector3.zero;
-            bloodSplashParticals.transform.position = bulletMesh.transform.position;
-            bulletMesh.SetActive(false);
-           
-            //bloodSplashParticals.GetComponent<ParticleSystem>().Stop();
-            bloodSplashParticals.SetActive(true);
-            //bloodSplashParticals.GetComponent<ParticleSystem>().Play();
-            Invoke("DisableGameobject", 1f);
-            Debug.Log("++ >>  OnTriggerEnter for - "+other.name);
+            
         }
 
         private void DisableGameobject()

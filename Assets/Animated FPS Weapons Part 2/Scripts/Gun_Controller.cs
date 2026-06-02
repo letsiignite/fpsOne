@@ -1235,12 +1235,12 @@ public class Gun_Controller : MonoBehaviour
     }
     private void ShowCollimator()
     {
-        Debug.Log("ShowCollimator");
+        //Debug.Log("ShowCollimator");
         Collimator.SetActive(true);
     }
     private void HideCollimator()
     {
-        Debug.Log("HideCollimator");
+        //Debug.Log("HideCollimator");
         Collimator.SetActive(false);
     }
     private void PlayReloadLoop()
@@ -1346,37 +1346,38 @@ public class Gun_Controller : MonoBehaviour
 
             if (!isSniper)
             {
-
+                GameObject holeObject = null;
                 GameObject impactObject = impactPool.GetObject(hit.point, hit.normal);
                 if (colObject.CompareTag("Metal"))
                 {
-                    GameObject holeObject = bulletHoleMetalPool.GetObject(hit.point, hit.normal);
+                    holeObject = bulletHoleMetalPool.GetObject(hit.point, hit.normal);
                     StartCoroutine(DeactivateHole(holeObject));
 
                 }
                 else if (colObject.CompareTag("Wood"))
                 {
-                    GameObject holeObject = bulletHoleWoodPool.GetObject(hit.point, hit.normal);
+                    holeObject = bulletHoleWoodPool.GetObject(hit.point, hit.normal);
                     StartCoroutine(DeactivateHole(holeObject));
                 }
                 else if (colObject.CompareTag("Concrete"))
                 {
-                    GameObject holeObject = bulletHoleConcretePool.GetObject(hit.point, hit.normal);
+                    holeObject = bulletHoleConcretePool.GetObject(hit.point, hit.normal);
                     StartCoroutine(DeactivateHole(holeObject));
                 }
                 else if (colObject.CompareTag("Flesh"))
                 {
-                    GameObject holeObject = bulletHoleFleshPool.GetObject(hit.point, hit.normal);
+                    holeObject = bulletHoleFleshPool.GetObject(hit.point, hit.normal);
                     StartCoroutine(DeactivateHole(holeObject));
                 }
                 else
                 {
-                    GameObject holeObject = Instantiate(bulletHoleConcretePool.GetObject(hit.point, hit.normal), hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                    holeObject = Instantiate(bulletHoleConcretePool.GetObject(hit.point, hit.normal), hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
                     //GameObject holeObject = bulletHolePool.GetObject();
 
-                    holeObject.transform.SetParent(colObject.transform);
+                   
                     StartCoroutine(DeactivateHole(holeObject));
                 }
+                holeObject.transform.SetParent(colObject.transform);
                 StartCoroutine(DeactivateHole(impactObject));
             }
             if (canShake && hit.distance < 25)
