@@ -29,6 +29,8 @@ public class MenuManager : MonoBehaviour
     private TMP_Text fpsText;
     [SerializeField]
     private GameObject keyMapping;
+    [SerializeField]
+    private GameObject pauseMenu;
 
     private string GAME_SCENE_NAME = "GameScene";
     private float deltaTime = 0.0f;
@@ -81,23 +83,20 @@ public class MenuManager : MonoBehaviour
 
     public void DisplayPauseMenu()
     {
-        resumeButton.SetActive(!resumeButton.activeInHierarchy);
-        if (resumeButton.activeInHierarchy)
+        if (!pauseMenu.activeInHierarchy)
         {
-            deathScreen.DisplayDeathScreen();
+            pauseMenu.SetActive(true);
             AudioListener.pause = true;
-            onDeathMenu.SetActive(true);
             GameManager.Instance.SetGameState(GameState.Pause);
             Time.timeScale = 0f;
             missionManager.DisablePlayerMovement();
         }
         else
         {
-            deathScreen.HideDeathScreen();
+            pauseMenu.SetActive(false);
             Time.timeScale = 01f;
             AudioListener.pause = false;
             GameManager.Instance.SetGameState(GameState.Running);
-            onDeathMenu.SetActive(false);
             missionManager.EnablePlayerMovements();
         }
     }

@@ -175,7 +175,7 @@ namespace Enemy
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(" -- OnTriggerEnter | Tag = "+ other.tag);
+            //Debug.Log(" -- OnTriggerEnter | Tag = "+ other.tag);
             if (other.CompareTag("Player") && currentState != State.Dead)
             {
                 FacePlayer();
